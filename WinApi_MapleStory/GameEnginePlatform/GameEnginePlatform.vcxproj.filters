@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GameEngineInput.h" />
+    <ClInclude Include="GameEngineSound.h" />
+    <ClInclude Include="GameEngineWindow.h" />
+    <ClInclude Include="GameEngineWindowTexture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameEngineInput.cpp" />
+    <ClCompile Include="GameEngineSound.cpp" />
+    <ClCompile Include="GameEngineWindow.cpp" />
+    <ClCompile Include="GameEngineWindowTexture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FMOD">
+      <UniqueIdentifier>{434c19e0-49d8-4212-ae6d-a376fdbd4298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FMOD\Debug">
+      <UniqueIdentifier>{a5ae5c3c-cea6-4d49-82b7-a4140015e38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FMOD\Release">
+      <UniqueIdentifier>{cc74ef12-1efc-4024-982a-ae3ba83a22f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
+      <Filter>FMOD\Release</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
+      <Filter>FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL.dll">
+      <Filter>FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod.dll">
+      <Filter>FMOD\Release</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+</Project>
