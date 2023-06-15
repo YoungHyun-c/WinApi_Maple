@@ -5,28 +5,25 @@
 class ContentCore : public CoreProcess
 {
 public:
-	// constrcuter destructer
+	// constructer destructer
 	ContentCore();
 	~ContentCore();
 
 	// delete Function
 	ContentCore(const ContentCore& _Other) = delete;
 	ContentCore(ContentCore&& _Other) noexcept = delete;
-	ContentCore& operator=(const ContentCore& _Other) = delete;
-	ContentCore& operator=(ContentCore&& _Other) noexcept = delete;
+	ContentCore& operator = (const ContentCore& _Other) = delete;
+	ContentCore& operator = (ContentCore&& _Other) noexcept = delete;
 
 protected:
 
 private:
 	void Start() override;
 
-	// 행동한고.
-	void Update(float _Delta) override;
+	//void Update(float Delta) override;
 
-	// 그려지고.
-	void Render(float _Delta) override;
+	//void Render(float Delta) override;
 
-	// 정리된다.
-	void Release() override;
+	//void Release() override;
 };
 

@@ -1,5 +1,5 @@
 #include "BackGround.h"
-#include "ContentsEnum.h"
+#include "Enum.h"
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineRenderer.h>
@@ -8,15 +8,17 @@
 
 BackGround::BackGround()
 {
+
 }
 
 BackGround::~BackGround()
 {
+
 }
 
-void BackGround::Start() 
+void BackGround::Start()
 {
-	SetPos({ 640, 360 });
+	SetPos({ 512, 384 });
 	Renderer = CreateRenderer(RenderOrder::BackGround);
 
 	DebugRenderer = CreateRenderer(RenderOrder::BackGround);
@@ -24,15 +26,6 @@ void BackGround::Start()
 	Renderer->On();
 	DebugRenderer->Off();
 }
-
-
-void BackGround::Update(float _Delta) {
-}
-
-void BackGround::Release() 
-{
-}
-
 
 void BackGround::Init(const std::string& _FileName, const std::string& _DebugFileName)
 {
@@ -43,8 +36,8 @@ void BackGround::Init(const std::string& _FileName, const std::string& _DebugFil
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\" + _FileName);
-
+		FilePath.MoveChild("ContentsResources\\Texture\\" + FileName);
+		
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
@@ -55,11 +48,9 @@ void BackGround::Init(const std::string& _FileName, const std::string& _DebugFil
 	DebugRenderer->SetTexture(_DebugFileName);
 	DebugRenderer->SetRenderScale(Scale);
 	SetPos({ Scale.hX(), Scale.hY() });
-
-
 }
 
-void BackGround::SwitchRender()
+void BackGround::SwitchRenderer()
 {
 	SwitchRenderValue = !SwitchRenderValue;
 
@@ -68,8 +59,10 @@ void BackGround::SwitchRender()
 		Renderer->On();
 		DebugRenderer->Off();
 	}
-	else {
+	else
+	{
 		Renderer->Off();
 		DebugRenderer->On();
 	}
 }
+

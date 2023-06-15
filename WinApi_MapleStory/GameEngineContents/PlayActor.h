@@ -19,13 +19,13 @@ public:
 
 	void CameraFocus();
 
-	void GravityReset() 
+	void GravityReset()
 	{
 		GravityVector = float4::ZERO;
 	}
 
 
-	void GravityOff() 
+	void GravityOff()
 	{
 		IsGravity = false;
 	}

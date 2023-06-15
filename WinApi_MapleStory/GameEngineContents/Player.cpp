@@ -1,7 +1,7 @@
 #include "Player.h"
 #pragma region Headers
 
-#include "ContentsEnum.h"
+#include "Enum.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEnginePath.h>
@@ -14,20 +14,20 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineCore.h>
-#include "Bullet.h"
-#include "Monster.h"
-#include "PlayUIManager.h"
+//#include "Bullet.h"
+//#include "Monster.h"
+//#include "PlayUIManager.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 
 #pragma endregion
 
 Player* Player::MainPlayer = nullptr;
 
-Player::Player() 
+Player::Player()
 {
 }
 
-Player::~Player() 
+Player::~Player()
 {
 }
 
@@ -46,41 +46,37 @@ void Player::Start()
 
 		// ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
 
-		GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("Fade", {1280, 720});
-		T->FillTexture(RGB(255, 0 , 0));
-
+		GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("Fade", { 1280, 720 });
+		T->FillTexture(RGB(255, 0, 0));
 
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Player.bmp"), 5, 17);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Player.bmp"), 5, 17);
-		
-		
-		FolderPath.MoveChild("ContentsResources\\Texture\\");
-		ResourcesManager::GetInst().CreateSpriteFolder("FolderPlayer", FolderPath.PlusFilePath("FolderPlayer"));
 
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Test.bmp"));
+
+		FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
+		//ResourcesManager::GetInst().CreateSpriteFolder("Left", FolderPath.PlusFilePath("Left"));
+		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\Stand\\");
+		ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
+		ResourcesManager::GetInst().CreateSpriteFolder("Walk", FolderPath.PlusFilePath("Walk"));
+
+		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Test.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
 	}
 
 	{
 
-		MainRenderer = CreateRenderer(200);
-		MainRenderer->CreateAnimation("Test", "FolderPlayer");
-		MainRenderer->CreateAnimation("Left_Idle", "Left_Player.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Idle", "Right_Player.bmp", 0, 2, 1.0f, true);
-		MainRenderer->CreateAnimation("Left_Run", "Left_Player.bmp", 3, 6, 0.1f, true);
-		// MainRenderer->CreateAnimation("Right_Run", "Right_Player.bmp", 20, 0, 0.1f, true);
+		MainRenderer = CreateRenderer(RenderOrder::Play);
+		MainRenderer->CreateAnimation("Left_Idle", "Stand", 0, 2, 0.5f);
+		MainRenderer->CreateAnimation("Right_Idle", "Stand", 3, 5, 0.5f);
 
-		MainRenderer->CreateAnimationToFrame("Right_Run", "Right_Player.bmp", {20, 19, 18, 17, 16, 15}, 0.1f, true);
-		MainRenderer->ChangeAnimation("Test");
-		MainRenderer->SetRenderScaleToTexture();
-	}
+		//MainRenderer->CreateAnimation("Right_Idle", "Right_Player.bmp", 0, 2, 1.0f, true);
+		//MainRenderer->CreateAnimation("Right_Idle", "FolderPlayer");
+		MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f, true);
+		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f, true);
 
-	{
-		GameEngineRenderer* Ptr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
-		Ptr->SetRenderPos({ 0, -100 });
-		Ptr->SetRenderScale({ 200, 40 });
-		Ptr->SetTexture("HPBar.bmp");
-		Ptr->SetText("か神格たびかし葛ったびかし葛ったびかし葛った顕し葛君たびしけい稽っ原閑", 40);
+		//MainRenderer->CreateAnimationToFrame("Right_Run", "Right_Player.bmp", { 20, 19, 18, 17, 16, 15 }, 0.1f, true);
+		MainRenderer->ChangeAnimation("Right_Idle");
+		//MainRenderer->SetRenderScaleToTexture();
 	}
 
 	{
@@ -89,15 +85,15 @@ void Player::Start()
 	}
 
 	{
-		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		BodyCollsion->SetCollisionScale({100, 100});
-		BodyCollsion->SetCollisionType(CollisionType::CirCle);
+		//BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
+		//BodyCollsion->SetCollisionScale({ 100, 100 });
+		//BodyCollsion->SetCollisionType(CollisionType::CirCle);
 	}
 
 
 	// SetGroundTexture("StageTestPixel.bmp");
 
-	
+
 
 	// State = PlayerState::Idle;
 
@@ -108,22 +104,21 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 
-	std::vector<GameEngineCollision*> _Col;
-	if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
-		, CollisionType::Rect // 蟹研 紫唖莫生稽 坐操
-		, CollisionType::CirCle // 雌企亀 紫唖莫生稽 坐操
-	))
-	{
-		for (size_t i = 0; i < _Col.size(); i++)
-		{
-			GameEngineCollision* Collison = _Col[i];
+	//std::vector<GameEngineCollision*> _Col;
+	//if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
+	//	, CollisionType::Rect // 蟹研 紫唖莫生稽 坐操
+	//	, CollisionType::CirCle // 雌企亀 紫唖莫生稽 坐操
+	//))
+	//{
+	//	for (size_t i = 0; i < _Col.size(); i++)
+	//	{
+	//		GameEngineCollision* Collison = _Col[i];
 
-			GameEngineActor* Actor = Collison->GetActor();
+	//		GameEngineActor* Actor = Collison->GetActor();
 
-			Actor->Death();
-		}
-		// 蟹澗 佼什斗櫛 中宜廃暗醤.
-	}
+	//		Actor->Death();
+	//	}
+	//}
 
 	if (true == GameEngineInput::IsPress('L'))
 	{
@@ -142,6 +137,7 @@ void Player::Update(float _Delta)
 		// GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
 		GameEngineLevel::CollisionDebugRenderSwitch();
 	}
+
 
 	StateUpdate(_Delta);
 
@@ -276,7 +272,7 @@ void Player::ChangeAnimationState(const std::string& _StateName)
 
 
 
-void Player::LevelStart() 
+void Player::LevelStart()
 {
 	MainPlayer = this;
 }
@@ -303,15 +299,15 @@ void Player::Render(float _Delta)
 		TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
-	CollisionData Data;
+	//CollisionData Data;
 
-	Data.Pos = ActorCameraPos();
-	Data.Scale = { 5,5 };
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos();
+	//Data.Scale = { 5,5 };
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	Data.Pos = ActorCameraPos() + LeftCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + LeftCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	Data.Pos = ActorCameraPos() + RightCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + RightCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 }

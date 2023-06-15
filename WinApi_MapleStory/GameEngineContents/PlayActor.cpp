@@ -4,15 +4,15 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/ResourcesManager.h>
 
-PlayActor::PlayActor() 
+PlayActor::PlayActor()
 {
 }
 
-PlayActor::~PlayActor() 
+PlayActor::~PlayActor()
 {
 }
 
-void PlayActor::Gravity(float _Delta) 
+void PlayActor::Gravity(float _Delta)
 {
 	if (false == IsGravity)
 	{
@@ -25,7 +25,7 @@ void PlayActor::Gravity(float _Delta)
 	AddPos(GravityVector * _Delta);
 }
 
-void PlayActor::CameraFocus() 
+void PlayActor::CameraFocus()
 {
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
 	GetLevel()->GetMainCamera()->SetPos(GetPos() + float4{ -WindowScale.hX(), -WindowScale.hY() });

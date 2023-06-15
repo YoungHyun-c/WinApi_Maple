@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "ContentsEnum.h"
+#include "Enum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEnginePlatform/GameEngineInput.h>
@@ -114,11 +114,9 @@ void Player::RunUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('A') && Dir == PlayerDir::Left)
 	{
-		// 귀찮음
-		// => 프로그래머의 최악의 
 		CheckPos = LeftCheck;
 		MovePos = { -Speed * _Delta, 0.0f };
-	} 
+	}
 	else if (true == GameEngineInput::IsPress('D') && Dir == PlayerDir::Right)
 	{
 		CheckPos = RightCheck;
@@ -156,21 +154,29 @@ void Player::RunUpdate(float _Delta)
 
 void Player::JumpStart()
 {
-	// 애니메이션 해야하는데 귀찮음
 
 	SetGravityVector(float4::UP * 1000.0f);
 }
 
-int A = 0;
 
 void Player::JumpUpdate(float _Delta)
 {
 	Gravity(_Delta);
 
-	//for (size_t i = 0; i < 1000000; i++)
-	//{
-	//	++A;
-	//}
+	float Speed = 500.0f;
+	float4 MovePos = float4::ZERO;
+
+	if (true == GameEngineInput::IsPress('A'))
+	{
+		MovePos = { -Speed * _Delta , 0.0f };
+		ChanageState(PlayerState::Run);
+	}
+	else if (true == GameEngineInput::IsPress('D'))
+	{
+		MovePos = { Speed * _Delta, 0.0f };
+		ChanageState(PlayerState::Run);
+	}
+
 
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255));

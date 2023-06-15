@@ -1,40 +1,24 @@
 #include "ContentCore.h"
-#include "TitleLevel.h"
+#include "StartLevel.h"
 #include "PlayLevel.h"
-#include "EndingLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 
-ContentCore::ContentCore() 
+ContentCore::ContentCore()
 {
+
 }
 
-ContentCore::~ContentCore() 
+ContentCore::~ContentCore()
 {
+
 }
 
-void ContentCore::Start() 
+void ContentCore::Start()
 {
-	GameEngineWindow::MainWindow.SetPosAndScale({100, 100}, { 1280, 720 });
+	GameEngineWindow::MainWindow.SetPosAndScale({ 50, 50 }, { 1024, 768 });
 
-	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
+	GameEngineCore::CreateLevel<StartLevel>("StartLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
-	GameEngineCore::CreateLevel<EndingLevel>("EndingLevel");
 
-	// 이 레벨이 화면에 보여라.
 	GameEngineCore::ChangeLevel("PlayLevel");
-}
-
-// 행동한고.
-void ContentCore::Update(float _Delta)
-{
-}
-
-// 그려지고.
-void ContentCore::Render(float _Delta)
-{
-}
-
-// 정리된다.
-void ContentCore::Release() 
-{
 }

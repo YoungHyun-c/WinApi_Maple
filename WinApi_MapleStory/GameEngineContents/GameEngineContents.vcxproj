@@ -155,6 +155,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{43e95582-82fc-46c5-a7ca-7d887cd0432b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
+      <Project>{25420802-ca45-42a3-9d95-42f2a0bd9d5b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEnginePlatform\GameEnginePlatform.vcxproj">
+      <Project>{f6e44423-c86d-4d5d-8807-5ea6de42b126}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="BackGround.h">
       <SubType>
       </SubType>
@@ -163,24 +174,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ContentsEnum.h" />
-    <ClInclude Include="DefaultHeader.h" />
-    <ClInclude Include="EndingLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="FadeObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GlobalValue.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="Enum.h" />
     <ClInclude Include="PlayActor.h">
       <SubType>
       </SubType>
@@ -189,19 +183,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayUIManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TitleLevel.h">
+    <ClInclude Include="StartLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -215,22 +201,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EndingLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="FadeObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GlobalValue.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="PlayActor.cpp">
       <SubType>
       </SubType>
@@ -239,34 +209,15 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Player_State.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayUIManager.cpp">
+    <ClCompile Include="StartLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TitleLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{43e95582-82fc-46c5-a7ca-7d887cd0432b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
-      <Project>{25420802-ca45-42a3-9d95-42f2a0bd9d5b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEnginePlatform\GameEnginePlatform.vcxproj">
-      <Project>{f6e44423-c86d-4d5d-8807-5ea6de42b126}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
