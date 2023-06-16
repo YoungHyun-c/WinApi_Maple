@@ -44,7 +44,7 @@ void Player::Start()
 
 		FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
 
-		// ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
+		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
 
 		GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("Fade", { 1280, 720 });
 		T->FillTexture(RGB(255, 0, 0));
@@ -59,7 +59,6 @@ void Player::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
 		ResourcesManager::GetInst().CreateSpriteFolder("Walk", FolderPath.PlusFilePath("Walk"));
 
-		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Test.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
 	}
 
@@ -71,17 +70,14 @@ void Player::Start()
 
 		//MainRenderer->CreateAnimation("Right_Idle", "Right_Player.bmp", 0, 2, 1.0f, true);
 		//MainRenderer->CreateAnimation("Right_Idle", "FolderPlayer");
-		MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f, true);
-		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f, true);
+		MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f);
+		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f);
 
 		//MainRenderer->CreateAnimationToFrame("Right_Run", "Right_Player.bmp", { 20, 19, 18, 17, 16, 15 }, 0.1f, true);
+		MainRenderer->SetRenderPos({ 0 , -34 });
+		//MainRenderer->SetRenderScale({ 66, 69 });
 		MainRenderer->ChangeAnimation("Right_Idle");
 		//MainRenderer->SetRenderScaleToTexture();
-	}
-
-	{
-		/*GameEngineRenderer* Ptr = CreateRenderer("Fade", 6000);
-		Ptr->SetRenderScale({ 1280, 720 });*/
 	}
 
 	{
@@ -90,12 +86,8 @@ void Player::Start()
 		//BodyCollsion->SetCollisionType(CollisionType::CirCle);
 	}
 
-
 	// SetGroundTexture("StageTestPixel.bmp");
 
-
-
-	// State = PlayerState::Idle;
 
 	ChanageState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
@@ -122,13 +114,7 @@ void Player::Update(float _Delta)
 
 	if (true == GameEngineInput::IsPress('L'))
 	{
-		// GameEngineSound::SoundLoad("C:\\AAAA\\AAAA\\A\\AAA.Mp3");
-		// GameEngineSound::SoundPlay("AAA.Mp3");
-		// GameEngineSound::PlayBgm("AAA.Mp3");
-		// GameEngineSound::StopBgm("AAA.Mp3");
-
 		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
-
 		// Monster::AllMonsterDeath();
 	}
 
@@ -216,32 +202,6 @@ void Player::DirCheck()
 		return;
 	}
 
-
-	// 원래 있던 코드.
-	/*PlayerDir CheckDir = PlayerDir::Left;
-
-	if (true == GameEngineInput::IsDown('A'))
-	{
-		CheckDir = PlayerDir::Left;
-	}
-	else if (true == GameEngineInput::IsDown('D'))
-	{
-		CheckDir = PlayerDir::Right;
-	}
-
-	bool ChangeDir = false;
-
-	if (CheckDir != PlayerDir::Max)
-	{
-		Dir = CheckDir;
-		ChangeDir = true;
-	}
-
-	if (CheckDir != PlayerDir::Max && true == ChangeDir)
-	{
-		ChangeAnimationState(CurState);
-	}*/
-
 }
 
 void Player::ChangeAnimationState(const std::string& _StateName)
@@ -299,15 +259,15 @@ void Player::Render(float _Delta)
 		TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
-	//CollisionData Data;
+	CollisionData Data;
 
-	//Data.Pos = ActorCameraPos();
-	//Data.Scale = { 5,5 };
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos();
+	Data.Scale = { 5,5 };
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	//Data.Pos = ActorCameraPos() + LeftCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + LeftCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	//Data.Pos = ActorCameraPos() + RightCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + RightCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 }

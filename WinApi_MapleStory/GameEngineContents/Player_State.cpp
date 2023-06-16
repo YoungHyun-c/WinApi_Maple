@@ -87,7 +87,7 @@ void Player::RunUpdate(float _Delta)
 		{
 			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 
-			while (CheckColor != RGB(255, 255, 255))
+			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
 			{
 				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 				AddPos(float4::UP);
@@ -142,7 +142,7 @@ void Player::RunUpdate(float _Delta)
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
 
-		if (Color == RGB(255, 255, 255))
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
 		{
 			AddPos(MovePos);
 			GetLevel()->GetMainCamera()->AddPos(MovePos);
@@ -155,7 +155,7 @@ void Player::RunUpdate(float _Delta)
 void Player::JumpStart()
 {
 
-	SetGravityVector(float4::UP * 1000.0f);
+	SetGravityVector(float4::UP * 300.0f);
 }
 
 
@@ -163,19 +163,21 @@ void Player::JumpUpdate(float _Delta)
 {
 	Gravity(_Delta);
 
-	float Speed = 500.0f;
+	float Speed = 300.0f;
 	float4 MovePos = float4::ZERO;
 
 	if (true == GameEngineInput::IsPress('A'))
 	{
-		MovePos = { -Speed * _Delta , 0.0f };
-		ChanageState(PlayerState::Run);
+		MovePos += float4::LEFT * _Delta * Speed;
+
 	}
 	else if (true == GameEngineInput::IsPress('D'))
 	{
-		MovePos = { Speed * _Delta, 0.0f };
-		ChanageState(PlayerState::Run);
+		MovePos += float4::RIGHT * _Delta * Speed;
+
 	}
+
+	AddPos(MovePos);
 
 
 	{
