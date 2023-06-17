@@ -33,7 +33,8 @@ public:
 	void SetGroundTexture(const std::string& _GroundTextureName);
 
 	// 내 위치에서 
-	int GetGroundColor(unsigned int _DefaultColor, float4 _Pos = float4::ZERO);
+	//int GetGroundColor(unsigned int _DefaultColor, float4 _Pos = float4::ZERO);
+	int GetGroundColor(unsigned int _DefaultColor, float4 _Pos = float4{0.0f, 30.0f});
 
 	float4 ActorCameraPos();
 

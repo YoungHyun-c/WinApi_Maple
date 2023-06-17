@@ -11,6 +11,7 @@
 // Contents
 #include "Player.h"
 #include "BackGround.h"
+#include "PlayActor.h"
 
 PlayLevel::PlayLevel()
 {
@@ -31,8 +32,6 @@ void PlayLevel::Start()
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-
-		GameEnginePath FolderPath = FilePath;
 
 		FilePath.MoveChild("ContentsResources\\Texture\\");
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_NPC.bmp"));
@@ -79,4 +78,5 @@ void PlayLevel::Update(float _Delta)
 	{
 		BackGroundPtr->SwitchRenderer();
 	}
+	
 }

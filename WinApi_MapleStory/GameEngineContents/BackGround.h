@@ -24,7 +24,7 @@ public:
 protected:
 
 private:
-	bool SwitchRenderValue = false;
+	bool SwitchRenderValue = true;
 	std::string FileName;
 	class GameEngineRenderer* Renderer;
 	class GameEngineRenderer* DebugRenderer;

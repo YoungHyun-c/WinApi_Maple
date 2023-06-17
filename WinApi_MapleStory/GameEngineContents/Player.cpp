@@ -22,6 +22,9 @@
 #pragma endregion
 
 Player* Player::MainPlayer = nullptr;
+int Player::BackGroundSizeforCamX = 0;
+//int Player::BackGroundSizeforCamY = -1082;
+int Player::BackGroundSizeforCamY = 0;
 
 Player::Player()
 {
@@ -34,7 +37,7 @@ Player::~Player()
 
 void Player::Start()
 {
-	if (false == ResourcesManager::GetInst().IsLoadTexture("Test.Bmp"))
+	if (false == ResourcesManager::GetInst().IsLoadTexture("Left_Player.Bmp"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
@@ -45,9 +48,6 @@ void Player::Start()
 		FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
 
 		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
-
-		GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("Fade", { 1280, 720 });
-		T->FillTexture(RGB(255, 0, 0));
 
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Player.bmp"), 5, 17);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Player.bmp"), 5, 17);
@@ -60,25 +60,42 @@ void Player::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("Walk", FolderPath.PlusFilePath("Walk"));
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
+		
 	}
+
+	// 이미지 크기(사이즈)만큼 받아오기
+	if (false == ResourcesManager::GetInst().IsLoadTexture("RUTAMAP_NPC"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Texture\\");
+		GameEngineWindowTexture* FindImage = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.bmp");
+		BackGroundSizeforCamX = FindImage->GetScale().iX();
+		BackGroundSizeforCamY = FindImage->GetScale().iY();
+	}
+	//GameEngineImage* FindImage = GH_ResourcesManager::GH_GetInst().GH_FindGameImage("1-1_big.bmp");
+	//BackGroundSizeforCamX = FindImage->GH_GetSize().ix();
 
 	{
 
 		MainRenderer = CreateRenderer(RenderOrder::Play);
 		MainRenderer->CreateAnimation("Left_Idle", "Stand", 0, 2, 0.5f);
 		MainRenderer->CreateAnimation("Right_Idle", "Stand", 3, 5, 0.5f);
+	}
 
-		//MainRenderer->CreateAnimation("Right_Idle", "Right_Player.bmp", 0, 2, 1.0f, true);
-		//MainRenderer->CreateAnimation("Right_Idle", "FolderPlayer");
+	{
 		MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f);
 		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f);
 
 		//MainRenderer->CreateAnimationToFrame("Right_Run", "Right_Player.bmp", { 20, 19, 18, 17, 16, 15 }, 0.1f, true);
-		MainRenderer->SetRenderPos({ 0 , -34 });
+		//MainRenderer->SetRenderPos({ 100 , 700 });
+		//MainRenderer->SetRenderPos({ 0, -34 });
+		MainRenderer->SetRenderPos({ 0, 0 });
 		//MainRenderer->SetRenderScale({ 66, 69 });
 		MainRenderer->ChangeAnimation("Right_Idle");
-		//MainRenderer->SetRenderScaleToTexture();
 	}
+
 
 	{
 		//BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
@@ -98,8 +115,8 @@ void Player::Update(float _Delta)
 
 	//std::vector<GameEngineCollision*> _Col;
 	//if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
-	//	, CollisionType::Rect // 나를 사각형으로 봐줘
-	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
+	//	, CollisionType::Rect // 
+	//	, CollisionType::CirCle // 
 	//))
 	//{
 	//	for (size_t i = 0; i < _Col.size(); i++)
@@ -127,7 +144,56 @@ void Player::Update(float _Delta)
 
 	StateUpdate(_Delta);
 
-	CameraFocus();
+	//CameraFocus();
+
+	//GetLevel()->GetMainCamera()->SetPos({ GetPos() });
+	GetLevel()->GetMainCamera()->SetPos({ GetPos() - GameEngineWindow::MainWindow.GetScale().Half() });
+
+	//상하이동을 해도 카메라의 y축은 안바뀌게 제한
+	if (0 > GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		//카메라가 음수 좌표이면, 0,0에 카메라를 고정
+		GetLevel()->GetMainCamera()->SetPos({ 0, 0 });
+		//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
+	}
+	//&& 1082 > GetLevel()->GetMainCamera()->GetPos().Y
+
+	if (260 < GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() , 260 });
+		//GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() , GameEngineWindow::MainWindow.GetScale().hY() });
+	}
+	
+
+	if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X)
+	{
+		float Value = GetLevel()->GetMainCamera()->GetPos().X;
+		Value;
+		//카메라 좌표가 배경 이미지크기 - 화면크기를 넘어간다면 카메라를 고정
+		//루타배경 이미지 넓이 -> 2498
+
+		//GetLevel()->GetMainCamera()->SetPos({(BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 260});
+		GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 0 });
+	}
+
+	float Value = GetLevel()->GetMainCamera()->GetPos().Y;
+	Value;
+	if (0 > GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX(), 0});
+	}
+	int a = 0;
+	//if ((BackGroundSizeforCamY - GameEngineWindow::MainWindow.GetScale().Y) < GetLevel()->GetMainCamera()->GetPos().Y)
+	//{
+	//	float Value = GetLevel()->GetMainCamera()->GetPos().Y;
+	//	Value;
+	//	//카메라 좌표가 배경 이미지크기 - 화면크기를 넘어간다면 카메라를 고정
+	//	//루타배경 이미지 높이 -> 1082
+	//	GetLevel()->GetMainCamera()->SetPos({ 0, 260 });
+	//	//GetLevel()->GetMainCamera()->SetPos({ 0, (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().Y)});
+	//}
+
+
 
 	// Gravity();
 }
@@ -261,7 +327,7 @@ void Player::Render(float _Delta)
 
 	CollisionData Data;
 
-	Data.Pos = ActorCameraPos();
+	Data.Pos = (ActorCameraPos() + float4{ 0.0f, 30.0f });
 	Data.Scale = { 5,5 };
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 

@@ -36,7 +36,7 @@ void Player::IdleUpdate(float _Delta)
 		{
 			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 
-			while (CheckColor != RGB(255, 255, 255))
+			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
 			{
 				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
 				AddPos(float4::UP);
@@ -64,12 +64,6 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-
-	// 줄줄이 사탕으로 
-	//if (true)
-	//{
-	//	ChanageState(PlayerState::Idle);
-	//}
 
 }
 
@@ -155,7 +149,7 @@ void Player::RunUpdate(float _Delta)
 void Player::JumpStart()
 {
 
-	SetGravityVector(float4::UP * 300.0f);
+	SetGravityVector(float4::UP * 1000.0f);
 }
 
 
@@ -179,10 +173,9 @@ void Player::JumpUpdate(float _Delta)
 
 	AddPos(MovePos);
 
-
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
-		if (RGB(255, 255, 255) != Color)
+		if (RGB(255, 255, 255) != Color && Color != RGB(0, 255, 0))
 		{
 			ChanageState(PlayerState::Idle);
 			return;

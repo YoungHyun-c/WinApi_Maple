@@ -70,6 +70,9 @@ protected:
 	void ChangeAnimationState(const std::string& _StateName);
 
 private:
+	static int BackGroundSizeforCamX;
+	static int BackGroundSizeforCamY;
+
 	void LevelStart() override;
 
 	void Start() override;
@@ -77,8 +80,10 @@ private:
 	void Render(float _Delta) override;
 
 	////////////////////// DebugValue
-	float4 LeftCheck = { -20.0f, -50.0f };
-	float4 RightCheck = { 20.0f, -50.0f };
+	float4 LeftCheck = { -20.0f, -20.0f };
+	float4 RightCheck = { 20.0f, -20.0f };
+	/*float4 LeftCheck = { -20.0f, -550.0f };
+	float4 RightCheck = { 20.0f, -550.0f };*/
 
 };
 
