@@ -150,39 +150,53 @@ void Player::Update(float _Delta)
 	GetLevel()->GetMainCamera()->SetPos({ GetPos() - GameEngineWindow::MainWindow.GetScale().Half() });
 
 	//상하이동을 해도 카메라의 y축은 안바뀌게 제한
+	// 260 -> GetLevel()->GetMainCamera()->GetPos().hY()
+	// Cam X가 0보다 작고, Y가 260 이상이면
+	if (0 > GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		//카메라가 음수 좌표이면, 0,0에 카메라를 고정
+		//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
+		GetLevel()->GetMainCamera()->SetPos({ 0, 0 });
+	}
 	if (0 > GetLevel()->GetMainCamera()->GetPos().X)
 	{
 		//카메라가 음수 좌표이면, 0,0에 카메라를 고정
-		GetLevel()->GetMainCamera()->SetPos({ 0, 0 });
 		//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
+		GetLevel()->GetMainCamera()->SetPos({ 0, 260 });
 	}
 	//&& 1082 > GetLevel()->GetMainCamera()->GetPos().Y
 
-	if (260 < GetLevel()->GetMainCamera()->GetPos().Y)
+	// Cam X가 0보다 커지면
+	if (0 < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
 	{
-		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() , 260 });
-		//GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() , GameEngineWindow::MainWindow.GetScale().hY() });
+		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() ,0 }); 
 	}
 	
-
+	if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
+	{
+		GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 0 });
+	}
+	// Cam X가 이미지의 X보다 커지면
 	if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X)
 	{
 		float Value = GetLevel()->GetMainCamera()->GetPos().X;
 		Value;
 		//카메라 좌표가 배경 이미지크기 - 화면크기를 넘어간다면 카메라를 고정
 		//루타배경 이미지 넓이 -> 2498
-
-		//GetLevel()->GetMainCamera()->SetPos({(BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 260});
-		GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 0 });
+		
+		GetLevel()->GetMainCamera()->SetPos({(BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 260});
 	}
 
-	float Value = GetLevel()->GetMainCamera()->GetPos().Y;
-	Value;
-	if (0 > GetLevel()->GetMainCamera()->GetPos().Y)
+	if (260 < GetLevel()->GetMainCamera()->GetPos().Y)
 	{
-		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX(), 0});
+		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX(), 260});
+		//GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) , 260 });
+		float Value = GetLevel()->GetMainCamera()->GetPos().Y;
+		Value;
 	}
+
 	int a = 0;
+
 	//if ((BackGroundSizeforCamY - GameEngineWindow::MainWindow.GetScale().Y) < GetLevel()->GetMainCamera()->GetPos().Y)
 	//{
 	//	float Value = GetLevel()->GetMainCamera()->GetPos().Y;
