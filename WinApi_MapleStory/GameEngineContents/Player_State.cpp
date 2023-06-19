@@ -256,3 +256,42 @@ void Player::ProneAttackStart()
 {
 	ChangeAnimationState("Prone_Attack");
 }
+
+void Player::AttackUpdate(float _Delta)
+{
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+		if (RGB(255, 255, 255) == Color)
+		{
+			Gravity(_Delta);
+		}
+		else
+		{
+			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+
+			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
+			{
+				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+				AddPos(float4::UP);
+			}
+
+
+			GravityReset();
+		}
+	}
+	if (true == MainRenderer->IsAnimationEnd())
+	{
+		++TestValue;
+		ChangeState(PlayerState::Idle);
+
+		//if (true == GameEngineInput::IsDown('A')
+		//	|| true == GameEngineInput::IsDown('D'))
+		//{
+		//	DirCheck();
+		//	ChangeState(PlayerState::Run);
+		//	return;
+		//}
+	}
+
+}

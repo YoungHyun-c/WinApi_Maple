@@ -110,8 +110,8 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Alert", "Alert.bmp", 0, 2, 0.3f);
 		MainRenderer->CreateAnimation("Right_Alert", "Alert.bmp", 3, 5, 0.3f);
 
-		MainRenderer->CreateAnimation("Left_Attack", "Left_Attack.bmp", 0, 8, 0.3f);
-		MainRenderer->CreateAnimation("Right_Attack", "Right_Attack.bmp", 0, 8, 0.3f);
+		MainRenderer->CreateAnimation("Left_Attack", "Left_Attack.bmp", 0, 8, 0.2f);
+		MainRenderer->CreateAnimation("Right_Attack", "Right_Attack.bmp", 0, 8, 0.2f);
 		
 		MainRenderer->CreateAnimation("Left_Jump", "Jump.bmp", 0, 0, 0.3f, false);
 		MainRenderer->CreateAnimation("Right_Jump", "Jump.bmp", 1, 1, 0.3f, false);
@@ -288,6 +288,10 @@ void Player::StateUpdate(float _Delta)
 	case PlayerState::Prone:
 		return ProneUpdate(_Delta);
 		break;
+
+	case PlayerState::Attack:
+		return AttackUpdate(_Delta);
+		break;
 	//case PlayerState::Rope:
 	//	RopeUpdate(_Delta);
 	//	break;
@@ -405,7 +409,8 @@ void Player::Render(float _Delta)
 	{
 		std::string Text = "";
 		Text += "플레이어 테스트 값 : ";
-		Text += std::to_string(1.0f / _Delta);
+		Text += std::to_string(TestValue);
+		//Text += std::to_string(1.0f / _Delta);
 		TextOutA(dc, 2, 3, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
