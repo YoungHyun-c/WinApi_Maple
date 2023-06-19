@@ -187,7 +187,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SkillUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StartLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="UIPanel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -214,7 +222,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="StartLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="UIPanel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

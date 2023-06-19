@@ -49,18 +49,27 @@ void Player::Start()
 
 		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
 
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Player.bmp"), 5, 17);
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Player.bmp"), 5, 17);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Stand.bmp"), 6, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Walk.bmp"), 4, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Walk.bmp"), 4, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Alert.bmp"), 3, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Attack.bmp"), 9, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Jump.bmp"), 2, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone.bmp"), 2, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone_Attack.bmp"), 4, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Rope.bmp"), 2, 1);
+
+		
+		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Pl11ayer.bmp"), 5, 17);
+		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Playrrer.bmp"), 5, 17);
 
 
-		FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
-		//ResourcesManager::GetInst().CreateSpriteFolder("Left", FolderPath.PlusFilePath("Left"));
-		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\Stand\\");
-		ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
-		ResourcesManager::GetInst().CreateSpriteFolder("Walk", FolderPath.PlusFilePath("Walk"));
+		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
+		//ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
+
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
-		
+
 	}
 
 	// 이미지 크기(사이즈)만큼 받아오기
@@ -74,26 +83,63 @@ void Player::Start()
 		BackGroundSizeforCamX = FindImage->GetScale().iX();
 		BackGroundSizeforCamY = FindImage->GetScale().iY();
 	}
-	//GameEngineImage* FindImage = GH_ResourcesManager::GH_GetInst().GH_FindGameImage("1-1_big.bmp");
-	//BackGroundSizeforCamX = FindImage->GH_GetSize().ix();
+
+	if (false == ResourcesManager::GetInst().IsLoadTexture("Inventory.bmp"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources\\");
+		FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
+		//GameEngineWindowTexture* FindImage = ResourcesManager::GetInst().FindTexture("Inventory.bmp");
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Inventory.bmp"));
+		//GameEngineRenderer* Ptr = CreateUIRenderer("Inventory.bmp", RenderOrder::PlayUI);
+		//Ptr->SetRenderPos({ 500, 500 });
+	}
+
 
 	{
 
 		MainRenderer = CreateRenderer(RenderOrder::Play);
-		MainRenderer->CreateAnimation("Left_Idle", "Stand", 0, 2, 0.5f);
-		MainRenderer->CreateAnimation("Right_Idle", "Stand", 3, 5, 0.5f);
+		MainRenderer->CreateAnimation("Left_Idle", "Stand.bmp", 0, 2, 0.3f);
+		MainRenderer->CreateAnimation("Right_Idle", "Stand.bmp", 3, 5, 0.3f);
+	
+		MainRenderer->CreateAnimation("Left_Run", "Left_Walk.bmp", 0, 3, 0.3f, true);
+		MainRenderer->CreateAnimation("Right_Run", "Right_Walk.bmp", 0, 3, 0.3f, true);
+
+		MainRenderer->CreateAnimation("Left_Alert", "Alert.bmp", 0, 2, 0.3f);
+		MainRenderer->CreateAnimation("Right_Alert", "Alert.bmp", 3, 5, 0.3f);
+
+		MainRenderer->CreateAnimation("Left_Attack", "Attack.bmp", 0, 8, 0.3f);
+		MainRenderer->CreateAnimation("Right_Attack", "Attack.bmp", 9, 17, 0.3f);
+		
+		MainRenderer->CreateAnimation("Left_Jump", "Jump.bmp", 0, 0, 0.3f, false);
+		MainRenderer->CreateAnimation("Right_Jump", "Jump.bmp", 1, 1, 0.3f, false);
+
+		MainRenderer->CreateAnimation("Left_Prone", "Prone.bmp", 0, 0, 0.3f, false);
+		MainRenderer->CreateAnimation("Right_Prone", "Prone.bmp", 1, 1, 0.3f, false);
+
+		MainRenderer->CreateAnimation("Left_Prone_Attack", "Prone_Attack.bmp", 0, 1, 0.3f, false);
+		MainRenderer->CreateAnimation("Right_Prone_Attack", "Prone_Attack.bmp", 2, 3, 0.3f, false);
+		
+		MainRenderer->CreateAnimation("Rope", "Rope.bmp", 0 , 1, 0.3f, true);
+
+		//MainRenderer->SetRenderPos({ 0, 0 });
+		MainRenderer->GetActor()->SetPos({ 500, 700 });
+		MainRenderer->SetRenderScale({ 128, 128 });
+		
+		MainRenderer->ChangeAnimation("Right_Idle");
 	}
 
 	{
-		MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f);
-		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f);
-
+		/*MainRenderer->CreateAnimation("Left_Run", "Walk", 0, 3, 0.3f);
+		MainRenderer->CreateAnimation("Right_Run", "Walk", 4, 7, 0.3f);*/
+		
 		//MainRenderer->CreateAnimationToFrame("Right_Run", "Right_Player.bmp", { 20, 19, 18, 17, 16, 15 }, 0.1f, true);
 		//MainRenderer->SetRenderPos({ 100 , 700 });
 		//MainRenderer->SetRenderPos({ 0, -34 });
-		MainRenderer->SetRenderPos({ 0, 0 });
+		//MainRenderer->SetRenderPos({ 0, 0 });
 		//MainRenderer->SetRenderScale({ 66, 69 });
-		MainRenderer->ChangeAnimation("Right_Idle");
+		//MainRenderer->ChangeAnimation("Right_Idle");
 	}
 
 
@@ -139,6 +185,21 @@ void Player::Update(float _Delta)
 	{
 		// GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
 		GameEngineLevel::CollisionDebugRenderSwitch();
+	}
+
+	if (true == GameEngineInput::IsDown('I')) // Item
+	{
+		m_Item = !m_Item;
+
+		if (m_Item)
+		{
+			UIRenderer = CreateUIRenderer("Inventory.bmp", RenderOrder::PlayUI);
+			UIRenderer->SetRenderPos({ 200, -100 });
+		}
+		else
+		{
+			UIRenderer->Off();
+		}
 	}
 
 
@@ -208,8 +269,6 @@ void Player::Update(float _Delta)
 	//}
 
 
-
-	// Gravity();
 }
 
 void Player::StateUpdate(float _Delta)

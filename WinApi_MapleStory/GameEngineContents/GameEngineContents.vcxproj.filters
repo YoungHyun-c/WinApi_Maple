@@ -10,6 +10,15 @@
     <Filter Include="Play">
       <UniqueIdentifier>{024a5cf4-f6f6-466b-a27d-13f5cb3bbdb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{80c37e3c-42bc-47ef-9a5f-70cf6c7e52ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\SkillUI">
+      <UniqueIdentifier>{115ad38d-a1fd-4131-a093-f35c730adc7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UIPanel">
+      <UniqueIdentifier>{55aa6515-5e52-4ba3-8299-b3f35a30694c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StartLevel.h">
@@ -29,6 +38,12 @@
     <ClInclude Include="Enum.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="SkillUI.h">
+      <Filter>UI\SkillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPanel.h">
+      <Filter>UI\UIPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -47,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillUI.cpp">
+      <Filter>UI\SkillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIPanel.cpp">
+      <Filter>UI\UIPanel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

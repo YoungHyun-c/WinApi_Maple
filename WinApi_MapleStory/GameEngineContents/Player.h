@@ -41,6 +41,9 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 	GameEngineRenderer* MainRenderer = nullptr;
+	
+	
+	GameEngineRenderer* UIRenderer = nullptr;
 
 protected:
 	void StateUpdate(float _Delta);
@@ -84,6 +87,10 @@ private:
 	float4 RightCheck = { 20.0f, -20.0f };
 	/*float4 LeftCheck = { -20.0f, -550.0f };
 	float4 RightCheck = { 20.0f, -550.0f };*/
+
+	//////////////////////
+	bool	m_Skill; // 스킬
+	bool	m_Item;	 // 아이템
 
 };
 

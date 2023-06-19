@@ -9,14 +9,11 @@
 void Player::IdleStart()
 {
 	ChangeAnimationState("Idle");
-
-	// MainRenderer->ChangeAnimation("Right_Idle");
 }
 
 void Player::RunStart()
 {
 	ChangeAnimationState("Run");
-	// MainRenderer->ChangeAnimation("Right_Run");
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -63,7 +60,6 @@ void Player::IdleUpdate(float _Delta)
 		ChanageState(PlayerState::Jump);
 		return;
 	}
-
 
 }
 
