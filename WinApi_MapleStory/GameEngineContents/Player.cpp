@@ -53,7 +53,8 @@ void Player::Start()
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Walk.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Walk.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Alert.bmp"), 3, 2);
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Attack.bmp"), 9, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Attack.bmp"), 3, 3);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Attack.bmp"), 3, 3);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Jump.bmp"), 2, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone.bmp"), 2, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone_Attack.bmp"), 4, 1);
@@ -109,8 +110,8 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Alert", "Alert.bmp", 0, 2, 0.3f);
 		MainRenderer->CreateAnimation("Right_Alert", "Alert.bmp", 3, 5, 0.3f);
 
-		MainRenderer->CreateAnimation("Left_Attack", "Attack.bmp", 0, 8, 0.3f);
-		MainRenderer->CreateAnimation("Right_Attack", "Attack.bmp", 9, 17, 0.3f);
+		MainRenderer->CreateAnimation("Left_Attack", "Left_Attack.bmp", 0, 8, 0.3f);
+		MainRenderer->CreateAnimation("Right_Attack", "Right_Attack.bmp", 0, 8, 0.3f);
 		
 		MainRenderer->CreateAnimation("Left_Jump", "Jump.bmp", 0, 0, 0.3f, false);
 		MainRenderer->CreateAnimation("Right_Jump", "Jump.bmp", 1, 1, 0.3f, false);
@@ -118,16 +119,18 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Prone", "Prone.bmp", 0, 0, 0.3f, false);
 		MainRenderer->CreateAnimation("Right_Prone", "Prone.bmp", 1, 1, 0.3f, false);
 
-		MainRenderer->CreateAnimation("Left_Prone_Attack", "Prone_Attack.bmp", 0, 1, 0.3f, false);
-		MainRenderer->CreateAnimation("Right_Prone_Attack", "Prone_Attack.bmp", 2, 3, 0.3f, false);
+		MainRenderer->CreateAnimation("Left_Prone_Attack", "Prone_Attack.bmp", 0, 1, 0.3f);
+		MainRenderer->CreateAnimation("Right_Prone_Attack", "Prone_Attack.bmp", 2, 3, 0.3f);
 		
-		MainRenderer->CreateAnimation("Rope", "Rope.bmp", 0 , 1, 0.3f, true);
+		MainRenderer->CreateAnimation("Left_Rope", "Rope.bmp", 0, 1, 0.3f, true);
+		MainRenderer->CreateAnimation("Right_Rope", "Rope.bmp", 0 , 1, 0.3f, true);
 
 		//MainRenderer->SetRenderPos({ 0, 0 });
 		MainRenderer->GetActor()->SetPos({ 500, 700 });
 		MainRenderer->SetRenderScale({ 128, 128 });
 		
-		MainRenderer->ChangeAnimation("Right_Idle");
+		//MainRenderer->ChangeAnimation("Right_Idle");
+		MainRenderer->ChangeAnimation("Left_Idle");
 	}
 
 	{
@@ -152,7 +155,7 @@ void Player::Start()
 	// SetGroundTexture("StageTestPixel.bmp");
 
 
-	ChanageState(PlayerState::Idle);
+	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
 }
 
@@ -282,13 +285,19 @@ void Player::StateUpdate(float _Delta)
 	case PlayerState::Jump:
 		return JumpUpdate(_Delta);
 		break;
+	case PlayerState::Prone:
+		return ProneUpdate(_Delta);
+		break;
+	//case PlayerState::Rope:
+	//	RopeUpdate(_Delta);
+	//	break;
 	default:
 		break;
 	}
 
 }
 
-void Player::ChanageState(PlayerState _State)
+void Player::ChangeState(PlayerState _State)
 {
 	if (_State != State)
 	{
@@ -303,6 +312,19 @@ void Player::ChanageState(PlayerState _State)
 		case PlayerState::Jump:
 			JumpStart();
 			break;
+		case PlayerState::Prone:
+			ProneStart();
+			break;
+		case PlayerState::Rope:
+			RopeStart();
+			break;
+		case PlayerState::Attack:
+			AttackStart();
+			break;
+		case PlayerState::ProneAttack:
+			ProneAttackStart();
+			break;
+
 		default:
 			break;
 		}

@@ -6,6 +6,10 @@ enum class PlayerState
 	Idle,
 	Run,
 	Jump,
+	Rope,
+	Prone,
+	Attack,
+	ProneAttack,
 	Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -58,7 +62,19 @@ protected:
 	void JumpStart();
 	void JumpUpdate(float _Delta);
 
-	void ChanageState(PlayerState State);
+	void ProneStart();
+	void ProneUpdate(float _Delta);
+
+	void RopeStart();
+	void RopeUpdate(float _Delta);
+
+	void AttackStart();
+	void AttackUpdate(float _Delta);
+
+	void ProneAttackStart();
+	void ProneAttackUpdate(float _Delta);
+
+	void ChangeState(PlayerState State);
 
 	PlayerState State = PlayerState::Max;
 	PlayerDir Dir = PlayerDir::Right;

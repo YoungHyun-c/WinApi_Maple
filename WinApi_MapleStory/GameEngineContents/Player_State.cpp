@@ -46,21 +46,38 @@ void Player::IdleUpdate(float _Delta)
 
 
 	if (true == GameEngineInput::IsDown('A')
-		|| true == GameEngineInput::IsDown('W')
-		|| true == GameEngineInput::IsDown('S')
+		//|| true == GameEngineInput::IsDown('W')
+		//|| true == GameEngineInput::IsDown('S')
 		|| true == GameEngineInput::IsDown('D'))
 	{
 		DirCheck();
-		ChanageState(PlayerState::Run);
+		ChangeState(PlayerState::Run);
 		return;
 	}
 
 	if (true == GameEngineInput::IsPress(VK_SPACE))
 	{
-		ChanageState(PlayerState::Jump);
+		ChangeState(PlayerState::Jump);
 		return;
 	}
 
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		ChangeState(PlayerState::Prone);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress('W'))
+	{
+		ChangeState(PlayerState::Rope);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown(VK_SHIFT))
+	{
+		ChangeState(PlayerState::Attack);
+		return;
+	}
 }
 
 
@@ -85,7 +102,7 @@ void Player::RunUpdate(float _Delta)
 
 			if (true == GameEngineInput::IsPress(VK_SPACE))
 			{
-				ChanageState(PlayerState::Jump);
+				ChangeState(PlayerState::Jump);
 				return;
 			}
 
@@ -125,7 +142,7 @@ void Player::RunUpdate(float _Delta)
 	if (MovePos == float4::ZERO)
 	{
 		DirCheck();
-		ChanageState(PlayerState::Idle);
+		ChangeState(PlayerState::Idle);
 		return;
 	}
 
@@ -144,8 +161,8 @@ void Player::RunUpdate(float _Delta)
 
 void Player::JumpStart()
 {
-
-	SetGravityVector(float4::UP * 1000.0f);
+	ChangeAnimationState("Jump");
+	SetGravityVector(float4::UP * 400.0f);
 }
 
 
@@ -155,14 +172,16 @@ void Player::JumpUpdate(float _Delta)
 
 	float Speed = 300.0f;
 	float4 MovePos = float4::ZERO;
+	float4 CheckPos = float4::ZERO;
 
 	if (true == GameEngineInput::IsPress('A'))
 	{
+		CheckPos = LeftCheck;
 		MovePos += float4::LEFT * _Delta * Speed;
-
 	}
 	else if (true == GameEngineInput::IsPress('D'))
 	{
+		CheckPos = RightCheck;
 		MovePos += float4::RIGHT * _Delta * Speed;
 
 	}
@@ -173,9 +192,67 @@ void Player::JumpUpdate(float _Delta)
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
 		if (RGB(255, 255, 255) != Color && Color != RGB(0, 255, 0))
 		{
-			ChanageState(PlayerState::Idle);
+			ChangeState(PlayerState::Idle);
 			return;
 		}
 	}
+}
 
+void Player::ProneStart()
+{
+	ChangeAnimationState("Prone");
+}
+
+void Player::ProneUpdate(float _Delta)
+{
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+		if (RGB(255, 255, 255) == Color)
+		{
+			Gravity(_Delta);
+		}
+		else
+		{
+			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+
+			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
+			{
+				CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+				AddPos(float4::UP);
+			}
+
+
+			GravityReset();
+		}
+	}
+
+	if (true == GameEngineInput::IsDown('A')
+		|| true == GameEngineInput::IsDown('D'))
+	{
+		DirCheck();
+		ChangeState(PlayerState::Run);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown(VK_SHIFT))
+	{
+		ChangeState(PlayerState::ProneAttack);
+		return;
+	}
+}
+
+void Player::RopeStart()
+{
+	ChangeAnimationState("Rope");
+}
+
+void Player::AttackStart()
+{
+	ChangeAnimationState("Attack");
+}
+
+void Player::ProneAttackStart()
+{
+	ChangeAnimationState("Prone_Attack");
 }
