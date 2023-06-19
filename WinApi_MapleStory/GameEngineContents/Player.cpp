@@ -431,6 +431,9 @@ void Player::Render(float _Delta)
 	Data.Scale = { 5,5 };
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
+	Data.Pos = (ActorCameraPos() + float4{ 0.0f, 10.0f });
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
 	Data.Pos = ActorCameraPos() + LeftCheck;
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 

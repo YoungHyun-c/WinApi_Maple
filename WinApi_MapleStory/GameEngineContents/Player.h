@@ -101,8 +101,6 @@ private:
 	////////////////////// DebugValue
 	float4 LeftCheck = { -20.0f, -20.0f };
 	float4 RightCheck = { 20.0f, -20.0f };
-	/*float4 LeftCheck = { -20.0f, -550.0f };
-	float4 RightCheck = { 20.0f, -550.0f };*/
 
 	//////////////////////
 	bool	m_Skill; // ½ºÅ³

@@ -18,10 +18,6 @@ void Player::RunStart()
 
 void Player::IdleUpdate(float _Delta)
 {
-	if (true == MainRenderer->IsAnimationEnd())
-	{
-		++TestValue;
-	}
 
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
@@ -67,7 +63,8 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('W'))
+	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), float4::UP);
+	if (true == GameEngineInput::IsDown('W') && CheckColor == RGB(0, 255, 0))
 	{
 		ChangeState(PlayerState::Rope);
 		return;
