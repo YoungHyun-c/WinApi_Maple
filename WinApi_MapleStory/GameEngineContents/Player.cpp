@@ -116,14 +116,14 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Jump", "Jump.bmp", 0, 0, 0.3f, false);
 		MainRenderer->CreateAnimation("Right_Jump", "Jump.bmp", 1, 1, 0.3f, false);
 
-		MainRenderer->CreateAnimation("Left_Prone", "Prone.bmp", 0, 0, 0.3f, false);
-		MainRenderer->CreateAnimation("Right_Prone", "Prone.bmp", 1, 1, 0.3f, false);
+		MainRenderer->CreateAnimation("Left_Prone", "Prone.bmp", 0, 0, 0.3f);
+		MainRenderer->CreateAnimation("Right_Prone", "Prone.bmp", 1, 1, 0.3f);
 
 		MainRenderer->CreateAnimation("Left_Prone_Attack", "Prone_Attack.bmp", 0, 1, 0.3f);
 		MainRenderer->CreateAnimation("Right_Prone_Attack", "Prone_Attack.bmp", 2, 3, 0.3f);
 		
-		MainRenderer->CreateAnimation("Left_Rope", "Rope.bmp", 0, 1, 0.3f, true);
-		MainRenderer->CreateAnimation("Right_Rope", "Rope.bmp", 0 , 1, 0.3f, true);
+		MainRenderer->CreateAnimation("Left_Rope", "Rope.bmp", 0, 1, 0.3f);
+		MainRenderer->CreateAnimation("Right_Rope", "Rope.bmp", 0 , 1, 0.3f);
 
 		//MainRenderer->SetRenderPos({ 0, 0 });
 		MainRenderer->GetActor()->SetPos({ 500, 700 });
@@ -292,9 +292,9 @@ void Player::StateUpdate(float _Delta)
 	case PlayerState::Attack:
 		return AttackUpdate(_Delta);
 		break;
-	//case PlayerState::Rope:
-	//	RopeUpdate(_Delta);
-	//	break;
+	case PlayerState::Rope:
+		RopeUpdate(_Delta);
+		break;
 	default:
 		break;
 	}
@@ -427,11 +427,11 @@ void Player::Render(float _Delta)
 
 	CollisionData Data;
 
-	Data.Pos = (ActorCameraPos() + float4{ 0.0f, 30.0f });
-	Data.Scale = { 5,5 };
+	Data.Pos = ActorCameraPos() + GroundCheck;
+	Data.Scale = { 5, 5 };
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	Data.Pos = (ActorCameraPos() + float4{ 0.0f, 10.0f });
+	Data.Pos = ActorCameraPos() + BodyCheck;
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
 	Data.Pos = ActorCameraPos() + LeftCheck;

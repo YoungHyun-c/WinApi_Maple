@@ -35,7 +35,7 @@ void PlayLevel::Start()
 
 		FilePath.MoveChild("ContentsResources\\Texture\\");
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_NPC.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_DebugT.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_DebugTT.bmp"));
 	}
 
 	GameEngineSound::SetGlobalVolume(0.4f);
@@ -50,10 +50,10 @@ void PlayLevel::Start()
 	}
 
 	BackGroundPtr = CreateActor<BackGround>();
-	BackGroundPtr->Init("RUTAMAP_NPC.bmp", "RUTAMAP_DebugT.bmp");
+	BackGroundPtr->Init("RUTAMAP_NPC.bmp", "RUTAMAP_DebugTT.bmp");
 
 	LevelPlayer = CreateActor<Player>();
-	LevelPlayer->SetGroundTexture("RUTAMAP_DebugT.bmp");
+	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 	//LevelPlayer->OverOn();
 }
 
@@ -68,7 +68,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	//BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
 
-	LevelPlayer->SetGroundTexture("RUTAMAP_DebugT.bmp");
+	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 
 }
 

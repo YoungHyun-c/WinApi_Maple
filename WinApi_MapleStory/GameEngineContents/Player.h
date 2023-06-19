@@ -102,6 +102,9 @@ private:
 	float4 LeftCheck = { -20.0f, -20.0f };
 	float4 RightCheck = { 20.0f, -20.0f };
 
+	float4 GroundCheck = { 0.0f, 30.0f };
+	float4 BodyCheck = { 0.0f, 10.0f };
+
 	//////////////////////
 	bool	m_Skill; // 스킬
 	bool	m_Item;	 // 아이템
