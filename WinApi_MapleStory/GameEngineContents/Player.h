@@ -6,6 +6,7 @@ enum class PlayerState
 	Idle,
 	Run,
 	Jump,
+	DoubleJump,
 	Rope,
 	Prone,
 	Attack,
@@ -62,6 +63,9 @@ protected:
 	void JumpStart();
 	void JumpUpdate(float _Delta);
 
+	void DoubleJumpStart();
+	void DoubleJumpUpdate(float _Delta);
+
 	void ProneStart();
 	void ProneUpdate(float _Delta);
 
@@ -103,11 +107,14 @@ private:
 	float4 RightCheck = { 20.0f, -20.0f };
 
 	float4 GroundCheck = { 0.0f, 30.0f };
-	float4 BodyCheck = { 0.0f, 10.0f };
+	float4 RopeCheck = { 0.0f, 10.0f };
 
 	//////////////////////
 	bool	m_Skill; // 스킬
 	bool	m_Item;	 // 아이템
+
+	//////////////////////
+	bool DoubleJump;
 
 };
 

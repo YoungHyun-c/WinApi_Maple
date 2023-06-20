@@ -44,6 +44,12 @@ public:
 		GravityVector = _GravityVector;
 	}
 
+	float4 GetGravityVector()
+	{
+		// GravityVector.y > 0.0f
+		return GravityVector;
+	}
+
 protected:
 
 private:

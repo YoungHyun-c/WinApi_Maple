@@ -110,8 +110,13 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Alert", "Alert.bmp", 0, 2, 0.3f);
 		MainRenderer->CreateAnimation("Right_Alert", "Alert.bmp", 3, 5, 0.3f);
 
-		MainRenderer->CreateAnimation("Left_Attack", "Left_Attack.bmp", 0, 8, 0.2f);
-		MainRenderer->CreateAnimation("Right_Attack", "Right_Attack.bmp", 0, 8, 0.2f);
+		MainRenderer->CreateAnimation("Left_Attack0", "Left_Attack.bmp", 0, 2, 0.2f);
+		MainRenderer->CreateAnimation("Left_Attack1", "Left_Attack.bmp", 3, 5, 0.2f);
+		MainRenderer->CreateAnimation("Left_Attack2", "Left_Attack.bmp", 6, 8, 0.2f);
+		
+		MainRenderer->CreateAnimation("Right_Attack0", "Right_Attack.bmp", 0, 2, 0.2f);
+		MainRenderer->CreateAnimation("Right_Attack1", "Right_Attack.bmp", 3, 5, 0.2f);
+		MainRenderer->CreateAnimation("Right_Attack2", "Right_Attack.bmp", 6, 8, 0.2f);
 		
 		MainRenderer->CreateAnimation("Left_Jump", "Jump.bmp", 0, 0, 0.3f, false);
 		MainRenderer->CreateAnimation("Right_Jump", "Jump.bmp", 1, 1, 0.3f, false);
@@ -285,10 +290,15 @@ void Player::StateUpdate(float _Delta)
 	case PlayerState::Jump:
 		return JumpUpdate(_Delta);
 		break;
+	case PlayerState::DoubleJump:
+		return DoubleJumpUpdate(_Delta);
+		break;
 	case PlayerState::Prone:
 		return ProneUpdate(_Delta);
 		break;
-
+	case PlayerState::ProneAttack:
+		return ProneAttackUpdate(_Delta);
+		break;
 	case PlayerState::Attack:
 		return AttackUpdate(_Delta);
 		break;
@@ -316,11 +326,11 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Jump:
 			JumpStart();
 			break;
-		case PlayerState::Prone:
-			ProneStart();
-			break;
 		case PlayerState::Rope:
 			RopeStart();
+			break;
+		case PlayerState::Prone:
+			ProneStart();
 			break;
 		case PlayerState::Attack:
 			AttackStart();
@@ -328,7 +338,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::ProneAttack:
 			ProneAttackStart();
 			break;
-
+		case PlayerState::DoubleJump:
+			DoubleJumpStart();
+			break;
 		default:
 			break;
 		}
@@ -419,10 +431,10 @@ void Player::Render(float _Delta)
 		float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
 		float4 Dir = PlayerPos - MousePos;
 
-		std::string Text = "";
-		Text += "마우스 앵글 값 : ";
-		Text += std::to_string(Dir.AngleDeg());
-		TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
+		//std::string Text = "";
+		//Text += "마우스 앵글 값 : ";
+		//Text += std::to_string(Dir.AngleDeg());
+		//TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
 	CollisionData Data;
@@ -431,12 +443,12 @@ void Player::Render(float _Delta)
 	Data.Scale = { 5, 5 };
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	Data.Pos = ActorCameraPos() + BodyCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
 	Data.Pos = ActorCameraPos() + LeftCheck;
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
 	Data.Pos = ActorCameraPos() + RightCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+	Data.Pos = ActorCameraPos() + RopeCheck;
 	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 }
