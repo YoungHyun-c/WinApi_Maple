@@ -170,11 +170,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Enum.h" />
+    <ClInclude Include="GardenLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayActor.h">
       <SubType>
       </SubType>
@@ -205,7 +213,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GardenLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

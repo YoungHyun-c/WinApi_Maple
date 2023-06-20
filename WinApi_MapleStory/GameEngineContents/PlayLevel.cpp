@@ -7,11 +7,14 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineSound.h>
 
+#include <GameEngineCore/GameEngineCollision.h>
+
 
 // Contents
 #include "Player.h"
 #include "BackGround.h"
 #include "PlayActor.h"
+#include "Enum.h"
 
 PlayLevel::PlayLevel()
 {
@@ -38,7 +41,7 @@ void PlayLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_DebugTT.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.4f);
+	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("YggdrasilPrayer.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -59,24 +62,24 @@ void PlayLevel::Start()
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	/*if (nullptr == LevelPlayer)
+	if (nullptr == LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다.");
-	}*/
+	}
 
-	//GameEngineSound::SoundPlay()
 
-	//BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
 
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
+
+
 
 }
 
 void PlayLevel::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('J'))
+	if (true == GameEngineInput::IsDown('B'))
 	{
 		BackGroundPtr->SwitchRenderer();
 	}
-	
 }

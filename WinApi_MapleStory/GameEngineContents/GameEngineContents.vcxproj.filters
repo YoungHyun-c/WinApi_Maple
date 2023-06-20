@@ -44,6 +44,12 @@
     <ClInclude Include="UIPanel.h">
       <Filter>UI\UIPanel</Filter>
     </ClInclude>
+    <ClInclude Include="GardenLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -68,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="UIPanel.cpp">
       <Filter>UI\UIPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="GardenLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

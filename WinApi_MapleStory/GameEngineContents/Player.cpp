@@ -152,9 +152,9 @@ void Player::Start()
 
 
 	{
-		//BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		//BodyCollsion->SetCollisionScale({ 100, 100 });
-		//BodyCollsion->SetCollisionType(CollisionType::CirCle);
+		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
+		BodyCollsion->SetCollisionScale({ 50, 50 });
+		BodyCollsion->SetCollisionType(CollisionType::Rect);
 	}
 
 	// SetGroundTexture("StageTestPixel.bmp");
@@ -183,13 +183,13 @@ void Player::Update(float _Delta)
 	//	}
 	//}
 
-	if (true == GameEngineInput::IsPress('L'))
-	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
-		// Monster::AllMonsterDeath();
-	}
+	//if (true == GameEngineInput::IsPress('L'))
+	//{
+	//	GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(1.0f * _Delta);
+	//	// Monster::AllMonsterDeath();
+	//}
 
-	if (true == GameEngineInput::IsPress('Y'))
+	if (true == GameEngineInput::IsDown('R'))
 	{
 		// GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-1.0f * _Delta);
 		GameEngineLevel::CollisionDebugRenderSwitch();
@@ -275,7 +275,6 @@ void Player::Update(float _Delta)
 	//	GetLevel()->GetMainCamera()->SetPos({ 0, 260 });
 	//	//GetLevel()->GetMainCamera()->SetPos({ 0, (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().Y)});
 	//}
-
 
 }
 
