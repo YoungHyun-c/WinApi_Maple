@@ -47,7 +47,6 @@ public:
 
 	GameEngineRenderer* MainRenderer = nullptr;
 	
-	
 	GameEngineRenderer* UIRenderer = nullptr;
 
 protected:
@@ -96,6 +95,7 @@ private:
 	static int BackGroundSizeforCamX;
 	static int BackGroundSizeforCamY;
 
+
 	void LevelStart() override;
 
 	void Start() override;
@@ -108,10 +108,13 @@ private:
 
 	float4 GroundCheck = { 0.0f, 30.0f };
 	float4 RopeCheck = { 0.0f, 10.0f };
+	float4 PotalCheck = { 0.0f, 10.0f };
 
 	//////////////////////
-	bool	m_Skill; // 스킬
-	bool	m_Item;	 // 아이템
+	//bool	M_Skill; // 스킬
+	//bool	M_Item;	 // 아이템
+	///// 보류
+
 
 	//////////////////////
 	bool Jump;

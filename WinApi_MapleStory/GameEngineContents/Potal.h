@@ -1,8 +1,11 @@
 #pragma once
+#include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
-class Potal
+class Potal : public GameEngineActor
 {
+private:
+	static std::list<Potal*> AllPotal;
 public:
 	// constructer destructer
 	Potal();
@@ -17,6 +20,8 @@ public:
 protected:
 
 private:
+	void Start() override;
 
+	void Update(float _Delta) override;
 };
 

@@ -1,7 +1,9 @@
 #pragma once
+#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 // Ό³Έν :
-class GardenLevel
+class GardenLevel : public GameEngineLevel
 {
 public:
 	// constructer destructer
@@ -15,8 +17,17 @@ public:
 	GardenLevel& operator = (GardenLevel&& _Other) noexcept = delete;
 
 protected:
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
+	void Start() override;
+	void Update(float _Delta) override;
+	void Release() override;
 
+	class BackGround* BackGroundPtr;
+	class Player* LevelPlayer = nullptr;
+
+	GameEngineSoundPlayer BGMPlayer;
 };
 

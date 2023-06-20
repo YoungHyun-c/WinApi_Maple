@@ -6,6 +6,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineCore.h>
 
 void Player::IdleStart()
 {
@@ -30,7 +31,7 @@ void Player::IdleUpdate(float _Delta)
 		{
 			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
 
-			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
+			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0) && CheckColor == (0, 0, 255))
 			{
 				CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
 				AddPos(float4::UP);
@@ -64,6 +65,19 @@ void Player::IdleUpdate(float _Delta)
 	{
 		ChangeState(PlayerState::Rope);
 		return;
+	}
+
+	unsigned int PotalCheckColor = GetGroundColor(RGB(0, 0, 255), PotalCheck);
+	if (true == GameEngineInput::IsPress('W') && PotalCheckColor == RGB(0, 0, 255))
+	{
+		int a = 0;
+		/*{
+			GameEngineRenderer* Ptr = CreateUIRenderer("HPBar.bmp", RenderOrder::Play);
+			Ptr->SetText("か神格たびかし葛ったびかし葛ったびかし葛った顕し葛君たびしけい稽っ原閑", 40);
+			Ptr->SetRenderPos({ 100, 100 });
+			Ptr->SetRenderScale({ 200, 200 });
+		}*/
+		GameEngineCore::ChangeLevel("GardenLevel");
 	}
 
 	if (true == GameEngineInput::IsDown(VK_SHIFT))
@@ -155,7 +169,7 @@ void Player::RunUpdate(float _Delta)
 
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
 
-		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 255))
 		{
 			if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), GroundCheck + MovePos))
 			{

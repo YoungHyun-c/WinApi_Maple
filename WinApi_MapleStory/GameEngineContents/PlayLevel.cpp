@@ -9,6 +9,7 @@
 
 #include <GameEngineCore/GameEngineCollision.h>
 
+#include "UIPanel.h"
 
 // Contents
 #include "Player.h"
@@ -58,6 +59,8 @@ void PlayLevel::Start()
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 	//LevelPlayer->OverOn();
+
+	CreateActor<UIPanel>();
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -73,7 +76,6 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 
 
-
 }
 
 void PlayLevel::Update(float _Delta)
@@ -82,4 +84,9 @@ void PlayLevel::Update(float _Delta)
 	{
 		BackGroundPtr->SwitchRenderer();
 	}
+}
+
+void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	BGMPlayer.Stop();
 }

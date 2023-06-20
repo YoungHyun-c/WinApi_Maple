@@ -50,6 +50,9 @@
     <ClInclude Include="BossLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Potal.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="BossLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Potal.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

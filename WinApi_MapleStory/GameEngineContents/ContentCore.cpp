@@ -1,6 +1,7 @@
 #include "ContentCore.h"
 #include "StartLevel.h"
 #include "PlayLevel.h"
+#include "GardenLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 ContentCore::ContentCore()
@@ -19,6 +20,8 @@ void ContentCore::Start()
 
 	GameEngineCore::CreateLevel<StartLevel>("StartLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
+	GameEngineCore::CreateLevel<GardenLevel>("GardenLevel");
 
 	GameEngineCore::ChangeLevel("PlayLevel");
+	//GameEngineCore::ChangeLevel("GardenLevel");
 }
