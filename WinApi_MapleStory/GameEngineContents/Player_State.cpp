@@ -17,6 +17,7 @@ void Player::RunStart()
 	ChangeAnimationState("Run");
 }
 
+// 가만히 있는 중일 때
 void Player::IdleUpdate(float _Delta)
 {
 
@@ -79,6 +80,7 @@ void Player::IdleUpdate(float _Delta)
 }
 
 
+// 움직이는 중일 때
 void Player::RunUpdate(float _Delta)
 {
 	// 중력 적용 
@@ -164,31 +166,52 @@ void Player::RunUpdate(float _Delta)
 void Player::JumpStart()
 {
 	SetGravityVector(float4::UP * 400.0f);
+	Jump = true;
 	DoubleJump = true;
 	ChangeAnimationState("Jump");
 }
 
 void Player::DoubleJumpStart()
 {
+	//SetGravityVector(float4::UP * 400.0f);
+	if (Dir == PlayerDir::Right)
+	{
+		SetGravityVector(float4::RIGHT * 400.0f);
+	}
+	if (Dir == PlayerDir::Left)
+	{
+		SetGravityVector(float4{-400.0f, -300.0f});
+	}
+	
 	ChangeAnimationState("Jump");
 }
 
 void Player::DoubleJumpUpdate(float _Delta)
 {
 	DirCheck();
+	Gravity(_Delta);
+
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255));
+		if (RGB(255, 255, 255) != Color)
+		{
+			ChangeState(PlayerState::Idle);
+			return;
+		}
+	}
 }
 
-
+// 점프중 일 때
 void Player::JumpUpdate(float _Delta)
 {
 	Gravity(_Delta);
 	DirCheck();
 
-	//if (DoubleJump == true && true == GameEngineInput::IsDown(VK_SPACE))
-	//{
- //		//ChangeState(PlayerState::Jump);
-	//	ChangeState(PlayerState::DoubleJump);
-	//}
+	if (DoubleJump == true && true == GameEngineInput::IsDown(VK_SPACE))
+	{
+ 		//ChangeState(PlayerState::Jump);
+		ChangeState(PlayerState::DoubleJump);
+	}
 
 	unsigned int CheckColor = GetGroundColor(RGB(0, 255, 0), RopeCheck);
 	if (true == GameEngineInput::IsPress('W') && CheckColor == RGB(0, 255, 0))
@@ -245,6 +268,7 @@ void Player::ProneStart()
 	ChangeAnimationState("Prone");
 }
 
+// 엎드려있는 중일 때
 void Player::ProneUpdate(float _Delta)
 {
 
@@ -290,6 +314,7 @@ void Player::RopeStart()
 	SetGravityVector(float4::UP * 100.0f);
 }
 
+// 로프(줄)타는 중일 때
 void Player::RopeUpdate(float _Delta)
 {
 	float Speed = 100.0f;
@@ -366,6 +391,7 @@ void Player::ProneAttackStart()
 	ChangeAnimationState("Prone_Attack");
 }
 
+// 엎드려서 공격중일 때
 void Player::ProneAttackUpdate(float _Delta)
 {
 
@@ -409,20 +435,23 @@ void Player::ProneAttackUpdate(float _Delta)
 
 void Player::AttackUpdate(float _Delta)
 {
-	//float Speed = 300.0f;
-	//float4 MovePos = float4::ZERO;
-	//float4 CheckPos = float4::ZERO;
-	//if (true == GameEngineInput::IsPress('A'))
-	//{
-	//	CheckPos = LeftCheck;
-	//	MovePos += float4::LEFT * _Delta * Speed;
-	//}
-	//else if (true == GameEngineInput::IsPress('D'))
-	//{
-	//	CheckPos = RightCheck;
-	//	MovePos += float4::RIGHT * _Delta * Speed;
-	//}
-	//AddPos(MovePos);
+	if (Jump == true)
+	{
+		float Speed = 300.0f;
+		float4 MovePos = float4::ZERO;
+		float4 CheckPos = float4::ZERO;
+		if (true == GameEngineInput::IsPress('A'))
+		{
+			CheckPos = LeftCheck;
+			MovePos += float4::LEFT * _Delta * Speed;
+		}
+		else if (true == GameEngineInput::IsPress('D'))
+		{
+			CheckPos = RightCheck;
+			MovePos += float4::RIGHT * _Delta * Speed;
+		}
+		AddPos(MovePos);
+	}
 
 
 	{
@@ -441,7 +470,7 @@ void Player::AttackUpdate(float _Delta)
 				AddPos(float4::UP);
 			}
 
-
+			Jump = false;
 			GravityReset();
 		}
 	}

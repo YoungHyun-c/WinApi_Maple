@@ -114,6 +114,7 @@ private:
 	bool	m_Item;	 // æ∆¿Ã≈€
 
 	//////////////////////
+	bool Jump;
 	bool DoubleJump;
 
 };
