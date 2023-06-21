@@ -17,6 +17,9 @@
 #include "PlayActor.h"
 #include "Enum.h"
 
+#include "MouseObject.h"
+#include "MouseObjectPlay.h"	
+
 PlayLevel::PlayLevel()
 {
 
@@ -30,6 +33,7 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
+	GameEngineWindow::MainWindow.CursorOff();
 
 	if (false == ResourcesManager::GetInst().IsLoadTexture("RUTAMAP_NPC.bmp"))
 	{
@@ -61,6 +65,8 @@ void PlayLevel::Start()
 	//LevelPlayer->OverOn();
 
 	CreateActor<UIPanel>();
+	CreateActor<MouseObject>();
+	CreateActor<MouseObjectPlay>();
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)

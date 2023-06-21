@@ -14,6 +14,8 @@ enum class CollisionOrder
 	Potal,
 	PlayerBody,
 	MonsterBody,
+	InvenIcon,
+	MouseObject,
 };
 
 enum class UpdateOrder

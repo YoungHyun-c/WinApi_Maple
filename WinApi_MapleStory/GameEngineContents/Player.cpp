@@ -60,7 +60,6 @@ void Player::Start()
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone_Attack.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Rope.bmp"), 2, 1);
 
-		
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Pl11ayer.bmp"), 5, 17);
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Playrrer.bmp"), 5, 17);
 
@@ -105,6 +104,7 @@ void Player::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Inventory.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Skill.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
 	}
 
 

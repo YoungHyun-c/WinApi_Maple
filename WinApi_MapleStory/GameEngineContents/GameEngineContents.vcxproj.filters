@@ -53,6 +53,12 @@
     <ClInclude Include="Potal.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="MouseObjectPlay.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseObject.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -85,6 +91,12 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="Potal.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseObjectPlay.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseObject.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
