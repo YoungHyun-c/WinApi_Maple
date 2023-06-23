@@ -1,11 +1,15 @@
 #include "MouseObject.h"
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include "Enum.h"
+
+#include "UIPanel.h"
+#include "UICollision.h"
 
 MouseObject::MouseObject()
 {
@@ -19,11 +23,10 @@ MouseObject::~MouseObject()
 
 void MouseObject::Start()
 {
-	GameEngineRenderer* CursorRender = CreateRenderer("Mouse.bmp", RenderOrder::Play);
-	// 난 UI를 이걸 안하고 있다.
+	GameEngineRenderer* CursorRender = CreateRenderer("Mouse.bmp", RenderOrder::PlayUI);
+
 	CursorRender->UICameraSetting();
 
-	//CursorRender->SetTexture("Mouse.bmp");
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("ContentsResources");
@@ -33,15 +36,22 @@ void MouseObject::Start()
 	FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
 
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Mouse.bmp"), 4, 2);
-
-	CursorRender->CreateAnimation("Idle", "Mouse.bmp", 0, 1, 0.3f);
+	CursorRender->SetOrder(4);
+	CursorRender->CreateAnimation("Idle", "Mouse.bmp", 0, 0, false);
 	CursorRender->SetRenderScale({ 50, 50 });
 	CursorRender->ChangeAnimation("Idle");
 
+	
 	// CollisionOrder
 
 	// 이녀석은 UI
 	// GameEngineCollision* Col = CreateCollision();
+	//GameEngineCollision* UIStatusCollision = CreateCollision(CollisionOrder::InvenIcon);
+	//UIStatusCollision->GetActor()->CreateRenderer("Apple.bmp", RenderOrder::PlayUI);
+	//UIStatusCollision->SetCollisionScale({ 100, 100 });
+	//UIStatusCollision->SetCollisionPos({ 100, 100 });
+	//UIStatusCollision->GetActor()->CreateUIRenderer(RenderOrder::PlayUI);
+	//UIStatusCollision->GetActor()->Render()
 }
 
 void MouseObject::Update(float _Delta)

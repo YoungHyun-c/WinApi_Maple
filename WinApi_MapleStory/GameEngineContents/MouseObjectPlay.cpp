@@ -5,6 +5,9 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include "Enum.h"
 
+#include "UICollision.h"
+#include "UIPanel.h"
+
 MouseObjectPlay::MouseObjectPlay()
 {
 
@@ -19,8 +22,8 @@ void MouseObjectPlay::Start()
 {
 	// 랜더러를 만들필요가 없다.
 	Collision = CreateCollision(CollisionOrder::MouseObject);
-	Collision->SetCollisionScale({ 100, 100 });
-
+	Collision->SetCollisionScale({ 50, 50 });
+	//Collision->SetCollisionPos({ 100, 100 });
 
 }
 
@@ -32,17 +35,16 @@ void MouseObjectPlay::Update(float _Delta)
 	float4 PlayMousePos = CameraPos + MousePos;
 	SetPos(PlayMousePos);
 
-	// 콜리전도 따라오게 되고 
+	//std::vector<GameEngineCollision*> Results;
 
-	std::vector<GameEngineCollision*> Results;
-
-	if (Collision->Collision(CollisionOrder::MonsterBody, Results))
-	{
-		for (size_t i = 0; i < Results.size(); i++)
-		{
-			Results[i]->GetActor()->Death();
-		}
-	}
+	//if (Collision->Collision(CollisionOrder::InvenIcon, Results))
+	//{
+	//	for (size_t i = 0; i < Results.size(); i++)
+	//	{
+	//		//Results[i]->GetActor()->Off();
+	//		GameEngineLevel::CollisionDebugRenderSwitch();
+	//	}
+	//}
 }
 
 

@@ -59,6 +59,9 @@
     <ClInclude Include="MouseObject.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="UICollision.h">
+      <Filter>UI\UIPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -67,7 +70,6 @@
     <ClCompile Include="PlayLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="PlayActor.cpp" />
     <ClCompile Include="BackGround.cpp">
       <Filter>Global</Filter>
@@ -99,5 +101,9 @@
     <ClCompile Include="MouseObject.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="UICollision.cpp">
+      <Filter>UI\UIPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentCore.cpp" />
   </ItemGroup>
 </Project>

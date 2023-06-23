@@ -28,6 +28,8 @@ protected:
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;
 
+	//GameEngineRenderer* UIItemPotionRenderer = nullptr;
+
 	bool Item = false;
 	bool SKill = false;
 	bool Status = false;

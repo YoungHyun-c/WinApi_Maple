@@ -1,7 +1,11 @@
 #include "UIPanel.h"
 #include "Enum.h"
+#include <GameEngineBase/GameEngineMath.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineInput.h>
+#include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineRenderer.h>
+
 
 
 UIPanel* UIPanel::UI = nullptr;
@@ -27,6 +31,12 @@ void UIPanel::Start()
 		UIItemRenderer->Off();
 	}
 
+	//{
+	//	UIItemPotionRenderer = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
+	//	UIItemPotionRenderer->SetRenderPos({ 640, 220 });
+	//	UIItemPotionRenderer->Off();
+	//}
+
 	{
 		UISkillRenderer = CreateUIRenderer("Skill.bmp", RenderOrder::PlayUI);
 		UISkillRenderer->SetRenderPos({ 500, 300 });
@@ -48,10 +58,12 @@ void UIPanel::Update(float _Delta)
 		if (Item)
 		{
 			UIItemRenderer->On();
+			//UIItemPotionRenderer->On();
 		}
 		else
 		{
 			UIItemRenderer->Off();
+			//UIItemPotionRenderer->Off();
 		}
 	}
 

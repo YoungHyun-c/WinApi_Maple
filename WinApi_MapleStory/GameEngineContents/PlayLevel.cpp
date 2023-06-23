@@ -19,6 +19,7 @@
 
 #include "MouseObject.h"
 #include "MouseObjectPlay.h"	
+#include "UICollision.h"
 
 PlayLevel::PlayLevel()
 {
@@ -67,6 +68,7 @@ void PlayLevel::Start()
 	CreateActor<UIPanel>();
 	CreateActor<MouseObject>();
 	CreateActor<MouseObjectPlay>();
+	CreateActor<UICollision>();
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -77,7 +79,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
+	//BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
 
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 

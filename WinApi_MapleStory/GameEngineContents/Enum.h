@@ -6,6 +6,8 @@ enum class RenderOrder
 	BackGround,
 	Play,
 	PlayUI,
+	InvenIcon,
+	MouseUI,
 };
 
 enum class CollisionOrder

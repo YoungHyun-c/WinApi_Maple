@@ -105,6 +105,8 @@ void Player::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Skill.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
+
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Apple.bmp"));
 	}
 
 

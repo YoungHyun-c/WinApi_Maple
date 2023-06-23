@@ -21,6 +21,5 @@ protected:
 	void Render(float _Delta) override;
 
 private:
-
 };
 
