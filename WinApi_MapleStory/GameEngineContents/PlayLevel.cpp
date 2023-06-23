@@ -65,9 +65,11 @@ void PlayLevel::Start()
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 	//LevelPlayer->OverOn();
 
-	CreateActor<UIPanel>();
-	CreateActor<MouseObject>();
-	CreateActor<MouseObjectPlay>();
+	UIPanel* P = CreateActor<UIPanel>();
+	MouseObject* M = CreateActor<MouseObject>();
+	P->SetMouseObject(M);
+
+	// CreateActor<MouseObjectPlay>();
 	CreateActor<UICollision>();
 }
 

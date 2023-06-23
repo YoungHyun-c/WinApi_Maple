@@ -21,6 +21,8 @@ UICollision::~UICollision()
 
 void UICollision::Start()
 {
+	return;
+
 	// 랜더러를 만들필요가 없다.
 	IconCollision = CreateCollision(CollisionOrder::InvenIcon);
 	IconCollision->SetCollisionPos({ 640, 220 });
@@ -38,6 +40,8 @@ void UICollision::Start()
 
 void UICollision::Update(float _Delta)
 {
+	return;
+
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 	SetPos(CameraPos);
 

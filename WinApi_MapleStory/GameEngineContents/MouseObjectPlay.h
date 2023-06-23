@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-// 설명 :
+// 설명 : 카메라에 영향을 받는 애입니다.
 class MouseObjectPlay : public GameEngineActor
 {
 public:

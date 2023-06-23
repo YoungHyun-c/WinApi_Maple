@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <vector>
 
 // Ό³Έν :
 class UIPanel : public GameEngineActor
@@ -18,6 +19,14 @@ public:
 	UIPanel& operator=(const UIPanel& _Other) = delete;
 	UIPanel& operator=(UIPanel&& _Other) noexcept = delete;
 
+	void InvenOn();
+	void InvenOff();
+
+	void SetMouseObject(class MouseObject* _MObject)
+	{
+		MObject = _MObject;
+	}
+
 protected:
 	void Start() override;
 
@@ -25,14 +34,26 @@ protected:
 
 
 	GameEngineRenderer* UIItemRenderer = nullptr;
+	std::vector<std::vector<GameEngineRenderer*>> IconRenders;
+	std::vector<std::vector<GameEngineCollision*>> IconCollisions;
+
+
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;
+
 
 	//GameEngineRenderer* UIItemPotionRenderer = nullptr;
 
 	bool Item = false;
 	bool SKill = false;
 	bool Status = false;
+
+	float4 InvenPos;
+	float4 IconInter;
+	float4 InvenSize;
+
 private:
+	class MouseObject* MObject;
+
 
 };

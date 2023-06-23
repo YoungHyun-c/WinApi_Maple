@@ -41,6 +41,9 @@ void MouseObject::Start()
 	CursorRender->SetRenderScale({ 50, 50 });
 	CursorRender->ChangeAnimation("Idle");
 
+	Collision = CreateCollision(CollisionOrder::MouseObject);
+	Collision->SetCollisionScale({20, 20});
+	Collision->IsUIOn();
 	
 	// CollisionOrder
 
