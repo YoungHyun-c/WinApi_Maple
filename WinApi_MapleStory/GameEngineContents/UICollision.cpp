@@ -7,11 +7,16 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include "Enum.h"
 
-UICollision* UICollision::UIIcon = nullptr;
+//UICollision* UICollision::UIIcon = nullptr;
+
+//UICollision::UICollision()
+//{
+//	UIIcon = this;
+//}
 
 UICollision::UICollision()
 {
-	UIIcon = this;
+
 }
 
 UICollision::~UICollision()
@@ -27,13 +32,10 @@ void UICollision::Start()
 	IconCollision = CreateCollision(CollisionOrder::InvenIcon);
 	IconCollision->SetCollisionPos({ 640, 220 });
 	IconCollision->SetCollisionScale({ 30, 30 });
-	//IconCollision->SetCollisionPos({ 675, 220 });
-
 	IconCollision->Off();
 
 	{
 		UIItemPotionRenderer = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
-		//UIItemPotionRenderer->SetRenderPos({ 640, 220 });
 		UIItemPotionRenderer->Off();
 	}
 }
@@ -51,9 +53,6 @@ void UICollision::Update(float _Delta)
 	{
 		for (size_t i = 0; i < Results.size(); i++)
 		{
-			//Results[i]->GetActor()->Off();
-			//GameEngineLevel::CollisionDebugRenderSwitch();
-			//IconCollision->SetCollisionPos({ 675, 220 });
 			IconCollision->Off();
 			UIItemPotionRenderer->Off();
 		}

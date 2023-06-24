@@ -2,16 +2,17 @@
 #include "GameEngineCamera.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineCollision.h"
+#include <GameEngineBase/GameEngineTime.h>
 
 bool GameEngineLevel::IsCollisionDebugRender = false;
 
-GameEngineLevel::GameEngineLevel() 
+GameEngineLevel::GameEngineLevel()
 {
 	MainCamera = new GameEngineCamera();
 	UICamera = new GameEngineCamera();
 }
 
-GameEngineLevel::~GameEngineLevel() 
+GameEngineLevel::~GameEngineLevel()
 {
 	if (nullptr != MainCamera)
 	{
@@ -29,7 +30,7 @@ GameEngineLevel::~GameEngineLevel()
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
 
-		for (GameEngineActor* _Actor: Group)
+		for (GameEngineActor* _Actor : Group)
 		{
 			if (nullptr != _Actor)
 			{
@@ -41,7 +42,7 @@ GameEngineLevel::~GameEngineLevel()
 }
 
 
-void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order) 
+void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 {
 	_Actor->Level = this;
 	_Actor->SetOrder(_Order);
@@ -54,6 +55,8 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
 
+		float TimeScale = GameEngineTime::MainTimer.GetTimeScale(_Pair.first);
+
 		for (GameEngineActor* _Actor : Group)
 		{
 			if (false == _Actor->IsUpdate())
@@ -62,7 +65,8 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 			}
 
 			_Actor->AddLiveTime(_Delta);
-			_Actor->Update(_Delta);
+			_Actor->Update(_Delta * TimeScale);
+			_Actor->SubObjectUpdate(_Delta * TimeScale);
 		}
 	}
 }
@@ -235,7 +239,7 @@ void GameEngineLevel::ActorLevelEnd()
 		}
 	}
 }
-void GameEngineLevel::ActorLevelStart() 
+void GameEngineLevel::ActorLevelStart()
 {
 	// 업데이트랑 별개로 꺼져있어도 돌아야 한다.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
@@ -286,7 +290,7 @@ void GameEngineLevel::OverCheck(GameEngineLevel* _PrevLevel)
 				{
 					Render->MainCameraSetting();
 				}
-				else 
+				else
 				{
 					Render->UICameraSetting();
 				}
@@ -298,9 +302,9 @@ void GameEngineLevel::OverCheck(GameEngineLevel* _PrevLevel)
 			{
 				Collision->SetOrder(Collision->GetOrder());
 			}
-			
 
-			
+
+
 
 			AllActors[Actor->GetOrder()].push_back(Actor);
 

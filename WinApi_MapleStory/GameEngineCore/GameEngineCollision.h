@@ -174,8 +174,8 @@ public:
 		GameEngineActorSubObject::Off();
 		CollisionRenderValue = false;
 	}
-
-	void IsUIOn() 
+	
+	void IsUIOn()
 	{
 		IsUI = true;
 	}

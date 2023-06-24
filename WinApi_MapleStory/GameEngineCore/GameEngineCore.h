@@ -23,13 +23,13 @@ public:
 	GameEngineCore& operator=(GameEngineCore&& _Other) noexcept = delete;
 
 	template<typename CoreProcessType>
-	static void EngineStart(const std::string& _Title, HINSTANCE _Inst) 
+	static void EngineStart(const std::string& _Title, HINSTANCE _Inst)
 	{
 		EngineStart(_Title, _Inst, new CoreProcessType());
 	}
 
 	template<typename LevelType>
-	static void CreateLevel(const std::string& _Name) 
+	static void CreateLevel(const std::string& _Name)
 	{
 		std::string Upper = GameEngineString::ToUpperReturn(_Name);
 

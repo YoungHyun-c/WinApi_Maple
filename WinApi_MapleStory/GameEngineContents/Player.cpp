@@ -95,19 +95,6 @@ void Player::Start()
 	//	BackGroundSizeforCamY = FindImage->GetScale().iY();
 	//}
 
-	if (false == ResourcesManager::GetInst().IsLoadTexture("Inventory.bmp"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("ContentsResources\\");
-		FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Inventory.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Skill.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Apple.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
-	}
 
 
 	{

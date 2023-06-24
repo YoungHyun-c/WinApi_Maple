@@ -6,10 +6,13 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/ResourcesManager.h>
+#include <GameEngineCore/GameEngineRenderer.h>
 #include "Enum.h"
 
 #include "UIPanel.h"
 #include "UICollision.h"
+
+//MouseObject* MouseObject::MainMouse = nullptr;
 
 MouseObject::MouseObject()
 {
@@ -23,38 +26,29 @@ MouseObject::~MouseObject()
 
 void MouseObject::Start()
 {
-	GameEngineRenderer* CursorRender = CreateRenderer("Mouse.bmp", RenderOrder::PlayUI);
-
-	CursorRender->UICameraSetting();
+	//MainMouse = this;
 
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("ContentsResources");
-
-	GameEnginePath FolderPath = FilePath;
-
-	FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
+	FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
 
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Mouse.bmp"), 4, 2);
-	CursorRender->SetOrder(4);
-	CursorRender->CreateAnimation("Idle", "Mouse.bmp", 0, 0, false);
-	CursorRender->SetRenderScale({ 50, 50 });
-	CursorRender->ChangeAnimation("Idle");
+
+	CursorRenderer = CreateRenderer("Mouse.bmp", RenderOrder::MouseUI);
+	CursorRenderer->UICameraSetting();
+	CursorRenderer->SetOrder(4);
+
+	CursorRenderer->CreateAnimation("Idle", "Mouse.bmp", 0, 0, false);
+	CursorRenderer->CreateAnimation("Grab", "Mouse.bmp", 4, 6, 0.4f, true);
+	CursorRenderer->CreateAnimation("GrabIdle", "Mouse.bmp", 6, 6, false);
+	CursorRenderer->SetRenderScale({ 50, 50 });
+	CursorRenderer->ChangeAnimation("Idle");
 
 	Collision = CreateCollision(CollisionOrder::MouseObject);
-	Collision->SetCollisionScale({20, 20});
+	Collision->SetCollisionPos({ -10, 0 });
+	Collision->SetCollisionScale({ 15, 15 });
 	Collision->IsUIOn();
-	
-	// CollisionOrder
-
-	// ÀÌ³à¼®Àº UI
-	// GameEngineCollision* Col = CreateCollision();
-	//GameEngineCollision* UIStatusCollision = CreateCollision(CollisionOrder::InvenIcon);
-	//UIStatusCollision->GetActor()->CreateRenderer("Apple.bmp", RenderOrder::PlayUI);
-	//UIStatusCollision->SetCollisionScale({ 100, 100 });
-	//UIStatusCollision->SetCollisionPos({ 100, 100 });
-	//UIStatusCollision->GetActor()->CreateUIRenderer(RenderOrder::PlayUI);
-	//UIStatusCollision->GetActor()->Render()
 }
 
 void MouseObject::Update(float _Delta)
@@ -66,4 +60,14 @@ void MouseObject::Update(float _Delta)
 void MouseObject::Render(float _Delta)
 {
 
+}
+
+void MouseObject::ChangeAnimationState(const std::string& _StateName)
+{
+
+	std::string AnimationName;
+
+	AnimationName = _StateName;
+
+	CursorRenderer->ChangeAnimation(AnimationName);
 }

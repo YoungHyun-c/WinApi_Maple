@@ -1,11 +1,11 @@
 #include "GameEngineActorSubObject.h"
 #include "GameEngineActor.h"
 
-GameEngineActorSubObject::GameEngineActorSubObject() 
+GameEngineActorSubObject::GameEngineActorSubObject()
 {
 }
 
-GameEngineActorSubObject::~GameEngineActorSubObject() 
+GameEngineActorSubObject::~GameEngineActorSubObject()
 {
 }
 

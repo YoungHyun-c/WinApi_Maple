@@ -63,14 +63,14 @@ void PlayLevel::Start()
 
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
-	//LevelPlayer->OverOn();
+	//LevelPlayer->OverOn(); 플레이어 그대로 넘어가기.
 
 	UIPanel* P = CreateActor<UIPanel>();
 	MouseObject* M = CreateActor<MouseObject>();
 	P->SetMouseObject(M);
 
 	// CreateActor<MouseObjectPlay>();
-	CreateActor<UICollision>();
+	//CreateActor<UICollision>();
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)

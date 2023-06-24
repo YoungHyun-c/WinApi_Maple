@@ -1,18 +1,18 @@
 #include "GameEnginePath.h"
 #include "GameEngineDebug.h"
 
-GameEnginePath::GameEnginePath() 
+GameEnginePath::GameEnginePath()
 {
 	SetCurrentPath();
 }
 
-GameEnginePath::GameEnginePath(const std::string& _path) 
+GameEnginePath::GameEnginePath(const std::string& _path)
 	: Path(_path)
 {
 
 }
 
-GameEnginePath::~GameEnginePath() 
+GameEnginePath::~GameEnginePath()
 {
 }
 
@@ -21,13 +21,13 @@ std::string GameEnginePath::GetFileName()
 	return Path.filename().string();
 }
 
-void GameEnginePath::SetCurrentPath() 
+void GameEnginePath::SetCurrentPath()
 {
 	Path = std::filesystem::current_path();
 }
 
 
-void GameEnginePath::MoveParent() 
+void GameEnginePath::MoveParent()
 {
 	Path = Path.parent_path();
 }
@@ -44,7 +44,7 @@ void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
 		{
 			MoveParent();
 		}
-		else 
+		else
 		{
 			break;
 		}

@@ -1,13 +1,16 @@
 #include "UIPanel.h"
 #include "Enum.h"
 #include <GameEngineBase/GameEngineMath.h>
+#include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/ResourcesManager.h>
 #include "MouseObject.h"
 
-
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include "Player.h"
 
 UIPanel* UIPanel::UI = nullptr;
 
@@ -48,7 +51,23 @@ void UIPanel::Start()
 {
 	// 위치를 옮기지 않았다.
 	// GetPos();
-	// 카메라가 안움직여
+	// 카메라가 안움직임
+
+	// 이미지 부르기.
+	if (false == ResourcesManager::GetInst().IsLoadTexture("Inventory.bmp"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources\\");
+		FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Inventory.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Skill.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Apple.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
+	}
+
 
 	{
 		InvenPos = { 700, 300 };
@@ -120,13 +139,27 @@ void UIPanel::Update(float _Delta)
 		{
 			for (size_t x = 0; x < IconRenders[y].size(); x++)
 			{
-				if (
-					true == IconCollisions[y][x]->CollisonCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-					&& GameEngineInput::IsDown(VK_LBUTTON)
-					)
+				if (true == IconCollisions[y][x]->CollisonCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsDown(VK_LBUTTON))
 				{
+					int ValueY = y;
+					int ValueX = x;
+					MObject->ChangeAnimationState("GrabIdle");
+					//IconRenders[y][x]->GetTexture();
+					IconRenders[y][x]->SetTexture("Empty.bmp");
 					int a = 0;
 				}
+				//if (true == IconCollisions[y][x]->CollisonCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				//	&& GameEngineInput::IsUp(VK_LBUTTON /*&& IconRenders[y][x]->*/))
+				//{
+				//	int ValueY = y;
+				//	int ValueX = x;
+				//	MObject->ChangeAnimationState("GrabIdle");
+
+				//	//IconRenders[y][x]->GetTexture();
+				//	//IconRenders[y][x]->SetTexture("Apple.bmp");
+				//	int a = 0;
+				//}
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 // Ό³Έν :
 class UICollision : public GameEngineActor
 {
-	static UICollision* UIIcon;
+	//static UICollision* UIIcon;
 
 public:
 	// constructer destructer
