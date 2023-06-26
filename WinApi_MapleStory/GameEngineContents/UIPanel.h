@@ -47,7 +47,9 @@ protected:
 	GameEngineRenderer* UIStatusRenderer = nullptr;
 
 
-	//GameEngineRenderer* UIItemPotionRenderer = nullptr;
+	//GameEngineRenderer* UIStartRenderer = nullptr;
+	//GameEngineCollision* StartCollision = nullptr;
+
 
 	bool Item = false;
 	bool SKill = false;

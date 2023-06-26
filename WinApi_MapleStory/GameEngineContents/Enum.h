@@ -18,6 +18,7 @@ enum class CollisionOrder
 	MonsterBody,
 	InvenIcon,
 	MouseObject,
+	StartIcon,
 };
 
 enum class UpdateOrder

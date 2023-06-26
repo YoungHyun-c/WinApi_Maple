@@ -10,6 +10,7 @@
 #include "Player.h"
 //#include "Monster.h"
 #include "BackGround.h"
+#include "GlobalValue.h"
 
 
 GardenLevel::GardenLevel()
@@ -52,7 +53,6 @@ void GardenLevel::Start()
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("Garden_Debug.bmp");
 	LevelPlayer->SetPos({ 300, 400 });
-	CreateActor<UIPanel>();
 }
 
 void GardenLevel::Update(float _Delta)
@@ -75,6 +75,20 @@ void GardenLevel::Release()
 
 void GardenLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	//GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("Garden_Test.Bmp");
+
+	//if (nullptr == Ptr)
+	//{
+	//	MsgBoxAssert("맵 텍스처를 알수가 없습니다.");
+	//}
+	//GlobalValue::MapScale = Ptr->GetScale();
+
+
+	if (nullptr == LevelPlayer)
+	{
+		MsgBoxAssert("플레이어를 세팅해주지 않았습니다.");
+	}
+
 	if (nullptr == LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다.");

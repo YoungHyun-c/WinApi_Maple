@@ -73,16 +73,16 @@ void Player::Start()
 	}
 
 	// 이미지 크기(사이즈)만큼 받아오기
-	if (false == ResourcesManager::GetInst().IsLoadTexture("RUTAMAP_NPC"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\");
-		GameEngineWindowTexture* FindImage = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.bmp");
-		BackGroundSizeforCamX = FindImage->GetScale().iX();
-		BackGroundSizeforCamY = FindImage->GetScale().iY();
-	}
+	//if (false == ResourcesManager::GetInst().IsLoadTexture("RUTAMAP_NPC"))
+	//{
+	//	GameEnginePath FilePath;
+	//	FilePath.SetCurrentPath();
+	//	FilePath.MoveParentToExistsChild("ContentsResources");
+	//	FilePath.MoveChild("ContentsResources\\Texture\\");
+	//	GameEngineWindowTexture* FindImage = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.bmp");
+	//	BackGroundSizeforCamX = FindImage->GetScale().iX();
+	//	BackGroundSizeforCamY = FindImage->GetScale().iY();
+	//}
 
 	//if (false == ResourcesManager::GetInst().IsLoadTexture("Garden_Test"))
 	//{
@@ -129,7 +129,7 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Left_Rope", "Rope.bmp", 0, 1, 0.3f);
 		MainRenderer->CreateAnimation("Right_Rope", "Rope.bmp", 0 , 1, 0.3f);
 
-		MainRenderer->GetActor()->SetPos({ 500, 700 });
+		MainRenderer->GetActor()->SetPos({ 500, 500 });
 		MainRenderer->SetRenderScale({ 128, 128 });
 		
 		MainRenderer->ChangeAnimation("Right_Idle");
@@ -176,62 +176,62 @@ void Player::Update(float _Delta)
 
 	StateUpdate(_Delta);
 
-	//CameraFocus();
+	CameraFocus();
 
 	//if(FindImage = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.bmp"))
-	{
-		//GetLevel()->GetMainCamera()->SetPos({ GetPos() });
-		GetLevel()->GetMainCamera()->SetPos({ GetPos() - GameEngineWindow::MainWindow.GetScale().Half() });
+	//{
+	//	//GetLevel()->GetMainCamera()->SetPos({ GetPos() });
+	//	GetLevel()->GetMainCamera()->SetPos({ GetPos() - GameEngineWindow::MainWindow.GetScale().Half() });
 
-		//상하이동을 해도 카메라의 y축은 안바뀌게 제한
-		// 260 -> GetLevel()->GetMainCamera()->GetPos().hY()
-		// Cam X가 0보다 작고, Y가 260 이상이면
-		if (0 > GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
-		{
-			//카메라가 음수 좌표이면, 0,0에 카메라를 고정
-			//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
-			GetLevel()->GetMainCamera()->SetPos({ 0, 0 });
-		}
-		if (0 > GetLevel()->GetMainCamera()->GetPos().X)
-		{
-			//카메라가 음수 좌표이면, 0,0에 카메라를 고정
-			//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
-			GetLevel()->GetMainCamera()->SetPos({ 0, 260 });
-		}
-		//&& 1082 > GetLevel()->GetMainCamera()->GetPos().Y
+	//	//상하이동을 해도 카메라의 y축은 안바뀌게 제한
+	//	// 260 -> GetLevel()->GetMainCamera()->GetPos().hY()
+	//	// Cam X가 0보다 작고, Y가 260 이상이면
+	//	if (0 > GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
+	//	{
+	//		//카메라가 음수 좌표이면, 0,0에 카메라를 고정
+	//		//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
+	//		GetLevel()->GetMainCamera()->SetPos({ 0, 0 });
+	//	}
+	//	if (0 > GetLevel()->GetMainCamera()->GetPos().X)
+	//	{
+	//		//카메라가 음수 좌표이면, 0,0에 카메라를 고정
+	//		//GetLevel()->GetMainCamera()->SetPos({ 0, GameEngineWindow::MainWindow.GetScale().hY()});
+	//		GetLevel()->GetMainCamera()->SetPos({ 0, 260 });
+	//	}
+	//	//&& 1082 > GetLevel()->GetMainCamera()->GetPos().Y
 
-		// Cam X가 0보다 커지면
-		if (0 < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
-		{
-			GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() ,0 }); 
-		}
-	
-		if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
-		{
-			GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 0 });
-		}
-		// Cam X가 이미지의 X보다 커지면
-		if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X)
-		{
-			float Value = GetLevel()->GetMainCamera()->GetPos().X;
-			Value;
-			//카메라 좌표가 배경 이미지크기 - 화면크기를 넘어간다면 카메라를 고정
-			//루타배경 이미지 넓이 -> 2498
-		
-			GetLevel()->GetMainCamera()->SetPos({(BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 260});
-		}
+	//	// Cam X가 0보다 커지면
+	//	if (0 < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
+	//	{
+	//		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX() ,0 }); 
+	//	}
+	//
+	//	if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X && 260 > GetLevel()->GetMainCamera()->GetPos().Y)
+	//	{
+	//		GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 0 });
+	//	}
+	//	// Cam X가 이미지의 X보다 커지면
+	//	if ((BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) < GetLevel()->GetMainCamera()->GetPos().X)
+	//	{
+	//		float Value = GetLevel()->GetMainCamera()->GetPos().X;
+	//		Value;
+	//		//카메라 좌표가 배경 이미지크기 - 화면크기를 넘어간다면 카메라를 고정
+	//		//루타배경 이미지 넓이 -> 2498
+	//	
+	//		GetLevel()->GetMainCamera()->SetPos({(BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X), 260});
+	//	}
 
-		if (260 < GetLevel()->GetMainCamera()->GetPos().Y)
-		{
-			GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX(), 260});
-			//GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) , 260 });
-			float Value = GetLevel()->GetMainCamera()->GetPos().Y;
-			Value;
-		}
+	//	if (260 < GetLevel()->GetMainCamera()->GetPos().Y)
+	//	{
+	//		GetLevel()->GetMainCamera()->SetPos({ GetPos().X - GameEngineWindow::MainWindow.GetScale().hX(), 260});
+	//		//GetLevel()->GetMainCamera()->SetPos({ (BackGroundSizeforCamX - GameEngineWindow::MainWindow.GetScale().X) , 260 });
+	//		float Value = GetLevel()->GetMainCamera()->GetPos().Y;
+	//		Value;
+	//	}
 
-		int a = 0;
+	//	int a = 0;
 
-	}
+	//}
 
 	//if ((BackGroundSizeforCamY - GameEngineWindow::MainWindow.GetScale().Y) < GetLevel()->GetMainCamera()->GetPos().Y)
 	//{

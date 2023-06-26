@@ -208,7 +208,7 @@ void Player::RunUpdate(float _Delta)
 			}
 
 			AddPos(MovePos);
-			GetLevel()->GetMainCamera()->AddPos(MovePos);
+			//GetLevel()->GetMainCamera()->AddPos(MovePos);
 		}
 	}
 
@@ -336,7 +336,7 @@ void Player::JumpUpdate(float _Delta)
 		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
 		{
 			AddPos(MovePos);
-			GetLevel()->GetMainCamera()->AddPos(MovePos);
+			//GetLevel()->GetMainCamera()->AddPos(MovePos);
 		}
 	}
 
@@ -436,7 +436,7 @@ void Player::RopeUpdate(float _Delta)
 	if (Color == RGB(0, 255, 0))
 	{
 		AddPos(MovePos);
-		GetLevel()->GetMainCamera()->AddPos(MovePos);
+		//GetLevel()->GetMainCamera()->AddPos(MovePos);
 	}
 
 }
@@ -509,7 +509,7 @@ void Player::AttackUpdate(float _Delta)
 		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
 		{
 			AddPos(MovePos);
-			GetLevel()->GetMainCamera()->AddPos(MovePos);
+			//GetLevel()->GetMainCamera()->AddPos(MovePos);
 		}
 	}
 

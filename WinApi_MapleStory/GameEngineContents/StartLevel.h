@@ -1,5 +1,8 @@
 #pragma once
 #include <GameEngineCore/GameENgineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
+
+#include <vector>
 
 // Ό³Έν :
 class StartLevel : public GameEngineLevel
@@ -16,9 +19,23 @@ public:
 	StartLevel& operator = (StartLevel&& _Other) noexcept = delete;
 
 protected:
-	void Update(float _DeltaTime) override;
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
+
+	class BackGround* BackGroundPtr;
+
+	class UIStart* S = nullptr;
+	class MouseObject* D = nullptr;
+	class UIPanel* P = nullptr;
+
+	GameEngineRenderer* UIStartRenderer = nullptr;
+	GameEngineCollision* StartCollision = nullptr;
+
+	GameEngineSoundPlayer BGMPlayer;
 
 private:
+	void Start() override;
+	void Update(float _DeltaTime) override;
 
 };
 

@@ -27,6 +27,8 @@ private:
 
 	class BackGround* BackGroundPtr;
 	class Player* LevelPlayer = nullptr;
+	class UIPanel* P = nullptr;
+	class MouseObject* M = nullptr;
 	class TileMap* TileObject;
 
 	GameEngineSoundPlayer BGMPlayer;

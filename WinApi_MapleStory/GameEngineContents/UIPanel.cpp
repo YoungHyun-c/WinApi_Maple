@@ -2,13 +2,15 @@
 #include "Enum.h"
 #include <GameEngineBase/GameEngineMath.h>
 #include <GameEngineBase/GameEnginePath.h>
-#include <GameEngineCore/GameEngineRenderer.h>
+
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include "MouseObject.h"
+#include <GameEngineCore/GameEngineCore.h>
+#include <GameEngineCore/GameEngineLevel.h>
 
+#include "MouseObject.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Player.h"
 
@@ -60,17 +62,16 @@ void UIPanel::Start()
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources\\");
 		FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
+
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Inventory.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Skill.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Apple.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RedPotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
 	}
-
 
 	{
 		InvenPos = { 700, 300 };
@@ -119,11 +120,6 @@ void UIPanel::Start()
 	IconRenders[4][2]->SetTexture("BluePotion.bmp");
 	IconRenders[4][3]->SetTexture("WhitePotion.bmp");
 
-	//{
-	//	UIItemPotionRenderer = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
-	//	UIItemPotionRenderer->SetRenderPos({ 640, 220 });
-	//	UIItemPotionRenderer->Off();
-	//}
 
 	{
 		UISkillRenderer = CreateUIRenderer("Skill.bmp", RenderOrder::PlayUI);

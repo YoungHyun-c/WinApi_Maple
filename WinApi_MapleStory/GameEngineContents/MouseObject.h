@@ -15,13 +15,13 @@ enum class MouseState
 class MouseObject : public GameEngineActor
 {
 private:
-	//static MouseObject* MainMouse;
+	static MouseObject* MainMouse;
 
 public:
-	//static MouseObject* GetMainMouse()
-	//{
-	//	return MainMouse;
-	//}
+	static MouseObject* GetMainMouse()
+	{
+		return MainMouse;
+	}
 
 public:
 	// constructer destructer

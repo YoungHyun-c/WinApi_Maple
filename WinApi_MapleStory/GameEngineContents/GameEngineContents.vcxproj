@@ -183,6 +183,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MouseObject.h">
       <SubType>
       </SubType>
@@ -207,6 +211,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PracticeLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SkillUI.h">
       <SubType>
       </SubType>
@@ -220,6 +228,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="UIPanel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="UIStart.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -238,6 +250,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GardenLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -266,6 +282,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PracticeLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillUI.cpp">
       <SubType>
       </SubType>
@@ -279,6 +299,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="UIPanel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="UIStart.cpp">
       <SubType>
       </SubType>
     </ClCompile>

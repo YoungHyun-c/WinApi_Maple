@@ -10,6 +10,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 
 #include "UIPanel.h"
+#include "UIStart.h"
 
 // Contents
 #include "Player.h"
@@ -20,6 +21,7 @@
 #include "MouseObject.h"
 #include "MouseObjectPlay.h"	
 #include "UICollision.h"
+#include "GlobalValue.h"
 
 PlayLevel::PlayLevel()
 {
@@ -65,16 +67,24 @@ void PlayLevel::Start()
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 	//LevelPlayer->OverOn(); 플레이어 그대로 넘어가기.
 
-	UIPanel* P = CreateActor<UIPanel>();
-	MouseObject* M = CreateActor<MouseObject>();
-	P->SetMouseObject(M);
+	//M = CreateActor<MouseObject>();
+	//P = CreateActor<UIPanel>();
+	//P->SetMouseObject(M);
 
-	// CreateActor<MouseObjectPlay>();
-	//CreateActor<UICollision>();
+
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.Bmp");
+
+	if (nullptr == Ptr)
+	{
+		MsgBoxAssert("맵 텍스처를 알수가 없습니다.");
+	}
+
+	GlobalValue::MapScale = Ptr->GetScale();
+
 	if (nullptr == LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다.");
@@ -85,7 +95,6 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 
-
 }
 
 void PlayLevel::Update(float _Delta)
@@ -93,6 +102,16 @@ void PlayLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('B'))
 	{
 		BackGroundPtr->SwitchRenderer();
+	}
+
+	if (true == GameEngineInput::IsDown('0'))
+	{
+		GameEngineCore::ChangeLevel("StartLevel");
+	}
+
+	if (true == GameEngineInput::IsDown('1'))
+	{
+		GameEngineCore::ChangeLevel("PracticeLevel");
 	}
 }
 
