@@ -302,7 +302,7 @@ bool GameEngineCollision::Collision(int _Order,
 		// Level 
 
 		// 상대랑 나랑 충돌을 해보는 것.
-		if (true == CollisonCheck(Collision, _ThisType, _OtherType))
+		if (true == CollisionCheck(Collision, _ThisType, _OtherType))
 		{
 			_Result.push_back(Collision);
 			Check = true;
@@ -325,7 +325,7 @@ void GameEngineCollision::SetOrder(int _Order)
 
 }
 
-bool GameEngineCollision::CollisonCheck(GameEngineCollision* _Other
+bool GameEngineCollision::CollisionCheck(GameEngineCollision* _Other
 	, CollisionType _ThisType
 	, CollisionType _OtherType)
 {
@@ -378,7 +378,7 @@ void GameEngineCollision::DebugRender()
 	}
 }
 
-bool GameEngineCollision::CollisonCheckNext(const CollisionData& _Next, GameEngineCollision* _Other
+bool GameEngineCollision::CollisionCheckNext(const CollisionData& _Next, GameEngineCollision* _Other
 	, CollisionType _ThisType
 	, CollisionType _OtherType) 
 {
@@ -431,7 +431,7 @@ bool GameEngineCollision::CollisionNext(const float4& _NextPos, int _Order, std:
 		// Level 
 
 		// 상대랑 나랑 충돌을 해보는 것.
-		if (true == CollisonCheckNext(NextData, Collision, _ThisType, _OtherType))
+		if (true == CollisionCheckNext(NextData, Collision, _ThisType, _OtherType))
 		{
 			_Result.push_back(Collision);
 			Check = true;

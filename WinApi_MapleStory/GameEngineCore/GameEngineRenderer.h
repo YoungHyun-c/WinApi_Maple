@@ -37,6 +37,7 @@ public:
 		RenderPos = _Value;
 	}
 
+	std::string GetTexture();
 
 	void SetRenderScale(const float4& _Value)
 	{
@@ -104,6 +105,7 @@ private:
 	float4 CopyScale;
 	CameraType CameraTypeValue = CameraType::MAIN;
 	std::string Text;
+	std::string GetText;
 
 	float YPivot = 0.0f;
 

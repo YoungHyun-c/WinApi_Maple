@@ -135,11 +135,11 @@ public:
 
 	void SetOrder(int _Order) override;
 
-	bool CollisonCheck(GameEngineCollision* _Other
+	bool CollisionCheck(GameEngineCollision* _Other
 		, CollisionType _ThisType
 		, CollisionType _OtherType);
 
-	bool CollisonCheckNext(const CollisionData& _Next, GameEngineCollision* _Other
+	bool CollisionCheckNext(const CollisionData& _Next, GameEngineCollision* _Other
 		, CollisionType _ThisType
 		, CollisionType _OtherType);
 

@@ -37,6 +37,11 @@ protected:
 	std::vector<std::vector<GameEngineRenderer*>> IconRenders;
 	std::vector<std::vector<GameEngineCollision*>> IconCollisions;
 
+	std::string GetTextSave = "";
+	std::string GetSwitchTextSave = "";
+
+	int ValueY = 0;
+	int ValueX = 0;
 
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;

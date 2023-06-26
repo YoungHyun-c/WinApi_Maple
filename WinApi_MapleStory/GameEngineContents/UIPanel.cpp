@@ -65,6 +65,9 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Status.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Mouse.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Apple.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RedPotion.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotion.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
 	}
 
@@ -112,6 +115,10 @@ void UIPanel::Start()
 	IconRenders[3][2]->SetTexture("Empty.bmp");
 	IconRenders[4][0]->SetTexture("Empty.bmp");
 
+	IconRenders[4][1]->SetTexture("RedPotion.bmp");
+	IconRenders[4][2]->SetTexture("BluePotion.bmp");
+	IconRenders[4][3]->SetTexture("WhitePotion.bmp");
+
 	//{
 	//	UIItemPotionRenderer = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
 	//	UIItemPotionRenderer->SetRenderPos({ 640, 220 });
@@ -139,27 +146,41 @@ void UIPanel::Update(float _Delta)
 		{
 			for (size_t x = 0; x < IconRenders[y].size(); x++)
 			{
-				if (true == IconCollisions[y][x]->CollisonCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-					&& GameEngineInput::IsDown(VK_LBUTTON))
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
 				{
-					int ValueY = y;
-					int ValueX = x;
+					ValueY = y;
+					ValueX = x;
 					MObject->ChangeAnimationState("GrabIdle");
-					//IconRenders[y][x]->GetTexture();
+					GetTextSave = IconRenders[y][x]->GetTexture();
+					GetTextSave;
+
 					IconRenders[y][x]->SetTexture("Empty.bmp");
+				}
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				{
+					MObject->ChangeAnimationState("Idle");
+					GetSwitchTextSave = IconRenders[y][x]->GetTexture();
+
+					IconRenders[y][x]->SetTexture(GetTextSave);
+
+					//IconRenders[y][x]->SetTexture(Textl);
+					ValueY;
+					ValueX;
+					IconRenders[ValueY][ValueX]->SetTexture(GetSwitchTextSave);
+					
+					GetTextSave = ("Empty.bmp");
 					int a = 0;
 				}
-				//if (true == IconCollisions[y][x]->CollisonCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-				//	&& GameEngineInput::IsUp(VK_LBUTTON /*&& IconRenders[y][x]->*/))
-				//{
-				//	int ValueY = y;
-				//	int ValueX = x;
-				//	MObject->ChangeAnimationState("GrabIdle");
-
-				//	//IconRenders[y][x]->GetTexture();
-				//	//IconRenders[y][x]->SetTexture("Apple.bmp");
-				//	int a = 0;
-				//}
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() == "Empty.bmp")
+				{
+					MObject->ChangeAnimationState("Idle");
+					IconRenders[y][x]->SetTexture(GetTextSave);
+					GetTextSave = ("Empty.bmp");
+					int a = 0;
+				}
 			}
 		}
 	}
