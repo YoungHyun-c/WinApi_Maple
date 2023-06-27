@@ -11,6 +11,7 @@
 
 #include "UIPanel.h"
 #include "UICollision.h"
+#include "UIQuest.h"
 
 MouseObject* MouseObject::MainMouse = nullptr;
 

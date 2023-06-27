@@ -19,6 +19,7 @@ enum class CollisionOrder
 	InvenIcon,
 	MouseObject,
 	StartIcon,
+	QuestIcon,
 };
 
 enum class UpdateOrder

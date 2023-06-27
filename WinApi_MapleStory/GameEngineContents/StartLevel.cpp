@@ -16,6 +16,7 @@
 #include "BackGround.h"
 #include "UIStart.h"
 #include "UIPanel.h"
+#include "UIQuest.h"
 #include "MouseObject.h"
 #include "Enum.h"
 
@@ -63,7 +64,6 @@ void StartLevel::Start()
 	D = CreateActor<MouseObject>();
 	S = CreateActor<UIStart>();
 	S->SetMouseObject(D);
-
 }
 
 void StartLevel::Update(float _DeltaTime)
@@ -83,17 +83,20 @@ void StartLevel::Update(float _DeltaTime)
 
 void StartLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	BGMPlayer = GameEngineSound::SoundPlay("Login.mp3");
+	//BGMPlayer = GameEngineSound::SoundPlay("Login.mp3");
 }
 
 
 void StartLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BGMPlayer.Stop();
-	
+
 	P = CreateActor<UIPanel>();
+	Qu = CreateActor<UIQuest>();
+	Qu->SetMouseObject(D);
 	P->SetMouseObject(D);
 
-	P->OverOn();
+	Qu->OverOn();
 	D->OverOn();
+	P->OverOn();
 }

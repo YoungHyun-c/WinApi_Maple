@@ -31,6 +31,8 @@ private:
 	class MouseObject* M = nullptr;
 	class TileMap* TileObject;
 
+	class UIQuest* Quest = nullptr;
+
 	GameEngineCollision* NPCCollision = nullptr;
 
 	GameEngineSoundPlayer BGMPlayer;

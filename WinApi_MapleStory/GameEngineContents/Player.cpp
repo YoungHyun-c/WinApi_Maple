@@ -19,6 +19,8 @@
 #include "UIPanel.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 
+#include "UIQuest.h"
+
 #pragma endregion
 
 Player* Player::MainPlayer = nullptr;
@@ -141,10 +143,8 @@ void Player::Start()
 		BodyCollsion->SetCollisionScale({ 50, 50 });
 		BodyCollsion->SetCollisionType(CollisionType::Rect);
 	}
-
-	// SetGroundTexture("StageTestPixel.bmp");
-
-
+	
+	
 	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
 }

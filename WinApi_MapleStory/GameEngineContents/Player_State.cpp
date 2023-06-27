@@ -159,14 +159,6 @@ void Player::RunUpdate(float _Delta)
 	}
 
 	{
-		//unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-
-		//if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
-		//{
-		//	AddPos(MovePos);
-		//	GetLevel()->GetMainCamera()->AddPos(MovePos);
-		//}
-
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
 
 		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 255))
@@ -253,22 +245,6 @@ void Player::DoubleJumpUpdate(float _Delta)
 		ChangeState(PlayerState::Attack);
 		return;
 	}
-
-	//float Speed = 100.0f;
-	//float4 MovePos = float4::ZERO;
-	//float4 CheckPos = float4::ZERO;
-	//if (true == GameEngineInput::IsPress('A'))
-	//{
-	//	CheckPos = LeftCheck;
-	//	MovePos += float4::LEFT * Speed * _Delta;
-	//}
-	//else if (true == GameEngineInput::IsPress('D'))
-	//{
-	//	CheckPos = RightCheck;
-	//	MovePos += float4::RIGHT * Speed * _Delta;
-	//}
-
-	//AddPos(MovePos);
 
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);

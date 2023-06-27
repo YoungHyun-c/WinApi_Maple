@@ -32,7 +32,6 @@ void UIStart::Start()
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources\\");
 		FilePath.MoveChild("ContentsResources\\Texture\\UI\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("StartButton1.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("StartButton2.bmp"));
 	}
 

@@ -32,8 +32,8 @@ void GardenLevel::Start()
 		FilePath.MoveParentToExistsChild("ContentsResources");
 
 		FilePath.MoveChild("ContentsResources\\Texture\\");
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Garden_Test.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Garden_Debug.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Garden_Test1.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Garden_Debug1.bmp"));
 	}
 
 	GameEngineSound::SetGlobalVolume(0.3f);
@@ -48,10 +48,10 @@ void GardenLevel::Start()
 	}
 
 	BackGroundPtr = CreateActor<BackGround>();
-	BackGroundPtr->Init("Garden_Test.bmp", "Garden_Debug.bmp");
+	BackGroundPtr->Init("Garden_Test1.bmp", "Garden_Debug1.bmp");
 
 	LevelPlayer = CreateActor<Player>();
-	LevelPlayer->SetGroundTexture("Garden_Debug.bmp");
+	LevelPlayer->SetGroundTexture("Garden_Debug1.bmp");
 	LevelPlayer->SetPos({ 300, 400 });
 }
 
@@ -75,13 +75,13 @@ void GardenLevel::Release()
 
 void GardenLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	//GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("Garden_Test.Bmp");
+	GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("Garden_Test1.Bmp");
 
-	//if (nullptr == Ptr)
-	//{
-	//	MsgBoxAssert("맵 텍스처를 알수가 없습니다.");
-	//}
-	//GlobalValue::MapScale = Ptr->GetScale();
+	if (nullptr == Ptr)
+	{
+		MsgBoxAssert("맵 텍스처를 알수가 없습니다.");
+	}
+	GlobalValue::MapScale = Ptr->GetScale();
 
 
 	if (nullptr == LevelPlayer)
@@ -97,7 +97,7 @@ void GardenLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BGMPlayer = GameEngineSound::SoundPlay("AbyssCave.mp3");
 
-	LevelPlayer->SetGroundTexture("Garden_Debug.bmp");
+	LevelPlayer->SetGroundTexture("Garden_Debug1.bmp");
 
 
 }

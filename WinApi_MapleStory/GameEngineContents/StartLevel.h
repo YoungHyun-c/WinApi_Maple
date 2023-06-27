@@ -27,6 +27,7 @@ protected:
 	class UIStart* S = nullptr;
 	class MouseObject* D = nullptr;
 	class UIPanel* P = nullptr;
+	class UIQuest* Qu = nullptr;
 
 	GameEngineRenderer* UIStartRenderer = nullptr;
 	GameEngineCollision* StartCollision = nullptr;

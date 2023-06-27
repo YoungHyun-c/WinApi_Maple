@@ -115,7 +115,6 @@ private:
 	//bool	M_Item;	 // 아이템
 	///// 보류
 
-
 	//////////////////////
 	bool Jump;
 	bool DoubleJump;

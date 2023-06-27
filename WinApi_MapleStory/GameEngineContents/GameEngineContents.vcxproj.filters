@@ -13,11 +13,11 @@
     <Filter Include="UI">
       <UniqueIdentifier>{80c37e3c-42bc-47ef-9a5f-70cf6c7e52ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\SkillUI">
-      <UniqueIdentifier>{115ad38d-a1fd-4131-a093-f35c730adc7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI\UIPanel">
       <UniqueIdentifier>{55aa6515-5e52-4ba3-8299-b3f35a30694c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UIInteraction">
+      <UniqueIdentifier>{9c9c7e74-c738-4fae-a085-7d543e37f60f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,9 +37,6 @@
     </ClInclude>
     <ClInclude Include="Enum.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillUI.h">
-      <Filter>UI\SkillUI</Filter>
     </ClInclude>
     <ClInclude Include="UIPanel.h">
       <Filter>UI\UIPanel</Filter>
@@ -71,6 +68,12 @@
     <ClInclude Include="GlobalValue.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="UIQuest.h">
+      <Filter>UI\UIInteraction</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -88,9 +91,6 @@
     </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillUI.cpp">
-      <Filter>UI\SkillUI</Filter>
     </ClCompile>
     <ClCompile Include="UIPanel.cpp">
       <Filter>UI\UIPanel</Filter>
@@ -121,6 +121,12 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="UIQuest.cpp">
+      <Filter>UI\UIInteraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>

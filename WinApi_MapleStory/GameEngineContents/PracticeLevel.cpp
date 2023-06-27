@@ -19,9 +19,8 @@
 #include "Enum.h"
 
 #include "MouseObject.h"
-#include "MouseObjectPlay.h"	
-#include "UICollision.h"
 #include "GlobalValue.h"
+#include "UIQuest.h"
 
 
 PracticeLevel::PracticeLevel()
@@ -47,7 +46,6 @@ void PracticeLevel::Start()
 		FilePath.MoveChild("ContentsResources\\Texture\\");
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel_Debug.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Quest.bmp"));
 	}
 
 	GameEngineSound::SetGlobalVolume(0.3f);
@@ -66,7 +64,13 @@ void PracticeLevel::Start()
 
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("PracticeLevel_Debug.bmp");
-	//MainRenderer = CreateRenderer(RenderOrder::Play);
+
+	//M = CreateActor<MouseObject>();
+	//Quest = CreateActor<UIQuest>();
+	//P = CreateActor<UIPanel>();
+	//Quest->SetMouseObject(M);
+	//P->SetMouseObject(M);
+
 }
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -106,6 +110,7 @@ void PracticeLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
+
 }
 
 
