@@ -19,14 +19,12 @@ MouseObjectPlay::~MouseObjectPlay()
 
 void MouseObjectPlay::Start()
 {
-	return;
-	Collision = CreateCollision(CollisionOrder::MouseObject);
+	Collision = CreateCollision(CollisionOrder::MouseObjectPlay);
 	Collision->SetCollisionScale({ 50, 50 });
 }
 
 void MouseObjectPlay::Update(float _Delta)
 {
-	return;
 	float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
 	float4 CameraPos = GetLevel()->GetMainCamera()->GetPos();
 

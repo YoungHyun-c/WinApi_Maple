@@ -19,6 +19,7 @@ enum class CollisionOrder
 	MonsterBody,
 	InvenIcon,
 	MouseObject,
+	MouseObjectPlay,
 	StartIcon,
 	QuestIcon,
 };

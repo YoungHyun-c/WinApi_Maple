@@ -18,6 +18,7 @@
 #include "UIPanel.h"
 #include "UIQuest.h"
 #include "MouseObject.h"
+#include "MouseObjectPlay.h"
 #include "Enum.h"
 
 #include "NineNpc.h"
@@ -64,6 +65,7 @@ void StartLevel::Start()
 
 
 	D = CreateActor<MouseObject>();
+	MP = CreateActor<MouseObjectPlay>();
 	S = CreateActor<UIStart>();
 	S->SetMouseObject(D);
 }
@@ -102,6 +104,8 @@ void StartLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	//D->OverOn();
 	MouseObject::GetMainMouse()->OverOn();
 	P->OverOn();
+
+	MP->OverOn();
 
 	//NineN = CreateActor<NineNpc>();
 	//NineN->SetMouseObject(MouseObject::GetMainMouse());

@@ -47,6 +47,8 @@ void MouseObject::Start()
 		CursorRenderer->SetRenderScale({ 50, 50 });
 		CursorRenderer->ChangeAnimation("Idle");
 
+		// UI
+		// 혹은 카메라가 움직이지 않는 곳에서 잘될것이다.
 		Collision = CreateCollision(CollisionOrder::MouseObject);
 		Collision->SetCollisionPos({ -5, -10 });
 		Collision->SetCollisionScale({ 10, 10 });

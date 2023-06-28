@@ -25,6 +25,7 @@ protected:
 	class BackGround* BackGroundPtr;
 
 	class UIStart* S = nullptr;
+	class MouseObjectPlay* MP = nullptr;
 	class MouseObject* D = nullptr;
 	class UIPanel* P = nullptr;
 	class UIQuest* Qu = nullptr;

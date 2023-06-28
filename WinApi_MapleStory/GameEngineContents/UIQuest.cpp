@@ -66,6 +66,12 @@ void UIQuest::Start()
 
 void UIQuest::Update(float _Delta)
 {
+	std::vector<GameEngineCollision*> Col;
+	if (QuestCollision->Collision(CollisionOrder::MouseObjectPlay, Col))
+	{
+		int a = 0;
+	}
+
 	if (true == QuestCollision->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 		&& GameEngineInput::IsDown(VK_LBUTTON))
 	{

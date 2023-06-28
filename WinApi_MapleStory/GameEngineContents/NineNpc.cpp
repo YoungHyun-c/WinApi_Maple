@@ -58,6 +58,13 @@ void NineNpc::Update(float _Delta)
 {
 	//std::vector<GameEngineCollision*> Results;
 
+	std::vector<GameEngineCollision*> Col;
+	if (NineQuestCollision->Collision(CollisionOrder::MouseObjectPlay, Col))
+	{
+		int a = 0;
+	}
+
+
 	if (true == NineQuestCollision->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 		&& GameEngineInput::IsDown(VK_LBUTTON))
 	{
