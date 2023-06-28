@@ -21,6 +21,8 @@
 #include "MouseObject.h"
 #include "GlobalValue.h"
 #include "UIQuest.h"
+#include "FadeObject.h"
+#include "NineNpc.h"
 
 
 PracticeLevel::PracticeLevel()
@@ -65,11 +67,9 @@ void PracticeLevel::Start()
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("PracticeLevel_Debug.bmp");
 
-	//M = CreateActor<MouseObject>();
-	//Quest = CreateActor<UIQuest>();
-	//P = CreateActor<UIPanel>();
-	//Quest->SetMouseObject(M);
-	//P->SetMouseObject(M);
+	{
+		FObject = CreateActor<FadeObject>();
+	}
 
 }
 
@@ -117,4 +117,8 @@ void PracticeLevel::Update(float _Delta)
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BGMPlayer.Stop();
+
+	//NineN = CreateActor<NineNpc>();
+	//NineN->SetMouseObject(MouseObject::GetMainMouse());
+	//NineN->OverOn();
 }

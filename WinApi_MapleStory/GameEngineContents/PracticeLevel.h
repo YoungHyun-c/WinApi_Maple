@@ -34,6 +34,10 @@ private:
 	class UIQuest* Quest = nullptr;
 
 	GameEngineCollision* NPCCollision = nullptr;
+	class NineNpc* NineN = nullptr;
+
+	class FadeObject* FObject = nullptr;
+
 
 	GameEngineSoundPlayer BGMPlayer;
 };

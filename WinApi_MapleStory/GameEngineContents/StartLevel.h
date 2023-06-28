@@ -29,6 +29,8 @@ protected:
 	class UIPanel* P = nullptr;
 	class UIQuest* Qu = nullptr;
 
+	class NineNpc* NineN = nullptr;
+
 	GameEngineRenderer* UIStartRenderer = nullptr;
 	GameEngineCollision* StartCollision = nullptr;
 

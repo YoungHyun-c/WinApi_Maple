@@ -29,6 +29,11 @@ protected:
 
 	GameEngineRenderer* UIQuestRenderer = nullptr;
 	GameEngineCollision* QuestCollision = nullptr;
+	GameEngineRenderer* ScriptRenderer = nullptr;
+	GameEngineCollision* ScriptCollision = nullptr;
+
+	bool Script;
+	bool ScriptEnd;
 
 private:
 	class MouseObject* MObject;

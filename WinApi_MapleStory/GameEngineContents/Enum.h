@@ -8,6 +8,7 @@ enum class RenderOrder
 	PlayUI,
 	InvenIcon,
 	MouseUI,
+	Fade,
 };
 
 enum class CollisionOrder

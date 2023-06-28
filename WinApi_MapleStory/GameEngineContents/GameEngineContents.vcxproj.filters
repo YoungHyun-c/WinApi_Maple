@@ -56,9 +56,6 @@
     <ClInclude Include="MouseObject.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="UICollision.h">
-      <Filter>UI\UIPanel</Filter>
-    </ClInclude>
     <ClInclude Include="UIStart.h">
       <Filter>UI\UIPanel</Filter>
     </ClInclude>
@@ -73,6 +70,18 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeObject.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="EreveLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="NineNpc.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="RutaNpc.h">
+      <Filter>Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,9 +119,6 @@
     <ClCompile Include="MouseObject.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="UICollision.cpp">
-      <Filter>UI\UIPanel</Filter>
-    </ClCompile>
     <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="UIStart.cpp">
       <Filter>UI\UIPanel</Filter>
@@ -128,6 +134,18 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeObject.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="EreveLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="NineNpc.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="RutaNpc.cpp">
+      <Filter>Play</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

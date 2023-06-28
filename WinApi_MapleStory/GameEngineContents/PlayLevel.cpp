@@ -20,8 +20,8 @@
 
 #include "MouseObject.h"
 #include "MouseObjectPlay.h"	
-#include "UICollision.h"
 #include "GlobalValue.h"
+#include "FadeObject.h"
 
 PlayLevel::PlayLevel()
 {
@@ -67,11 +67,9 @@ void PlayLevel::Start()
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 	//LevelPlayer->OverOn(); 플레이어 그대로 넘어가기.
 
-	//M = CreateActor<MouseObject>();
-	//P = CreateActor<UIPanel>();
-	//P->SetMouseObject(M);
-
-
+	{
+		FadeObject* FObject = CreateActor<FadeObject>();
+	}
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
