@@ -33,8 +33,9 @@ protected:
 	GameEngineRenderer* ScriptRenderer = nullptr;
 	GameEngineCollision* ScriptCollision = nullptr;
 
-	bool Script;
-	bool ScriptEnd;
+	bool Script = false;
+	bool ScriptEnd = false;
+	int Scripti = 0;
 
 private:
 	class MouseObject* MObject;

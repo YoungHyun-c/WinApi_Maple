@@ -65,6 +65,7 @@ void PlayLevel::Start()
 
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
+	LevelPlayer->SetPos({ 200,200 });
 	//LevelPlayer->OverOn(); 플레이어 그대로 넘어가기.
 
 	{

@@ -17,6 +17,8 @@ public:
 
 	static float4 MapScale;
 
+	static float4 ScriptValue;
+
 protected:
 
 private:

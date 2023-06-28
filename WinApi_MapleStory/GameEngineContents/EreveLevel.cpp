@@ -92,8 +92,7 @@ void EreveLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	NineN = CreateActor<NineNpc>();
 	NineN->SetMouseObject(MouseObject::GetMainMouse());
-	float4 Pos = Player::GetMainPlayer()->MainRenderer->GetActor()->GetPos() + float4{ -150.0f, 80.0f };
-	//NineN->SetPos({340.0f, 640.0f});
+
 }
 
 void EreveLevel::Update(float _Delta)

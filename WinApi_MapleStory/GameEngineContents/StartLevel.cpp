@@ -64,10 +64,10 @@ void StartLevel::Start()
 	BackGroundPtr->Init("LoginBack_Test.bmp", "LoginBack_Test.bmp");
 
 
-	D = CreateActor<MouseObject>();
-	MP = CreateActor<MouseObjectPlay>();
+	MouseObjectD = CreateActor<MouseObject>();
+	MouseObjectP = CreateActor<MouseObjectPlay>();
 	S = CreateActor<UIStart>();
-	S->SetMouseObject(D);
+	S->SetMouseObject(MouseObjectD);
 }
 
 void StartLevel::Update(float _DeltaTime)
@@ -95,17 +95,17 @@ void StartLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BGMPlayer.Stop();
 
-	Qu = CreateActor<UIQuest>();
-	Qu->SetMouseObject(MouseObject::GetMainMouse());
-	Qu->OverOn();
+	Quest = CreateActor<UIQuest>();
+	Quest->SetMouseObject(MouseObjectD);
+	Quest->OverOn();
 	
 	P = CreateActor<UIPanel>();
-	P->SetMouseObject(MouseObject::GetMainMouse());
+	P->SetMouseObject(MouseObjectD);
 	//D->OverOn();
-	MouseObject::GetMainMouse()->OverOn();
+	MouseObjectD->OverOn();
 	P->OverOn();
 
-	MP->OverOn();
+	MouseObjectP->OverOn();
 
 	//NineN = CreateActor<NineNpc>();
 	//NineN->SetMouseObject(MouseObject::GetMainMouse());

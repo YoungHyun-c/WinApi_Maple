@@ -117,8 +117,4 @@ void PracticeLevel::Update(float _Delta)
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BGMPlayer.Stop();
-
-	//NineN = CreateActor<NineNpc>();
-	//NineN->SetMouseObject(MouseObject::GetMainMouse());
-	//NineN->OverOn();
 }

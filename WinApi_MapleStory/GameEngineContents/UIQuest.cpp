@@ -13,6 +13,7 @@
 #include "MouseObject.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Player.h"
+#include <GameEngineBase/GameEngineTime.h>
 
 
 UIQuest::UIQuest()
@@ -67,20 +68,15 @@ void UIQuest::Start()
 void UIQuest::Update(float _Delta)
 {
 	std::vector<GameEngineCollision*> Col;
-	if (QuestCollision->Collision(CollisionOrder::MouseObjectPlay, Col))
-	{
-		int a = 0;
-	}
-
-	if (true == QuestCollision->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-		&& GameEngineInput::IsDown(VK_LBUTTON))
+	if (QuestCollision->Collision(CollisionOrder::MouseObjectPlay, Col) && GameEngineInput::IsDown(VK_LBUTTON))
 	{
 		ScriptRenderer->On();
 		ScriptCollision->On();
 		Script = true;
 	}
-	if (true == ScriptCollision->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect) && GameEngineInput::IsDown(VK_LBUTTON)
-		|| Script == true && true == GameEngineInput::IsDown(VK_RETURN))
+
+	if (ScriptCollision->Collision(CollisionOrder::MouseObjectPlay, Col) && GameEngineInput::IsDown(VK_LBUTTON)
+		&& Script == true)// || GameEngineInput::IsDown(VK_RETURN))
 	{
 		ScriptRenderer->Off();
 		ScriptRenderer = CreateUIRenderer("2.bmp", RenderOrder::PlayUI);
@@ -92,9 +88,10 @@ void UIQuest::Update(float _Delta)
 	{
 		ScriptRenderer->Off();
 		ScriptCollision->Off();
-		GameEngineCore::ChangeLevel("EreveLevel");
 		QuestCollision->Off();
 		UIQuestRenderer->Off();
+		GameEngineCore::ChangeLevel("EreveLevel");
+		ScriptEnd = false;
 	}
 	float4 Pos = Player::GetMainPlayer()->MainRenderer->GetActor()->GetPos() + float4 { 10.0f, -60.0f };
 	UIQuestRenderer->SetRenderPos(Pos);
