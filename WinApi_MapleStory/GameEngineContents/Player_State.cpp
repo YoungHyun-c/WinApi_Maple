@@ -172,7 +172,7 @@ void Player::RunUpdate(float _Delta)
 				{
 					XPos += Dir;
 
-					if (abs(XPos.X) > 50.0f)
+					if (abs(XPos.X) > 5.0f)
 					{
 						break;
 					}
@@ -183,7 +183,7 @@ void Player::RunUpdate(float _Delta)
 				{
 					YPos.Y += 1;
 
-					if (YPos.Y > 60.0f)
+					if (YPos.Y > 10.0f)
 					{
 						break;
 					}

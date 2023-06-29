@@ -82,8 +82,11 @@ protected:
 	PlayerState State = PlayerState::Max;
 	PlayerDir Dir = PlayerDir::Right;
 	std::string CurState = "";
+	std::string AnimationName = "";
 
 	int TestValue = 0;
+
+	static bool DebugMode;
 
 	GameEngineCollision* BodyCollsion = nullptr;
 
@@ -103,8 +106,8 @@ private:
 	void Render(float _Delta) override;
 
 	////////////////////// DebugValue
-	float4 LeftCheck = { -20.0f, -15.0f };
-	float4 RightCheck = { 20.0f, -15.0f };
+	float4 LeftCheck = { -20.0f, -5.0f };
+	float4 RightCheck = { 20.0f, -5.0f };
 
 	float4 GroundCheck = { 0.0f, 30.0f };
 	float4 RopeCheck = { 0.0f, 10.0f };

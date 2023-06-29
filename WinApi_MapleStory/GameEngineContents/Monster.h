@@ -25,6 +25,7 @@ private:
 	static std::list<Monster*> AllMonster;
 
 public:
+	static void AllMonsterDeath();
 	// constructer destructer
 	Monster();
 	~Monster();
@@ -82,15 +83,12 @@ protected:
 	void ChangeAnimationState(const std::string& _StateName);
 
 private:
-	static int BackGroundSizeforCamX;
-	static int BackGroundSizeforCamY;
 
-
-	void LevelStart() override;
+	//void LevelStart() override;
 
 	void Start() override;
 	void Update(float _Delta) override;
-	void Render(float _Delta) override;
+	//void Render(float _Delta) override;
 
 	////////////////////// DebugValue
 	float4 LeftCheck = { -20.0f, -15.0f };
@@ -99,11 +97,6 @@ private:
 	float4 GroundCheck = { 0.0f, 30.0f };
 	float4 RopeCheck = { 0.0f, 10.0f };
 	float4 PotalCheck = { 0.0f, 10.0f };
-
-	//////////////////////
-	//bool	M_Skill; // 스킬
-	//bool	M_Item;	 // 아이템
-	///// 보류
 
 	//////////////////////
 	bool Jump;

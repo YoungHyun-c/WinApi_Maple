@@ -46,14 +46,18 @@ protected:
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;
 
+	GameEngineRenderer* PlayerStateRender = nullptr;
+
 
 	//GameEngineRenderer* UIStartRenderer = nullptr;
 	//GameEngineCollision* StartCollision = nullptr;
 
-
 	bool Item = false;
 	bool SKill = false;
 	bool Status = false;
+	bool StateRender = false;
+
+	bool m_bClick;
 
 	float4 InvenPos;
 	float4 IconInter;

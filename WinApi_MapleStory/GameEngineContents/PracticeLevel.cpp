@@ -17,6 +17,7 @@
 #include "BackGround.h"
 #include "PlayActor.h"
 #include "Enum.h"
+#include "Monster.h"
 
 #include "MouseObject.h"
 #include "GlobalValue.h"
@@ -71,6 +72,7 @@ void PracticeLevel::Start()
 		FObject = CreateActor<FadeObject>();
 	}
 
+	Snail = CreateActor<Monster>(UpdateOrder::Monster);
 }
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)

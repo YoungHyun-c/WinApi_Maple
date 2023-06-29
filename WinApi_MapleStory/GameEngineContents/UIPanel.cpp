@@ -40,7 +40,8 @@ void UIPanel::InvenOff()
 	}
 }
 
-UIPanel::UIPanel()
+UIPanel::UIPanel() :
+	m_bClick(false)
 {
 	UI = this;
 }
@@ -54,7 +55,6 @@ void UIPanel::Start()
 	// 위치를 옮기지 않았다.
 	// GetPos();
 	// 카메라가 안움직임
-
 	// 이미지 부르기.
 	if (false == ResourcesManager::GetInst().IsLoadTexture("Inventory.bmp"))
 	{
@@ -71,6 +71,13 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
+	}
+
+	{
+		PlayerStateRender = CreateUIRenderer("FADE.bmp", RenderOrder::PlayUI);
+		PlayerStateRender->SetRenderPos({ 600, 680 });
+		PlayerStateRender->SetRenderScale({ 210, 200 });
+		PlayerStateRender->Off();
 	}
 
 	{
@@ -143,40 +150,54 @@ void UIPanel::Update(float _Delta)
 			for (size_t x = 0; x < IconRenders[y].size(); x++)
 			{
 				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsDown(VK_LBUTTON) && !m_bClick && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				{
+					m_bClick = true;
+					MObject->ChangeAnimationState("GrabIdle");
+				}
+				else if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 					&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
 				{
-					ValueY = y;
-					ValueX = x;
-					MObject->ChangeAnimationState("GrabIdle");
-					GetTextSave = IconRenders[y][x]->GetTexture();
-					GetTextSave;
-
+					int a = 0;
+					m_bClick = false;
 					IconRenders[y][x]->SetTexture("Empty.bmp");
-				}
-				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
-				{
 					MObject->ChangeAnimationState("Idle");
-					GetSwitchTextSave = IconRenders[y][x]->GetTexture();
-
-					IconRenders[y][x]->SetTexture(GetTextSave);
-
-					//IconRenders[y][x]->SetTexture(Textl);
-					ValueY;
-					ValueX;
-					IconRenders[ValueY][ValueX]->SetTexture(GetSwitchTextSave);
-					
-					GetTextSave = ("Empty.bmp");
-					int a = 0;
 				}
-				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() == "Empty.bmp")
-				{
-					MObject->ChangeAnimationState("Idle");
-					IconRenders[y][x]->SetTexture(GetTextSave);
-					GetTextSave = ("Empty.bmp");
-					int a = 0;
-				}
+				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				//	&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				//{
+				//	ValueY = y;
+				//	ValueX = x;
+				//	MObject->ChangeAnimationState("GrabIdle");
+				//	GetTextSave = IconRenders[y][x]->GetTexture();
+				//	GetTextSave;
+
+				//	IconRenders[y][x]->SetTexture("Empty.bmp");
+				//}
+				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				//	&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				//{
+				//	MObject->ChangeAnimationState("Idle");
+				//	GetSwitchTextSave = IconRenders[y][x]->GetTexture();
+
+				//	IconRenders[y][x]->SetTexture(GetTextSave);
+
+				//	//IconRenders[y][x]->SetTexture(Textl);
+				//	ValueY;
+				//	ValueX;
+				//	IconRenders[ValueY][ValueX]->SetTexture(GetSwitchTextSave);
+				//	
+				//	GetTextSave = ("Empty.bmp");
+				//	int a = 0;
+				//}
+				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				//	&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() == "Empty.bmp")
+				//{
+				//	MObject->ChangeAnimationState("Idle");
+				//	IconRenders[y][x]->SetTexture(GetTextSave);
+				//	GetTextSave = ("Empty.bmp");
+				//	int a = 0;
+				//}
 			}
 		}
 	}
@@ -218,6 +239,19 @@ void UIPanel::Update(float _Delta)
 		else
 		{
 			UIStatusRenderer->Off();
+		}
+	}
+
+	if (GameEngineInput::IsDown(VK_F1))
+	{
+		StateRender = !StateRender;
+		if (StateRender)
+		{
+			PlayerStateRender->On();
+		}
+		else
+		{
+			PlayerStateRender->Off();
 		}
 	}
 

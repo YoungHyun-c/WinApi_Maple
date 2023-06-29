@@ -28,6 +28,8 @@ Player* Player::MainPlayer = nullptr;
 int Player::BackGroundSizeforCamX = 0;
 int Player::BackGroundSizeforCamY = 0;
 
+bool Player::DebugMode = false;
+
 Player::Player()
 {
 }
@@ -140,10 +142,10 @@ void Player::Start()
 
 	{
 		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		BodyCollsion->SetCollisionScale({ 50, 50 });
-		BodyCollsion->SetCollisionType(CollisionType::Rect);
+		BodyCollsion->SetCollisionPos({ 100, 100 });
+		BodyCollsion->SetCollisionScale({ 100, 100 });
+		BodyCollsion->SetCollisionType(CollisionType::CirCle);
 	}
-	
 	
 	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
@@ -171,6 +173,11 @@ void Player::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		GameEngineLevel::CollisionDebugRenderSwitch();
+	}
+
+	if (true == GameEngineInput::IsDown(VK_F1))
+	{
+		DebugMode = !DebugMode;
 	}
 
 
@@ -352,7 +359,6 @@ void Player::ChangeAnimationState(const std::string& _StateName)
 	// "Idle"
 	// _StateName
 
-	std::string AnimationName;
 
 	switch (Dir)
 	{
@@ -384,18 +390,81 @@ void Player::Render(float _Delta)
 {
 	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
 
+
+	if (DebugMode)
 	{
-		std::string Text = "";
-		Text += "플레이어 테스트 값 : ";
-		Text += std::to_string(TestValue);
-		//Text += std::to_string(1.0f / _Delta);
-		TextOutA(dc, 2, 3, Text.c_str(), static_cast<int>(Text.size()));
+		{
+			std::string Text = "";
+			Text += "플레이어 공격 횟수 : ";
+			Text += std::to_string(TestValue);
+			//Text += std::to_string(1.0f / _Delta);
+			TextOutA(dc, 2, 3, Text.c_str(), static_cast<int>(Text.size()));
+		}
+
+		{
+			std::string PlayerStateText = "";
+			PlayerStateText = "플레이어 상태 : " + AnimationName;
+			TextOutA(dc, 500, 600, PlayerStateText.c_str(), static_cast<int>(PlayerStateText.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string PlayerPosX = "";
+			int X = MainPlayer->GetPos().X;
+			PlayerPosX += "플레이어 X위치 : ";
+			PlayerPosX += std::to_string(X);
+			TextOutA(dc, 500, 630, PlayerPosX.c_str(), static_cast<int>(PlayerPosX.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string PlayerPosY = "";
+			int Y = MainPlayer->GetPos().Y;
+			PlayerPosY += "플레이어 Y위치 : ";
+			PlayerPosY += std::to_string(Y);
+			TextOutA(dc, 500, 650, PlayerPosY.c_str(), static_cast<int>(PlayerPosY.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string CameraPosX = "";
+			int X = GetLevel()->GetUICamera()->GetPos().X + MainPlayer->GetPos().Half().X;
+			//int X = GetLevel()->GetMainCamera()->GetPos().X;
+			CameraPosX += "카메라 X 위치 : ";
+			CameraPosX += std::to_string(X);
+			TextOutA(dc, X, 630, CameraPosX.c_str(), static_cast<int>(CameraPosX.size()));
+		}
+
+		//{
+		//	GameEngineRenderer* PlayerStateRen = CreateRenderer("FADE.bmp", RenderOrder::PlayUI);
+		//	PlayerStateRen->SetRenderPos({30, - 100 });
+		//	//PlayerStateRen->SetRenderScale({ 30, 30 });
+		//	PlayerStateRen->SetText("플레이어 상태 : " + AnimationName, 30);
+		//	PlayerStateRen->Off();
+		//}
+
+		CollisionData Data;
+
+		Data.Pos = ActorCameraPos() + GroundCheck;
+		Data.Scale = { 5, 5 };
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+		Data.Pos = ActorCameraPos() + LeftCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+		Data.Pos = ActorCameraPos() + RightCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+		Data.Pos = ActorCameraPos() + RopeCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+		Data.Pos = ActorCameraPos() + PotalCheck;
 	}
 
 	{
-		float4 PlayerPos = GameEngineWindow::MainWindow.GetScale().Half();
-		float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
-		float4 Dir = PlayerPos - MousePos;
+		//float4 PlayerPos = GameEngineWindow::MainWindow.GetScale().Half();
+		//float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
+		//float4 Dir = PlayerPos - MousePos;
 
 		//std::string Text = "";
 		//Text += "마우스 앵글 값 : ";
@@ -403,20 +472,4 @@ void Player::Render(float _Delta)
 		//TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
-	CollisionData Data;
-
-	Data.Pos = ActorCameraPos() + GroundCheck;
-	Data.Scale = { 5, 5 };
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
-	Data.Pos = ActorCameraPos() + LeftCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
-	Data.Pos = ActorCameraPos() + RightCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
-	Data.Pos = ActorCameraPos() + RopeCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
-	Data.Pos = ActorCameraPos() + PotalCheck;
 }

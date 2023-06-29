@@ -36,8 +36,10 @@ private:
 	GameEngineCollision* NPCCollision = nullptr;
 	class NineNpc* NineN = nullptr;
 
-	class FadeObject* FObject = nullptr;
+	class Monster* Snail = nullptr;
 
+
+	class FadeObject* FObject = nullptr;
 
 	GameEngineSoundPlayer BGMPlayer;
 };
