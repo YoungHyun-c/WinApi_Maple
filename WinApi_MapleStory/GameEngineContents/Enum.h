@@ -16,6 +16,7 @@ enum class CollisionOrder
 	Map,
 	Potal,
 	PlayerBody,
+	PlayerAttack,
 	MonsterBody,
 	InvenIcon,
 	MouseObject,

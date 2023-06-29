@@ -73,6 +73,13 @@ void PracticeLevel::Start()
 	}
 
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
+
+	Snail = CreateActor<Monster>(UpdateOrder::Monster);
+	Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 40});
+	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
+	//Snail->SetPos({ BlueSnailX,BlueSnailY+200 });
+	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
+	//Snail->SetPos({ BlueSnailX, BlueSnailY+300 });
 }
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -113,6 +120,43 @@ void PracticeLevel::Update(float _Delta)
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
+	//if (1.0f <= GetLiveTime())
+	//{
+	//	Monster* NewMonster = CreateActor<Monster>(UpdateOrder::Monster);
+	//	ResetLiveTime();
+	//}
+
+	//M_FMoveTime += _Delta;
+}
+
+void PracticeLevel::Render(float _Delta)
+{
+	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+
+	//{
+	//	std::string StrPos = "";
+	//	StrPos += "MoveTime : ";
+	//	StrPos += std::to_string(M_FMoveTime);
+	//	TextOutA(dc, BlueSnailX, BlueSnailY, StrPos.c_str(), static_cast<int>(StrPos.size()));
+	//}
+	//{
+	//	std::string StrPos = "";
+	//	StrPos += "MoveTime : ";
+	//	StrPos += std::to_string(M_FMoveTime);
+	//	TextOutA(dc, BlueSnailX, BlueSnailY+100, StrPos.c_str(), static_cast<int>(StrPos.size()));
+	//}
+	//{
+	//	std::string StrPos = "";
+	//	StrPos += "MoveTime : ";
+	//	StrPos += std::to_string(M_FMoveTime);
+	//	TextOutA(dc, BlueSnailX, BlueSnailY+200, StrPos.c_str(), static_cast<int>(StrPos.size()));
+	//}
+	//{
+	//	std::string StrPos = "";
+	//	StrPos += "MoveTime : ";
+	//	StrPos += std::to_string(M_FMoveTime);
+	//	TextOutA(dc, BlueSnailX, BlueSnailY+300, StrPos.c_str(), static_cast<int>(StrPos.size()));
+	//}
 }
 
 

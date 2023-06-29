@@ -23,6 +23,7 @@ protected:
 private:
 	void Start() override;
 	void Update(float _Delta) override;
+	void Render(float _Delta) override;
 	//void Release() override;
 
 	class BackGround* BackGroundPtr;
@@ -38,6 +39,10 @@ private:
 
 	class Monster* Snail = nullptr;
 
+
+	float BlueSnailX = { 300.0f };
+	float BlueSnailY = { 300.0f };
+	float M_FMoveTime = 0.0f;
 
 	class FadeObject* FObject = nullptr;
 

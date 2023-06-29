@@ -39,6 +39,7 @@ public:
 	GameEngineRenderer* BlueSnailRenderer = nullptr;
 
 	//GameEngineRenderer*  = nullptr;
+	GameEngineRenderer* Ptr = nullptr;
 
 protected:
 	void StateUpdate(float _Delta);
@@ -74,7 +75,9 @@ protected:
 	MonsterDir Dir = MonsterDir::Right;
 	std::string CurState = "";
 
-	int TestValue = 0;
+	float M_FMoveTime = 0.0f;
+	float M_FMoveLimitTime = 0.0f;
+	float M_FStopTime = 3.5f;
 
 	GameEngineCollision* BodyCollsion = nullptr;
 
@@ -88,7 +91,12 @@ private:
 
 	void Start() override;
 	void Update(float _Delta) override;
+	void Render(float _Delta) override;
 	//void Render(float _Delta) override;
+
+	float BlueSnailX = { 300.0f };
+	float BlueSnailY = { 300.0f };
+	float4 BlueSnailMovePos = float4::ZERO;
 
 	////////////////////// DebugValue
 	float4 LeftCheck = { -20.0f, -15.0f };

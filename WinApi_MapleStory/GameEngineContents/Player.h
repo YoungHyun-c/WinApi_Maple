@@ -89,6 +89,11 @@ protected:
 	static bool DebugMode;
 
 	GameEngineCollision* BodyCollsion = nullptr;
+	GameEngineCollision* AttackCollsion = nullptr;
+	float4 AttackCollisionPos = { 200, 0 };
+
+	GameEngineRenderer* AttackRenderer0 = nullptr;
+	float4 AttackRendererPos0 = { 100, 0 };
 
 	void DirCheck();
 

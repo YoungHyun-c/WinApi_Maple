@@ -420,17 +420,66 @@ void Player::RopeUpdate(float _Delta)
 void Player::AttackStart()
 {
 	int Value = GameEngineRandom::MainRandom.RandomInt(0, 2);
-
+	//AttackRenderer0->ChangeAnimation("Right_Skill0");
+	//AttackRenderer0->ChangeAnimation("Left_Skill0");
 	switch (Value)
 	{
 	case(0):
 		ChangeAnimationState("Attack0");
+		if (Dir == PlayerDir::Right)
+		{
+			AttackCollsion->SetCollisionPos(AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Right_Skill0");
+			AttackRenderer0->SetRenderPos(AttackRendererPos0);
+			AttackRenderer0->On();
+		}
+		if (Dir == PlayerDir::Left)
+		{
+			AttackCollsion->SetCollisionPos(-AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Left_Skill0");
+			AttackRenderer0->SetRenderPos(-AttackRendererPos0);
+			AttackRenderer0->On();
+		}
 		break;
 	case(1):
 		ChangeAnimationState("Attack1");
+		if (Dir == PlayerDir::Right)
+		{
+			AttackCollsion->SetCollisionPos(AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Right_Skill0");
+			AttackRenderer0->SetRenderPos(AttackRendererPos0);
+			AttackRenderer0->On();
+		}
+		if (Dir == PlayerDir::Left)
+		{
+			AttackCollsion->SetCollisionPos(-AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Left_Skill0");
+			AttackRenderer0->SetRenderPos(-AttackRendererPos0);
+			AttackRenderer0->On();
+		}
 		break;
 	case(2):
 		ChangeAnimationState("Attack2");
+		if (Dir == PlayerDir::Right)
+		{
+			AttackCollsion->SetCollisionPos(AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Right_Skill0");
+			AttackRenderer0->SetRenderPos(AttackRendererPos0);
+			AttackRenderer0->On();
+		}
+		if (Dir == PlayerDir::Left)
+		{
+			AttackCollsion->SetCollisionPos(-AttackCollisionPos);
+			AttackCollsion->On();
+			AttackRenderer0->ChangeAnimation("Left_Skill0");
+			AttackRenderer0->SetRenderPos(-AttackRendererPos0);
+			AttackRenderer0->On();
+		}
 		break;
 	default:
 		break;
@@ -527,6 +576,8 @@ void Player::AttackUpdate(float _Delta)
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		++TestValue;
+		AttackCollsion->Off();
+		AttackRenderer0->Off();
 		ChangeState(PlayerState::Run); // Alert
 		return;
 	}

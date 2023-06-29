@@ -2,9 +2,10 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/ResourcesManager.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include "Player.h"
 
 #include "Enum.h"
-#include "Player.h"
 
 std::list<Monster*> Monster::AllMonster;
 
@@ -30,26 +31,34 @@ void Monster::AllMonsterDeath()
 
 void Monster::Start()
 {
-	if (false == ResourcesManager::GetInst().IsLoadTexture("BlueSnialStand.Bmp"))
+	if (false == ResourcesManager::GetInst().IsLoadTexture("BlueSnailStand.Bmp"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-
-		GameEnginePath FolderPath = FilePath;
-
 		FilePath.MoveChild("ContentsResources\\Texture\\Monster\\BlueSnail\\");
 
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BlueSnailStand.bmp"));
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BlueSnailStand.bmp"), 2, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BlueSnailMove.bmp"), 5, 2);
 	}
 
 	{
 		BlueSnailRenderer = CreateRenderer(RenderOrder::Play);
 		BlueSnailRenderer->CreateAnimation("Left_Idle", "BlueSnailStand.bmp", 0, 0, 0.1f, true);
 		BlueSnailRenderer->CreateAnimation("Right_Idle", "BlueSnailStand.bmp", 1, 1, 0.1f, true);
-		BlueSnailRenderer->SetRenderPos({ 300, 300 });
-		BlueSnailRenderer->ChangeAnimation("Left_Idle");
+		BlueSnailRenderer->CreateAnimation("Left_Run", "BlueSnailMove.bmp", 0, 4, 0.3f, true);
+		BlueSnailRenderer->CreateAnimation("Right_Run", "BlueSnailMove.bmp", 5, 9, 0.3f, true);
+		BlueSnailRenderer->GetActor()->SetPos({ 300, 300 });
+		BlueSnailRenderer->ChangeAnimation("Right_Idle");
 	}
+
+	{
+		GameEngineCollision* MonsterBodyCol = CreateCollision(CollisionOrder::MonsterBody);
+		MonsterBodyCol->SetCollisionScale({ 50, 50 });
+		MonsterBodyCol->SetCollisionType(CollisionType::Rect);
+	}
+
 }
 
 void Monster::Update(float _Delta)
@@ -58,11 +67,50 @@ void Monster::Update(float _Delta)
 
 	//Dir.Normalize();
 
-	// Dir <= 거리가 일정하지 않다는 게 문제에요.
+	//AddPos(Dir * _Delta * 100.0f);
 
 	// Dir *= 0.1f;
+	float Speed = 30.0f;
+	BlueSnailMovePos;
 
-	
+	Dir = MonsterDir::Right;
+	ChangeAnimationState("Run");
+	M_FMoveTime += _Delta;
+
+	if (M_FStopTime <= M_FMoveTime)
+	{
+		BlueSnailMovePos = { -Speed * _Delta, 0.0f };
+		Dir = MonsterDir::Left;
+		ChangeAnimationState("Run");
+		AddPos(BlueSnailMovePos);
+
+		if (M_FMoveTime >= 7.0f)
+		{
+			M_FMoveTime = M_FMoveLimitTime;
+		}
+	}
+	else
+	{
+		Dir = MonsterDir::Right;
+		BlueSnailMovePos = { Speed * _Delta, 0.0f };
+		AddPos(BlueSnailMovePos);
+	}
+
+
+	//std::string StrPos ="";
+	//swprintf_s(StrPos, L"Move : %.2f / %.2f", M_FMoveTime, m_fMoveLimitTime);
+	//TextOut(hDC, x, y + 60, strPos, lstrlen(strPos));
+	//
+}
+
+void Monster::Render(float _Delta)
+{
+	//HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+
+	//std::string StrPos = "";
+	//StrPos += "MoveTime : ";
+	//StrPos += std::to_string(M_FMoveTime);
+	//TextOutA(dc, BlueSnailX + BlueSnailMovePos.X, BlueSnailY + BlueSnailMovePos.Y, StrPos.c_str(), static_cast<int>(StrPos.size()));
 }
 
 void Monster::StateUpdate(float _Delta)

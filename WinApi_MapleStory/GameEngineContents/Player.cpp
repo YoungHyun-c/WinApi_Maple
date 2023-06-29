@@ -64,6 +64,9 @@ void Player::Start()
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Prone_Attack.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Rope.bmp"), 2, 1);
 
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSkill0.bmp"), 4, 1);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSkill0.bmp"), 4, 1);
+
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Pl11ayer.bmp"), 5, 17);
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Playrrer.bmp"), 5, 17);
 
@@ -102,7 +105,6 @@ void Player::Start()
 
 
 	{
-
 		MainRenderer = CreateRenderer(RenderOrder::Play);
 		MainRenderer->CreateAnimation("Left_Idle", "Stand.bmp", 0, 2, 0.3f);
 		MainRenderer->CreateAnimation("Right_Idle", "Stand.bmp", 3, 5, 0.3f);
@@ -139,12 +141,22 @@ void Player::Start()
 		MainRenderer->ChangeAnimation("Right_Idle");
 	}
 
+	{
+		AttackRenderer0 = CreateRenderer(RenderOrder::Play);
+		AttackRenderer0->CreateAnimation("Left_Skill0", "LeftSkill0.bmp", 0, 3, 0.16f);
+		AttackRenderer0->CreateAnimation("Right_Skill0", "RightSkill0.bmp", 0, 3, 0.16f);
+		//AttackRenderer0->SetRenderPos({ 100, -30 });
+		AttackRenderer0->SetRenderScale({ 768, 512 });
+		AttackRenderer0->ChangeAnimation("Right_Skill0");
+		//AttackRenderer0->ChangeAnimation("Left_Skill0");
+		AttackRenderer0->Off();
+	}
 
 	{
-		BodyCollsion = CreateCollision(CollisionOrder::PlayerBody);
-		BodyCollsion->SetCollisionPos({ 100, 100 });
-		BodyCollsion->SetCollisionScale({ 100, 100 });
-		BodyCollsion->SetCollisionType(CollisionType::CirCle);
+		AttackCollsion = CreateCollision(CollisionOrder::PlayerAttack);
+		AttackCollsion->SetCollisionScale({ 300, 200 });
+		AttackCollsion->SetCollisionType(CollisionType::Rect);
+		AttackCollsion->Off();
 	}
 	
 	ChangeState(PlayerState::Idle);
@@ -154,21 +166,21 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 
-	//std::vector<GameEngineCollision*> _Col;
-	//if (true == BodyCollsion->Collision(CollisionOrder::MonsterBody, _Col
-	//	, CollisionType::Rect // 
-	//	, CollisionType::CirCle // 
-	//))
-	//{
-	//	for (size_t i = 0; i < _Col.size(); i++)
-	//	{
-	//		GameEngineCollision* Collison = _Col[i];
+	std::vector<GameEngineCollision*> _Col;
+	if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _Col
+		, CollisionType::Rect // 
+		, CollisionType::Rect // 
+	))
+	{
+		for (size_t i = 0; i < _Col.size(); i++)
+		{
+			GameEngineCollision* Collison = _Col[i];
 
-	//		GameEngineActor* Actor = Collison->GetActor();
+			GameEngineActor* Actor = Collison->GetActor();
 
-	//		Actor->Death();
-	//	}
-	//}
+			Actor->Death();
+		}
+	}
 
 	if (true == GameEngineInput::IsDown('R'))
 	{
@@ -410,7 +422,7 @@ void Player::Render(float _Delta)
 		{
 			float4 Pos;
 			std::string PlayerPosX = "";
-			int X = MainPlayer->GetPos().X;
+			float X = MainPlayer->GetPos().X;
 			PlayerPosX += "플레이어 X위치 : ";
 			PlayerPosX += std::to_string(X);
 			TextOutA(dc, 500, 630, PlayerPosX.c_str(), static_cast<int>(PlayerPosX.size()));
@@ -419,7 +431,7 @@ void Player::Render(float _Delta)
 		{
 			float4 Pos;
 			std::string PlayerPosY = "";
-			int Y = MainPlayer->GetPos().Y;
+			float Y = MainPlayer->GetPos().Y;
 			PlayerPosY += "플레이어 Y위치 : ";
 			PlayerPosY += std::to_string(Y);
 			TextOutA(dc, 500, 650, PlayerPosY.c_str(), static_cast<int>(PlayerPosY.size()));
@@ -428,7 +440,7 @@ void Player::Render(float _Delta)
 		{
 			float4 Pos;
 			std::string CameraPosX = "";
-			int X = GetLevel()->GetUICamera()->GetPos().X + MainPlayer->GetPos().Half().X;
+			float X = GetLevel()->GetUICamera()->GetPos().X + MainPlayer->GetPos().Half().X;
 			//int X = GetLevel()->GetMainCamera()->GetPos().X;
 			CameraPosX += "카메라 X 위치 : ";
 			CameraPosX += std::to_string(X);
