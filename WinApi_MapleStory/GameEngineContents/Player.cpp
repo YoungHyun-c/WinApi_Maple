@@ -66,6 +66,7 @@ void Player::Start()
 
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSkill0.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSkill0.bmp"), 4, 1);
+
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Bellom.bmp"), 5, 5);
 
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Pl11ayer.bmp"), 5, 17);
@@ -75,8 +76,6 @@ void Player::Start()
 		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
 		//ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
 
-
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
 
 	}
 
@@ -147,6 +146,7 @@ void Player::Start()
 		
 		MainRenderer->ChangeAnimation("Right_Idle");
 	}
+
 
 	{
 		BodyCollision = CreateCollision(CollisionOrder::PlayerBody);
@@ -449,6 +449,7 @@ void Player::Render(float _Delta)
 			TextOutA(dc, 500, 650, PlayerPosY.c_str(), static_cast<int>(PlayerPosY.size()));
 		}
 
+
 		{
 			float4 Pos;
 			std::string CameraPosX = "";
@@ -494,6 +495,24 @@ void Player::Render(float _Delta)
 		//Text += "마우스 앵글 값 : ";
 		//Text += std::to_string(Dir.AngleDeg());
 		//TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
+	}
+
+	{
+		float4 Pos;
+		std::string PlayerHP = "";
+		int Hp = GetMainPlayer()->GetMainPlayerHpValue();
+		//PlayerHP += "플레이어 HP : ";
+		PlayerHP += std::to_string(Hp);
+		TextOutA(dc, 500, 700, PlayerHP.c_str(), PlayerHP.size());
+	}
+
+	{
+		float4 Pos;
+		std::string PlayerMP = "";
+		int MP = GetMainPlayer()->GetMainPlayerMpValue();
+		//PlayerMP += "플레이어 MP : ";
+		PlayerMP += std::to_string(MP);
+		TextOutA(dc, 500, 715, PlayerMP.c_str(), PlayerMP.size());
 	}
 
 }

@@ -48,6 +48,24 @@ protected:
 
 	GameEngineRenderer* PlayerStateRender = nullptr;
 
+	GameEngineRenderer* PlayerBarRender = nullptr;
+	GameEngineRenderer* PlayerHPBarRender = nullptr;
+	int MovePlayerHP = 0;
+	int MovePlayerMP = 0;
+	float HpBarX = 141.0f;
+	float MpBarX = 141.0f;
+	float HpBarPosX = 520.0f;
+	float MpBarPosX = 520.0f;
+	GameEngineRenderer* PlayerMPBarRender = nullptr;
+	GameEngineRenderer* PlayerEXPBarRender = nullptr;
+	GameEngineRenderer* PlayerEXPUIBarRender = nullptr;
+
+	GameEngineRenderer* PlayerChatOpenRender = nullptr;
+	GameEngineRenderer* PlayerChatCloseRender = nullptr;
+
+	GameEngineRenderer* PlayerQuickSloteRender = nullptr;
+	GameEngineRenderer* PlayerQuickSlotAlphaRender = nullptr;
+
 
 	//GameEngineRenderer* UIStartRenderer = nullptr;
 	//GameEngineCollision* StartCollision = nullptr;
@@ -56,6 +74,7 @@ protected:
 	bool SKill = false;
 	bool Status = false;
 	bool StateRender = false;
+	bool CharUIRender = false;
 
 	bool m_bClick;
 

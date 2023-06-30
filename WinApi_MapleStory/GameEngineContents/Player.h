@@ -54,6 +54,25 @@ public:
 		return BodyCollision;
 	}
 
+	void GetMainPlayerHp(int _Value)
+	{
+		PlayerHp += _Value;
+	}
+
+	float GetMainPlayerHpValue()
+	{
+		return PlayerHp;
+	}
+
+	void GetMainPlayerMp(int _Value)
+	{
+		PlayerMp += _Value;
+	}
+
+	float GetMainPlayerMpValue()
+	{
+		return PlayerMp;
+	}
 protected:
 	void StateUpdate(float _Delta);
 
@@ -114,6 +133,10 @@ private:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
+
+
+	int PlayerHp = 1410;
+	int PlayerMp = 1410;
 
 	class Potal* GardenPotal;
 

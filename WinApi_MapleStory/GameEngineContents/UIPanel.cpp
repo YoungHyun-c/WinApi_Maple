@@ -72,7 +72,72 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
 
+		///// Ä³¸¯ÅÍ·»´õ
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BarUI.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("MPBar.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("ExpUI.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("ExpBar.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("ChatCloseUI.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("ChatOpenUI.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("QuickSlot.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("QuickSlotAlpha.bmp"));
 
+	}
+
+	{
+		PlayerBarRender = CreateUIRenderer("BarUI.bmp", RenderOrder::PlayUI);
+		PlayerBarRender->SetRenderPos({ 510, 710 });
+		PlayerBarRender->On();
+	}
+
+	{
+		PlayerHPBarRender = CreateUIRenderer("HPBar.bmp", RenderOrder::PlayUI);
+		PlayerHPBarRender->SetRenderPos({ 520, 710 });
+		PlayerHPBarRender->SetRenderScale({ HpBarX, 14});
+		PlayerHPBarRender->On();
+	}
+
+	{
+		PlayerMPBarRender = CreateUIRenderer("MPBar.bmp", RenderOrder::PlayUI);
+		PlayerMPBarRender->SetRenderPos({ 520, 725 });
+		PlayerMPBarRender->On();
+	}
+
+	{
+		PlayerEXPBarRender = CreateUIRenderer("ExpUI.bmp", RenderOrder::PlayUI);
+		PlayerEXPBarRender->SetRenderPos({ 510, 750 });
+		PlayerEXPBarRender->On();
+	}
+
+	{
+		PlayerEXPUIBarRender = CreateUIRenderer("ExpBar.bmp", RenderOrder::PlayUI);
+		PlayerEXPUIBarRender->SetRenderPos({ 510, 750 });
+		PlayerEXPUIBarRender->On();
+	}
+
+	{
+		PlayerChatOpenRender = CreateUIRenderer("ChatOpenUI.bmp", RenderOrder::PlayUI);
+		PlayerChatOpenRender->SetRenderPos({ 217, 680 });
+		PlayerChatOpenRender->On();
+	}
+
+	{
+		PlayerChatCloseRender = CreateUIRenderer("ChatCloseUI.bmp", RenderOrder::PlayUI);
+		PlayerChatCloseRender->SetRenderPos({ 217, 720 });
+		PlayerChatCloseRender->Off();
+	}
+
+	{
+		PlayerQuickSloteRender = CreateUIRenderer("QuickSlot.bmp", RenderOrder::PlayUI);
+		PlayerQuickSloteRender->SetRenderPos({ 900, 700 });
+		PlayerQuickSloteRender->On();
+	}
+
+	{
+		PlayerQuickSlotAlphaRender = CreateUIRenderer("QuickSlotAlpha.bmp", RenderOrder::PlayUI);
+		PlayerQuickSlotAlphaRender->SetRenderPos({ 900, 700 });
+		PlayerQuickSlotAlphaRender->On();
 	}
 
 	{
@@ -141,6 +206,7 @@ void UIPanel::Start()
 		UIStatusRenderer->SetRenderPos({ 200, 300 });
 		UIStatusRenderer->Off();
 	}
+
 }
 
 void UIPanel::Update(float _Delta)
@@ -164,6 +230,14 @@ void UIPanel::Update(float _Delta)
 					m_bClick = false;
 					IconRenders[y][x]->SetTexture("Empty.bmp");
 					MObject->ChangeAnimationState("Idle");
+
+					if (MovePlayerHP + 300 <= 1410)
+					{
+						HpBarPosX += 15;
+						Player::GetMainPlayer()->GetMainPlayerHp(300);
+						PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
+						PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+					}
 				}
 				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 				//	&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
@@ -257,4 +331,48 @@ void UIPanel::Update(float _Delta)
 		}
 	}
 
+
+	if (GameEngineInput::IsDown(VK_F2))
+	{
+		CharUIRender = !CharUIRender;
+		if (CharUIRender)
+		{
+			//PlayerBarRender->On();
+			PlayerChatOpenRender->Off();
+			PlayerChatCloseRender->On();
+		}
+		else
+		{
+			//PlayerBarRender->Off();
+			PlayerChatOpenRender->On();
+			PlayerChatCloseRender->Off();
+		}
+	}
+	
+	//int MovePlayerHP = Player::GetMainPlayer()->GetMainPlayerHpValue();
+	MovePlayerHP = Player::GetMainPlayer()->GetMainPlayerHpValue();
+	int MovePlayerMP = Player::GetMainPlayer()->GetMainPlayerHpValue();
+	if (MovePlayerHP -300 >= 0 && GameEngineInput::IsDown('-'))
+	{
+		HpBarPosX -= 15;
+		MpBarPosX -= 15;
+		Player::GetMainPlayer()->GetMainPlayerHp(-300);
+		PlayerHPBarRender->SetRenderScale({ HpBarX -= 30, 14});
+		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+		Player::GetMainPlayer()->GetMainPlayerMp(-300);
+		PlayerMPBarRender->SetRenderScale({ MpBarX -= 30, 14 });
+		PlayerMPBarRender->SetRenderPos({ MpBarPosX , 725 });
+	}
+
+	if (MovePlayerHP + 300 <= 1410 && GameEngineInput::IsDown('='))
+	{
+		HpBarPosX += 15;
+		MpBarPosX += 15;
+		Player::GetMainPlayer()->GetMainPlayerHp(300);
+		PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
+		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+		Player::GetMainPlayer()->GetMainPlayerMp(300);
+		PlayerMPBarRender->SetRenderScale({ MpBarX += 30, 14 });
+		PlayerMPBarRender->SetRenderPos({ MpBarPosX , 725 });
+	}
 }

@@ -7,6 +7,7 @@ enum class RenderOrder
 	Monster,
 	Play,
 	PlayUI,
+	PlayerHPMPBar,
 	InvenIcon,
 	MouseUI,
 	Fade,
