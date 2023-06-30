@@ -17,11 +17,23 @@ public:
 	Potal& operator = (const Potal& _Other) = delete;
 	Potal& operator = (Potal&& _Other) noexcept = delete;
 
-protected:
+	GameEngineCollision* GetGardenPotalCollision()
+	{
+		return GardenPotal;
+	}
 
+	GameEngineCollision* GetBossPotalCollsion()
+	{
+		return BossPotal;
+	}
+
+protected:
+	GameEngineCollision* GardenPotal = nullptr;
+	GameEngineCollision* BossPotal = nullptr;
+	
 private:
 	void Start() override;
-
 	void Update(float _Delta) override;
+	class Player* Mplayer;
 };
 
