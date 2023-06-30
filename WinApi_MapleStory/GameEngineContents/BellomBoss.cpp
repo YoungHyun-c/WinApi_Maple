@@ -1,12 +1,11 @@
 #include "BellomBoss.h"
-#include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Player.h"
 
-#include <GameEnginePlatform/GameEngineInput.h>
-
+#include <GameEnginePlatform/GameEngineInput.h>"
 #include "Enum.h"
 
 BellomBoss::BellomBoss()
@@ -39,69 +38,101 @@ void BellomBoss::Start()
 
 	{
 		Bellom = CreateRenderer(RenderOrder::Monster);
-		Bellom->CreateAnimation("Left_Ready", "Bellom1.bmp", 0, 7, 0.2f, true);
-		Bellom->CreateAnimation("Left_Wake", "Bellom2.bmp", 0, 7, 0.2f, true);
-		Bellom->CreateAnimation("Left_Down", "Bellom3.bmp", 0, 11, 0.2f, true);
-		Bellom->CreateAnimation("AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, true);
-		Bellom->CreateAnimation("Attack", "BellomAttack.bmp", 0, 5, 0.2f, true);
-		Bellom->CreateAnimation("AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, true);
+		Bellom->CreateAnimation("Left_Ready", "Bellom1.bmp", 0, 7, 0.2f, false);
+		Bellom->CreateAnimation("Left_Wake", "Bellom2.bmp", 0, 7, 0.2f, false);
+		Bellom->CreateAnimation("Left_Down", "Bellom3.bmp", 0, 11, 0.2f, false);
+		Bellom->CreateAnimation("AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Attack", "BellomAttack.bmp", 0, 5, 0.2f, false);
+		Bellom->CreateAnimation("AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, false);
 		Bellom->SetRenderScale({ 1024, 1024 });
-		Bellom->SetRenderPos({ 1700, 300 });
-		Bellom->ChangeAnimation("AttackReady");
+		//Bellom->SetRenderPos({ 1700, 300 });
+		//Bellom->ChangeAnimation("AttackReady");
+		Bellom->Off();
 	}
+
+	BellomSummon = CreateCollision(CollisionOrder::BossSummon);
+	BellomSummon->SetCollisionPos({ 1690, 650 });
+	BellomSummon->SetCollisionScale({ 200, 100 });
+
 }
 
 void BellomBoss::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown(VK_F6))
+	std::vector<GameEngineCollision*> Col;
+	if (BellomSummon->Collision(CollisionOrder::MouseObjectPlay, Col, CollisionType::Rect, CollisionType::Rect)
+		&& GameEngineInput::IsDown(VK_LBUTTON))
 	{
-		Bellom->ChangeAnimation("AttackReady");
-
-		Bellom->SetRenderPos({ 1700, 300 });
-		Bellom->SetRenderScale({ 1024, 1024 });
-	}
-	if (GameEngineInput::IsDown(VK_F7))
-	{
-		//Bellom->ChangeAnimation("Attack");
-		//Bellom->SetRenderPos({ 150, 430 });
-		//Bellom->SetRenderScale({ 1536, 1024 });
-		Bellom->ChangeAnimation("Attack");
-		Bellom->SetRenderPos({ 1700, 300 });
-		Bellom->SetRenderScale({ 1024, 1024 });
-	}
-	if (GameEngineInput::IsDown(VK_F8))
-	{
-		Bellom->ChangeAnimation("AttackBall");
-		Bellom->SetRenderPos({ 1700, 300 });
-		Bellom->SetRenderScale({ 1024, 1024 });
-	}
-	if (GameEngineInput::IsDown(VK_F9))
-	{
+		Bellom->On();
+		Bellom->SetRenderPos({ 1700, 400 });
 		Bellom->ChangeAnimation("Left_Ready");
-		Bellom->SetRenderPos({ 1700, 300 });
-		Bellom->SetRenderScale({ 1024, 1024 });
+		Summon = true;
+		BellomSummon->Off();
 	}
 
-	MoveTime += _Delta;
-	if (MoveTime <= 1.5f)
+	if (true == Summon)
 	{
-		Bellom->ChangeAnimation("AttackReady");
+		MoveTime += _Delta;
+	}
+
+	if (MoveTime >= 1.5f && true == Bellom->IsAnimationEnd())
+	{
+		Bellom->ChangeAnimation("Left_Wake");
 	}
 
 	if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
 	{
-		Bellom->ChangeAnimation("Attack");
+		Bellom->ChangeAnimation("Left_Down");
 	}
 
-	if (MoveTime >= 4.0f && true == Bellom->IsAnimationEnd())
-	{
-		Bellom->ChangeAnimation("AttackBall");
-	}
+	//if (GameEngineInput::IsDown(VK_F6))
+	//{
+	//	Bellom->ChangeAnimation("AttackReady");
 
-	if (MoveTime >= 7.0f)
-	{
-		MoveTime = 0.0f;
-	}
+	//	Bellom->SetRenderPos({ 1700, 300 });
+	//	Bellom->SetRenderScale({ 1024, 1024 });
+	//}
+	//if (GameEngineInput::IsDown(VK_F7))
+	//{
+	//	//Bellom->ChangeAnimation("Attack");
+	//	//Bellom->SetRenderPos({ 150, 430 });
+	//	//Bellom->SetRenderScale({ 1536, 1024 });
+	//	Bellom->ChangeAnimation("Attack");
+	//	Bellom->SetRenderPos({ 1700, 300 });
+	//	Bellom->SetRenderScale({ 1024, 1024 });
+	//}
+	//if (GameEngineInput::IsDown(VK_F8))
+	//{
+	//	Bellom->ChangeAnimation("AttackBall");
+	//	Bellom->SetRenderPos({ 1700, 300 });
+	//	Bellom->SetRenderScale({ 1024, 1024 });
+	//}
+	//if (GameEngineInput::IsDown(VK_F9))
+	//{
+	//	Bellom->ChangeAnimation("Left_Ready");
+	//	Bellom->SetRenderPos({ 1700, 300 });
+	//	Bellom->SetRenderScale({ 1024, 1024 });
+	//}
+
+	//MoveTime += _Delta;
+	//if (MoveTime <= 1.5f)
+	//{
+	//	Bellom->ChangeAnimation("AttackReady");
+	//}
+
+	//if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
+	//{
+	//	Bellom->ChangeAnimation("Attack");
+	//}
+
+	//if (MoveTime >= 4.0f && true == Bellom->IsAnimationEnd())
+	//{
+	//	Bellom->ChangeAnimation("AttackBall");
+	//}
+
+	//if (MoveTime >= 7.0f)
+	//{
+	//	MoveTime = 0.0f;
+	//}
 
 	//if (true == Bellom->IsAnimationEnd())
 	//{

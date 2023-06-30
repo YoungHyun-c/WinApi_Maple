@@ -17,6 +17,8 @@ public:
 
 protected:
 	GameEngineRenderer* Bellom = nullptr;
+	GameEngineCollision* BellomSummon = nullptr;
+	bool Summon = false;
 private:
 	void Start() override;
 	void Update(float _Delta) override;

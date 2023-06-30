@@ -87,7 +87,7 @@ void StartLevel::Update(float _DeltaTime)
 
 void StartLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	//BGMPlayer = GameEngineSound::SoundPlay("Login.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("Login.mp3");
 }
 
 

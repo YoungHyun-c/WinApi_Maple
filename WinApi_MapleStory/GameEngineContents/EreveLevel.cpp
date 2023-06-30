@@ -86,7 +86,7 @@ void EreveLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	//BGMPlayer = GameEngineSound::SoundPlay("QueensGarden.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("QueensGarden.mp3");
 
 	LevelPlayer->SetGroundTexture("Ereve_Debug.bmp");
 

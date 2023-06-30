@@ -47,6 +47,7 @@ void BossLevel::Start()
 	BackGroundPtr = CreateActor<BackGround>();
 	BackGroundPtr->Init("BossLevel.bmp", "BossLevel_Debug.bmp");
 
+
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("BossLevel_Debug.bmp");
 	//LevelPlayer->SetPos({ 1700, 700 });

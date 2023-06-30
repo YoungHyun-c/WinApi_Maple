@@ -22,6 +22,7 @@
 #include "MouseObjectPlay.h"	
 #include "GlobalValue.h"
 #include "FadeObject.h"
+#include "RutaNpc.h"
 
 #include "BellomBoss.h"
 #include "Potal.h"
@@ -94,7 +95,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	//BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
 
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 
@@ -103,6 +104,9 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GardenPotal = CreateActor<Potal>(UpdateOrder::Potal);
 	GardenPotal->CreateCollision(CollisionOrder::GardenPotal);
 	GardenPotal->SetPos({ 2000, 850 });
+
+	RutaNpc* RutaNpcQuest = CreateActor<RutaNpc>(UpdateOrder::Player);
+	RutaNpcQuest->SetMouseObject(MouseObject::GetMainMouse());
 }
 
 void PlayLevel::Update(float _Delta)

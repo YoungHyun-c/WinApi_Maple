@@ -71,6 +71,8 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
+
+
 	}
 
 	{

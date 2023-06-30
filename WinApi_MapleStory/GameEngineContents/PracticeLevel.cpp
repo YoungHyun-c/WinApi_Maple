@@ -52,14 +52,14 @@ void PracticeLevel::Start()
 	}
 
 	GameEngineSound::SetGlobalVolume(0.3f);
-	if (nullptr == GameEngineSound::FindSound("YggdrasilPrayer.mp3"))
+	if (nullptr == GameEngineSound::FindSound("AboveTheTreetops.mp3"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\Sound\\");
 
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("YggdrasilPrayer.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("AboveTheTreetops.mp3"));
 	}
 
 	BackGroundPtr = CreateActor<BackGround>();
@@ -99,7 +99,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	//BGMPlayer = GameEngineSound::SoundPlay("YggdrasilPrayer.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("AboveTheTreetops.mp3");
 
 	LevelPlayer->SetGroundTexture("PracticeLevel_Debug.bmp");
 
@@ -120,6 +120,11 @@ void PracticeLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('2'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
+	}
+
+	if (true == GameEngineInput::IsDown('4'))
+	{
+		GameEngineCore::ChangeLevel("BossLevel");
 	}
 
 	if (1.0f <= GetLiveTime())
