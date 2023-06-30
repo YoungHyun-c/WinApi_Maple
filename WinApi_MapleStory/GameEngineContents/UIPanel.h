@@ -66,5 +66,4 @@ protected:
 private:
 	class MouseObject* MObject;
 
-
 };

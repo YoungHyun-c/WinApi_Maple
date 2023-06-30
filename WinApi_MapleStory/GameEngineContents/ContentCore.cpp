@@ -1,9 +1,10 @@
 #include "ContentCore.h"
 #include "StartLevel.h"
-#include "PlayLevel.h"
-#include "EreveLevel.h"
 #include "PracticeLevel.h"
+#include "EreveLevel.h"
+#include "PlayLevel.h"
 #include "GardenLevel.h"
+#include "BossLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 ContentCore::ContentCore()
@@ -25,11 +26,12 @@ void ContentCore::Start()
 	GameEngineCore::CreateLevel<EreveLevel>("EreveLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
 	GameEngineCore::CreateLevel<GardenLevel>("GardenLevel");
+	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 
 	GameEngineCore::ChangeLevel("StartLevel");
 	//GameEngineCore::ChangeLevel("PracticeLevel");
 	//GameEngineCore::ChangeLevel("EreveLevel");
 	//GameEngineCore::ChangeLevel("PlayLevel");
 	//GameEngineCore::ChangeLevel("GardenLevel");
-	//GameEngineCore::ChangeLevel("BossLevel);
+	//GameEngineCore::ChangeLevel("BossLevel");
 }

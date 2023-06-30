@@ -83,6 +83,9 @@
     <ClInclude Include="RutaNpc.h">
       <Filter>Play</Filter>
     </ClInclude>
+    <ClInclude Include="BellomBoss.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="RutaNpc.cpp">
       <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="BellomBoss.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

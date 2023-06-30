@@ -2,15 +2,22 @@
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineCamera.h>
+
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineSound.h>
+#include <GameEngineCore/GameEngineCollision.h>
+
 
 #include "UIPanel.h"
 #include "Player.h"
 //#include "Monster.h"
 #include "BackGround.h"
 #include "GlobalValue.h"
+
+#include "Enum.h"
+#include "Potal.h"
+#include "FadeObject.h"
 
 
 GardenLevel::GardenLevel()
@@ -25,6 +32,7 @@ GardenLevel::~GardenLevel()
 
 void GardenLevel::Start()
 {
+	GameEngineWindow::MainWindow.CursorOff();
 	if (false == ResourcesManager::GetInst().IsLoadTexture("Garden_Test.bmp"))
 	{
 		GameEnginePath FilePath;
@@ -99,10 +107,16 @@ void GardenLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	LevelPlayer->SetGroundTexture("Garden_Debug1.bmp");
 
+	{
+		FadeObject* FObject = CreateActor<FadeObject>();
+	}
 
+	class Potal* BossPotal = CreateActor<Potal>(UpdateOrder::Potal);
+	BossPotal->CreateCollision(CollisionOrder::BossPotal);
+	BossPotal->SetPos({2820, 700});
 }
 
 void GardenLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	BGMPlayer.Stop();
+
 }

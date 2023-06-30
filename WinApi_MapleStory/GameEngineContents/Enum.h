@@ -4,6 +4,7 @@
 enum class RenderOrder
 {
 	BackGround,
+	Monster,
 	Play,
 	PlayUI,
 	InvenIcon,
@@ -14,6 +15,8 @@ enum class RenderOrder
 enum class CollisionOrder
 {
 	Map,
+	GardenPotal,
+	BossPotal,
 	Potal,
 	PlayerBody,
 	PlayerAttack,
@@ -29,4 +32,5 @@ enum class UpdateOrder
 {
 	Player,
 	Monster,
+	Potal,
 };

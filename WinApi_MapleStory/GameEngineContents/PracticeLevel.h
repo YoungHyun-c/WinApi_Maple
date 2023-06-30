@@ -34,7 +34,6 @@ private:
 
 	class UIQuest* Quest = nullptr;
 
-	GameEngineCollision* NPCCollision = nullptr;
 	class NineNpc* NineN = nullptr;
 
 	class Monster* Snail = nullptr;

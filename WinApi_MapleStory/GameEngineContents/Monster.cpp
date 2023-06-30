@@ -9,6 +9,7 @@
 
 std::list<Monster*> Monster::AllMonster;
 
+
 Monster::Monster()
 {
 	AllMonster.push_back(this);
@@ -44,12 +45,11 @@ void Monster::Start()
 	}
 
 	{
-		BlueSnailRenderer = CreateRenderer(RenderOrder::Play);
+		BlueSnailRenderer = CreateRenderer(RenderOrder::Monster);
 		BlueSnailRenderer->CreateAnimation("Left_Idle", "BlueSnailStand.bmp", 0, 0, 0.1f, true);
 		BlueSnailRenderer->CreateAnimation("Right_Idle", "BlueSnailStand.bmp", 1, 1, 0.1f, true);
 		BlueSnailRenderer->CreateAnimation("Left_Run", "BlueSnailMove.bmp", 0, 4, 0.3f, true);
 		BlueSnailRenderer->CreateAnimation("Right_Run", "BlueSnailMove.bmp", 5, 9, 0.3f, true);
-		BlueSnailRenderer->GetActor()->SetPos({ 300, 300 });
 		BlueSnailRenderer->ChangeAnimation("Right_Idle");
 	}
 

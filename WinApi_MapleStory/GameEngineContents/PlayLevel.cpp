@@ -23,6 +23,9 @@
 #include "GlobalValue.h"
 #include "FadeObject.h"
 
+#include "BellomBoss.h"
+#include "Potal.h"
+
 PlayLevel::PlayLevel()
 {
 
@@ -71,6 +74,7 @@ void PlayLevel::Start()
 	{
 		FadeObject* FObject = CreateActor<FadeObject>();
 	}
+
 }
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -94,6 +98,11 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	LevelPlayer->SetGroundTexture("RUTAMAP_DebugTT.bmp");
 
+	//Boss->SetPos({ 700, 550 });
+
+	GardenPotal = CreateActor<Potal>(UpdateOrder::Potal);
+	GardenPotal->CreateCollision(CollisionOrder::GardenPotal);
+	GardenPotal->SetPos({ 2000, 850 });
 }
 
 void PlayLevel::Update(float _Delta)

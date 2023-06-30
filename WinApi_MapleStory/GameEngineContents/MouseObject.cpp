@@ -39,7 +39,7 @@ void MouseObject::Start()
 
 		CursorRenderer = CreateRenderer("Mouse.bmp", RenderOrder::MouseUI);
 		CursorRenderer->UICameraSetting();
-		CursorRenderer->SetOrder(4);
+		CursorRenderer->SetOrder(200);
 
 		CursorRenderer->CreateAnimation("Idle", "Mouse.bmp", 0, 0, false);
 		CursorRenderer->CreateAnimation("Grab", "Mouse.bmp", 4, 6, 0.4f, true);

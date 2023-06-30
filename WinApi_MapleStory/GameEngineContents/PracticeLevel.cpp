@@ -73,9 +73,11 @@ void PracticeLevel::Start()
 	}
 
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
-
+	Snail->SetPos({ BlueSnailX,BlueSnailY });
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 40});
+
+
 	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	//Snail->SetPos({ BlueSnailX,BlueSnailY+200 });
 	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
@@ -120,11 +122,16 @@ void PracticeLevel::Update(float _Delta)
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
-	//if (1.0f <= GetLiveTime())
-	//{
-	//	Monster* NewMonster = CreateActor<Monster>(UpdateOrder::Monster);
-	//	ResetLiveTime();
-	//}
+	if (1.0f <= GetLiveTime())
+	{
+		//Monster* NewMonster = CreateActor<Monster>(UpdateOrder::Monster);
+		//ResetLiveTime();
+
+		//Snail = CreateActor<Monster>(UpdateOrder::Monster);
+
+		//Snail = CreateActor<Monster>(UpdateOrder::Monster);
+		//Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 40 });
+	}
 
 	//M_FMoveTime += _Delta;
 }

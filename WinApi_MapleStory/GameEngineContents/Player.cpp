@@ -66,6 +66,7 @@ void Player::Start()
 
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("LeftSkill0.bmp"), 4, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RightSkill0.bmp"), 4, 1);
+		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Bellom.bmp"), 5, 5);
 
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Pl11ayer.bmp"), 5, 17);
 		//ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Playrrer.bmp"), 5, 17);
@@ -102,6 +103,12 @@ void Player::Start()
 	//	BackGroundSizeforCamY = FindImage->GetScale().iY();
 	//}
 
+	//{
+	//	GameEngineRenderer* Bellom = CreateRenderer(RenderOrder::Play);
+	//	Bellom->CreateAnimation("Left_Idle", "Bellom.bmp", 0, 23, 0.2f);
+	//	//Bellom->SetRenderPos({ 500, 500 });
+	//	Bellom->ChangeAnimation("Left_Idle");
+	//}
 
 
 	{
@@ -139,6 +146,11 @@ void Player::Start()
 		MainRenderer->SetRenderScale({ 128, 128 });
 		
 		MainRenderer->ChangeAnimation("Right_Idle");
+	}
+
+	{
+		BodyCollision = CreateCollision(CollisionOrder::PlayerBody);
+		BodyCollision->SetCollisionScale({ 50,50 });
 	}
 
 	{
@@ -470,7 +482,7 @@ void Player::Render(float _Delta)
 		Data.Pos = ActorCameraPos() + RopeCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-		Data.Pos = ActorCameraPos() + PotalCheck;
+		//Data.Pos = ActorCameraPos() + PotalCheck;
 	}
 
 	{

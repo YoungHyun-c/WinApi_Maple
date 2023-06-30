@@ -49,6 +49,11 @@ public:
 	
 	GameEngineRenderer* UIRenderer = nullptr;
 
+	GameEngineCollision* GetBodyCollision()
+	{
+		return BodyCollision;
+	}
+
 protected:
 	void StateUpdate(float _Delta);
 
@@ -88,7 +93,7 @@ protected:
 
 	static bool DebugMode;
 
-	GameEngineCollision* BodyCollsion = nullptr;
+	GameEngineCollision* BodyCollision = nullptr;
 	GameEngineCollision* AttackCollsion = nullptr;
 	float4 AttackCollisionPos = { 200, 0 };
 
@@ -110,13 +115,16 @@ private:
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
 
+	class Potal* GardenPotal;
+
 	////////////////////// DebugValue
 	float4 LeftCheck = { -20.0f, -5.0f };
 	float4 RightCheck = { 20.0f, -5.0f };
 
 	float4 GroundCheck = { 0.0f, 30.0f };
 	float4 RopeCheck = { 0.0f, 10.0f };
-	float4 PotalCheck = { 0.0f, 10.0f };
+
+	//float4 PotalCheck = { 0.0f, 10.0f };
 
 	//////////////////////
 	//bool	M_Skill; // ½ºÅ³
