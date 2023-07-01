@@ -1,5 +1,6 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "PlayActor.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class MonsterState
 {
@@ -18,7 +19,7 @@ enum class MonsterDir
 };
 
 // Ό³Έν :
-class Monster : public GameEngineActor
+class Monster : public PlayActor
 {
 private:
 	static std::list<Monster*> AllMonster;
@@ -84,18 +85,16 @@ private:
 
 	float BlueSnailX = { 300.0f };
 	float BlueSnailY = { 300.0f };
-	float4 BlueSnailMovePos = float4::ZERO;
 
 	////////////////////// DebugValue
-	float4 LeftCheck = { -20.0f, -15.0f };
-	float4 RightCheck = { 20.0f, -15.0f };
+	float4 LeftCheck = { -18.0f, 0.0f };
+	float4 RightCheck = { 18.0f, 0.0f };
+	
+	bool WallCheck = false;
+	//float Speed = 30.0f;
+	
+	float4 BlueSnailMovePos = float4::ZERO;
+	float4 CheckPos = float4::ZERO;
 
-	float4 GroundCheck = { 0.0f, 30.0f };
-	float4 RopeCheck = { 0.0f, 10.0f };
-	float4 PotalCheck = { 0.0f, 10.0f };
-
-	//////////////////////
-	bool Jump;
-	bool DoubleJump;
 
 };

@@ -1,4 +1,5 @@
 #include "Monster.h"
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/ResourcesManager.h>
@@ -145,12 +146,21 @@ void Monster::Update(float _Delta)
 
 void Monster::Render(float _Delta)
 {
-	//HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
 
 	//std::string StrPos = "";
 	//StrPos += "MoveTime : ";
 	//StrPos += std::to_string(M_FMoveTime);
 	//TextOutA(dc, BlueSnailX + BlueSnailMovePos.X, BlueSnailY + BlueSnailMovePos.Y, StrPos.c_str(), static_cast<int>(StrPos.size()));
+
+	CollisionData Data;
+
+	Data.Scale = { 5, 5 };
+	Data.Pos = ActorCameraPos() + LeftCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+	Data.Pos = ActorCameraPos() + RightCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 }
 
 void Monster::StateUpdate(float _Delta)
@@ -231,7 +241,6 @@ void Monster::IdleUpdate(float _Delta)
 {
 	if (M_FStopTime <= M_FMoveTime)
 	{
-		Dir = MonsterDir::Right;
 		ChangeState(MonsterState::Run);
 		M_FMoveTime = 0.0f;
 	}
@@ -240,8 +249,8 @@ void Monster::IdleUpdate(float _Delta)
 void Monster::RunStart()
 {
 	ChangeAnimationState("Run");
-	idx = rand() % 2;
-	Dir = idx ? MonsterDir::Right : MonsterDir::Left;
+	idx = GameEngineRandom::MainRandom.RandomInt(0, 2);
+	Dir = idx ? MonsterDir::Left : MonsterDir::Right;
 	int a = 0;
 }
 
@@ -251,26 +260,37 @@ void Monster::RunUpdate(float _Delta)
 	float Speed = 30.0f;
 	BlueSnailMovePos;
 
-	//ChangeAnimationState("Run");
-	//AddPos(BlueSnailMovePos);
-	if (M_FStopTime <= M_FMoveTime && idx == 0)
+	//if (M_FStopTime <= M_FMoveTime)
+	//{
+	if (idx == 0)
 	{
+		Dir = MonsterDir::Left;
 		BlueSnailMovePos = { -Speed * _Delta, 0.0f };
-		//Dir = MonsterDir::Left;
 		ChangeAnimationState("Run");
-		AddPos(BlueSnailMovePos);
-
-		if (M_FMoveTime >= 7.0f)
-		{
-			M_FMoveTime = M_FMoveLimitTime;
-			ChangeState(MonsterState::Idle);
-		}
+		CheckPos = LeftCheck;
 	}
-	else
+	if (idx == 1)
 	{
-		//Dir = MonsterDir::Right;
+		Dir = MonsterDir::Right;
 		BlueSnailMovePos = { Speed * _Delta, 0.0f };
+		ChangeAnimationState("Run");
+		CheckPos = RightCheck;
+	}
+
+	//if (M_FMoveTime >= 7.0f)
+	//{
+	//	M_FMoveTime = M_FMoveLimitTime;
+	//	ChangeState(MonsterState::Idle);
+	//}
+	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	if (RGB(0, 0, 128) != CheckColor)
+	{
+		//ChangeAnimationState("Idle");
 		AddPos(BlueSnailMovePos);
+	}
+	if (RGB(0, 0, 128) == CheckColor)
+	{
+		ChangeState(MonsterState::Idle);
 	}
 }
 
