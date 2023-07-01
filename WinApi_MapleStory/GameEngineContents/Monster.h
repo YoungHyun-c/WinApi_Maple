@@ -5,8 +5,7 @@ enum class MonsterState
 {
 	Idle,
 	Run,
-	Jump,
-	DoubleJump,
+	Death,
 	Attack,
 	Max, // 일반적으로 사용하지 않는 값.
 };
@@ -25,6 +24,7 @@ private:
 	static std::list<Monster*> AllMonster;
 
 public:
+	static Monster* BlueSnailMonster;
 	static void AllMonsterDeath();
 	// constructer destructer
 	Monster();
@@ -39,7 +39,6 @@ public:
 	GameEngineRenderer* BlueSnailRenderer = nullptr;
 
 	//GameEngineRenderer*  = nullptr;
-	GameEngineRenderer* Ptr = nullptr;
 
 protected:
 	void StateUpdate(float _Delta);
@@ -50,24 +49,11 @@ protected:
 	void RunStart();
 	void RunUpdate(float _Delta);
 
-	// 클래스로 만들어도 되고.
-	void JumpStart();
-	void JumpUpdate(float _Delta);
-
-	void DoubleJumpStart();
-	void DoubleJumpUpdate(float _Delta);
-
-	void ProneStart();
-	void ProneUpdate(float _Delta);
-
-	void RopeStart();
-	void RopeUpdate(float _Delta);
+	void DeathStart();
+	void DeathUpdate(float _Delta);
 
 	void AttackStart();
 	void AttackUpdate(float _Delta);
-
-	void ProneAttackStart();
-	void ProneAttackUpdate(float _Delta);
 
 	void ChangeState(MonsterState State);
 
@@ -78,8 +64,10 @@ protected:
 	float M_FMoveTime = 0.0f;
 	float M_FMoveLimitTime = 0.0f;
 	float M_FStopTime = 3.5f;
+	int idx = rand() % 2;
 
 	GameEngineCollision* BodyCollsion = nullptr;
+	GameEngineCollision* MonsterBodyCol = nullptr;
 
 	void DirCheck();
 

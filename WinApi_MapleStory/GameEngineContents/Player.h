@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayActor.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 enum class PlayerState
 {
@@ -158,5 +159,8 @@ private:
 	bool Jump;
 	bool DoubleJump;
 
+
+	//////////////////// »ç¿îµå
+	GameEngineSoundPlayer AttackSound;
 };
 

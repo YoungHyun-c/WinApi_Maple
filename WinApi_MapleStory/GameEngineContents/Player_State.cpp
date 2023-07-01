@@ -442,6 +442,7 @@ void Player::AttackStart()
 	int Value = GameEngineRandom::MainRandom.RandomInt(0, 2);
 	//AttackRenderer0->ChangeAnimation("Right_Skill0");
 	//AttackRenderer0->ChangeAnimation("Left_Skill0");
+	GameEngineSound::SoundPlay("Attack.mp3");
 	switch (Value)
 	{
 	case(0):

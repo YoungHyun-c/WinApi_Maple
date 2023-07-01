@@ -40,6 +40,32 @@ void UIPanel::InvenOff()
 	}
 }
 
+void UIPanel::InvenCollisionOn()
+{
+	InvenPos = { 700, 300 };
+	InvenSize = { 120, 160 };
+	IconInter = { 36, 36 };
+	IconCollisions.resize(6);
+	for (size_t y = 0; y < 6; y++)
+	{
+		for (size_t x = 0; x < 4; x++)
+		{
+			float4 StartPos = InvenPos - InvenSize.Half();
+			float4 IconPos;
+			IconPos.X = x * IconInter.X;
+			IconPos.Y = y * IconInter.Y;
+			StartPos += IconPos;
+			InvenCollision = CreateCollision(CollisionOrder::InvenIcon);
+			InvenCollision->SetCollisionPos(StartPos);
+			InvenCollision->SetCollisionScale(IconInter);
+			InvenCollision->IsUIOn();
+
+			IconCollisions[y].push_back(InvenCollision);
+			InvenCollision->On();
+		}
+	}
+}
+
 UIPanel::UIPanel() :
 	m_bClick(false)
 {
@@ -169,7 +195,7 @@ void UIPanel::Start()
 				StartPos += IconPos;
 
 
-				GameEngineCollision* InvenCollision = CreateCollision(CollisionOrder::InvenIcon);
+				InvenCollision = CreateCollision(CollisionOrder::InvenIcon);
 				InvenCollision->SetCollisionPos(StartPos);
 				InvenCollision->SetCollisionScale(IconInter);
 				InvenCollision->IsUIOn();
@@ -181,6 +207,7 @@ void UIPanel::Start()
 
 				IconCollisions[y].push_back(InvenCollision);
 				IconRenders[y].push_back(Icon);
+				InvenCollision->Off();
 			}
 		}
 	}
@@ -279,16 +306,19 @@ void UIPanel::Update(float _Delta)
 	}
 
 
+
 	if (GameEngineInput::IsDown('I'))
 	{
 		Item = !Item;
 		if (Item)
 		{
 			InvenOn();
+			InvenCollisionOn();
 		}
 		else
 		{
 			InvenOff();
+			InvenCollision->Off();
 		}
 	}
 

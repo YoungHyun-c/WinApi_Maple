@@ -22,6 +22,8 @@ public:
 	void InvenOn();
 	void InvenOff();
 
+	void InvenCollisionOn();
+
 	void SetMouseObject(class MouseObject* _MObject)
 	{
 		MObject = _MObject;
@@ -34,6 +36,7 @@ protected:
 
 
 	GameEngineRenderer* UIItemRenderer = nullptr;
+	GameEngineCollision* InvenCollision = nullptr;
 	std::vector<std::vector<GameEngineRenderer*>> IconRenders;
 	std::vector<std::vector<GameEngineCollision*>> IconCollisions;
 

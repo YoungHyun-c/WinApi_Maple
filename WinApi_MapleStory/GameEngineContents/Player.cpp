@@ -76,7 +76,16 @@ void Player::Start()
 		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
 		//ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
 
+		if (nullptr == GameEngineSound::FindSound("Attack.mp3"))
+		{
+			GameEnginePath FilePath;
+			FilePath.SetCurrentPath();
+			FilePath.MoveParentToExistsChild("ContentsResources");
+			FilePath.MoveChild("ContentsResources\\Sound\\");
 
+			GameEngineSound::SoundLoad(FilePath.PlusFilePath("Attack.mp3"));
+		}
+		
 	}
 
 	// 이미지 크기(사이즈)만큼 받아오기
@@ -155,8 +164,8 @@ void Player::Start()
 
 	{
 		AttackRenderer0 = CreateRenderer(RenderOrder::Play);
-		AttackRenderer0->CreateAnimation("Left_Skill0", "LeftSkill0.bmp", 0, 3, 0.16f);
-		AttackRenderer0->CreateAnimation("Right_Skill0", "RightSkill0.bmp", 0, 3, 0.16f);
+		AttackRenderer0->CreateAnimation("Left_Skill0", "LeftSkill0.bmp", 0, 3, 0.075f);
+		AttackRenderer0->CreateAnimation("Right_Skill0", "RightSkill0.bmp", 0, 3, 0.075f);
 		//AttackRenderer0->SetRenderPos({ 100, -30 });
 		AttackRenderer0->SetRenderScale({ 768, 512 });
 		AttackRenderer0->ChangeAnimation("Right_Skill0");
@@ -178,21 +187,21 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 
-	std::vector<GameEngineCollision*> _Col;
-	if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _Col
-		, CollisionType::Rect // 
-		, CollisionType::Rect // 
-	))
-	{
-		for (size_t i = 0; i < _Col.size(); i++)
-		{
-			GameEngineCollision* Collison = _Col[i];
+	//std::vector<GameEngineCollision*> _Col;
+	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _Col
+	//	, CollisionType::Rect // 
+	//	, CollisionType::Rect // 
+	//))
+	//{
+	//	for (size_t i = 0; i < _Col.size(); i++)
+	//	{
+	//		GameEngineCollision* Collison = _Col[i];
 
-			GameEngineActor* Actor = Collison->GetActor();
+	//		GameEngineActor* Actor = Collison->GetActor();
 
-			Actor->Death();
-		}
-	}
+	//		Actor->Death();
+	//	}
+	//}
 
 	if (true == GameEngineInput::IsDown('R'))
 	{
@@ -282,8 +291,10 @@ void Player::StateUpdate(float _Delta)
 	{
 	case PlayerState::Idle:
 		return IdleUpdate(_Delta);
+		break;
 	case PlayerState::Run:
 		return RunUpdate(_Delta);
+		break;
 	case PlayerState::Jump:
 		return JumpUpdate(_Delta);
 		break;

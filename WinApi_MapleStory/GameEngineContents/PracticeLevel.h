@@ -40,7 +40,7 @@ private:
 
 
 	float BlueSnailX = { 300.0f };
-	float BlueSnailY = { 300.0f };
+	float BlueSnailY = { 310.0f };
 	float M_FMoveTime = 0.0f;
 
 	class FadeObject* FObject = nullptr;

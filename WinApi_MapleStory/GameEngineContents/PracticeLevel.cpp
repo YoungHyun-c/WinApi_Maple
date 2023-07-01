@@ -73,10 +73,10 @@ void PracticeLevel::Start()
 	}
 
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
-	Snail->SetPos({ BlueSnailX,BlueSnailY });
+	Snail->SetPos({ BlueSnailX, BlueSnailY });
+	
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
-	Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 40});
-
+	Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 45});
 
 	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	//Snail->SetPos({ BlueSnailX,BlueSnailY+200 });
