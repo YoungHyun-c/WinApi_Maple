@@ -83,7 +83,7 @@ void Player::IdleUpdate(float _Delta)
 	//	GameEngineCore::ChangeLevel("GardenLevel");
 	//}
 	std::vector<GameEngineCollision*> _Col;
-	if (true == BodyCollision->Collision(CollisionOrder::GardenPotal, _Col, CollisionType::Rect, CollisionType::Rect))
+	if (true == GameEngineInput::IsDown('W') && BodyCollision->Collision(CollisionOrder::GardenPotal, _Col, CollisionType::Rect, CollisionType::Rect))
 	{
 		GameEngineCore::ChangeLevel("GardenLevel");
 	}

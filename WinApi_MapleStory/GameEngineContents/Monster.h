@@ -61,10 +61,12 @@ protected:
 	MonsterState State = MonsterState::Max;
 	MonsterDir Dir = MonsterDir::Right;
 	std::string CurState = "";
+	std::string AnimationName;
 
 	float M_FMoveTime = 0.0f;
-	float M_FMoveLimitTime = 0.0f;
-	float M_FStopTime = 3.5f;
+	float M_FMoveLimitTime = 5.0f;
+	float M_FStopTime = 0.0f;
+	float M_FStopLimitTime = 3.5f;
 	int idx = rand() % 2;
 
 	GameEngineCollision* BodyCollsion = nullptr;
@@ -81,7 +83,6 @@ private:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
-	//void Render(float _Delta) override;
 
 	float BlueSnailX = { 300.0f };
 	float BlueSnailY = { 300.0f };
@@ -91,10 +92,11 @@ private:
 	float4 RightCheck = { 18.0f, 0.0f };
 	
 	bool WallCheck = false;
-	//float Speed = 30.0f;
+	float Speed = 30.0f;
 	
 	float4 BlueSnailMovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
 
+	bool MonsterStatus = false;
 
 };

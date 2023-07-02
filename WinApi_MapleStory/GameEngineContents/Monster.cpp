@@ -4,8 +4,12 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineInput.h>
 #include "Player.h"
 
+#include <iostream>
+#include <cmath>
+using namespace std;
 #include "Enum.h"
 
 std::list<Monster*> Monster::AllMonster;
@@ -78,43 +82,6 @@ void Monster::Start()
 
 void Monster::Update(float _Delta)
 {
-	//float4 Dir = Player::GetMainPlayer()->GetPos() - GetPos();
-
-	//Dir.Normalize();
-
-	//AddPos(Dir * _Delta * 100.0f);
-
-	// Dir *= 0.1f;
-
-
-	//float Speed = 30.0f;
-	//BlueSnailMovePos;
-
-	//Dir = MonsterDir::Right;
-	//ChangeAnimationState("Run");
-	M_FMoveTime += _Delta;
-
-	//DirCheck();
-
-	//if (M_FStopTime <= M_FMoveTime)
-	//{
-	//	BlueSnailMovePos = { -Speed * _Delta, 0.0f };
-	//	Dir = MonsterDir::Left;
-	//	ChangeAnimationState("Run");
-	//	AddPos(BlueSnailMovePos);
-
-	//	if (M_FMoveTime >= 7.0f)
-	//	{
-	//		M_FMoveTime = M_FMoveLimitTime;
-	//	}
-	//}
-	//else
-	//{
-	//	Dir = MonsterDir::Right;
-	//	BlueSnailMovePos = { Speed * _Delta, 0.0f };
-	//	AddPos(BlueSnailMovePos);
-	//}
-
 	StateUpdate(_Delta);
 
 	std::vector<GameEngineCollision*> _Col;
@@ -123,25 +90,13 @@ void Monster::Update(float _Delta)
 		, CollisionType::Rect // 
 	))
 	{
-		for (size_t i = 0; i < _Col.size(); i++)
-		{
-			GameEngineCollision* Collison = _Col[i];
-
-			GameEngineActor* Actor = Collison->GetActor();
-
-			ChangeState(MonsterState::Death);
-			//BlueSnailRenderer->ChangeAnimation("Right_Death");
-
-			//if (BlueSnailRenderer->IsAnimationEnd())
-			//{
-			//	Actor->Death();
-			//}
-		}
+		ChangeState(MonsterState::Death);
 	}
 
-	//std::string StrPos ="";
-	//swprintf_s(StrPos, L"Move : %.2f / %.2f", M_FMoveTime, m_fMoveLimitTime);
-	//TextOut(hDC, x, y + 60, strPos, lstrlen(strPos));
+	if (GameEngineInput::IsDown(VK_F2))
+	{
+		MonsterStatus = !MonsterStatus;
+	}
 }
 
 void Monster::Render(float _Delta)
@@ -153,14 +108,65 @@ void Monster::Render(float _Delta)
 	//StrPos += std::to_string(M_FMoveTime);
 	//TextOutA(dc, BlueSnailX + BlueSnailMovePos.X, BlueSnailY + BlueSnailMovePos.Y, StrPos.c_str(), static_cast<int>(StrPos.size()));
 
-	CollisionData Data;
 
-	Data.Scale = { 5, 5 };
-	Data.Pos = ActorCameraPos() + LeftCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	if (MonsterStatus)
+	{
+		{
+			CollisionData Data;
 
-	Data.Pos = ActorCameraPos() + RightCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Scale = { 5, 5 };
+			Data.Pos = ActorCameraPos() + LeftCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+			Data.Pos = ActorCameraPos() + RightCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		}
+
+		{
+			float4 Pos;
+			std::string MonsterState = "";
+			MonsterState += "몬스터 상태 : " + AnimationName;
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 100, MonsterState.c_str(), static_cast<int>(MonsterState.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string MonsterPosX = "";
+			float X = GetPos().X;
+			MonsterPosX += "몬스터 X 위치 : ";
+			MonsterPosX += std::to_string(X);
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -80, MonsterPosX.c_str(), static_cast<int>(MonsterPosX.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string MonsterPosY = "";
+			float Y = GetPos().Y;
+			MonsterPosY += ("몬스터 Y 위치 : ");
+			MonsterPosY += std::to_string(Y);
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -60, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string MonsterPosY = "";
+			MonsterPosY += ("MoveTime : ");
+			MonsterPosY += std::to_string(M_FMoveTime);
+			MonsterPosY += ("/");
+			MonsterPosY += std::to_string(static_cast<int>(M_FMoveLimitTime));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 40, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string MonsterPosY = "";
+			MonsterPosY += ("StopTime : ");
+			MonsterPosY += std::to_string(static_cast<int>(M_FStopTime));
+			MonsterPosY += ("/");
+			MonsterPosY += std::to_string(static_cast<int>(M_FStopLimitTime));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 20, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+		}
+	}
 }
 
 void Monster::StateUpdate(float _Delta)
@@ -210,7 +216,6 @@ void Monster::DirCheck()
 
 void Monster::ChangeAnimationState(const std::string& _StateName)
 {
-	std::string AnimationName;
 
 	switch (Dir)
 	{
@@ -239,10 +244,11 @@ void Monster::IdleStart()
 
 void Monster::IdleUpdate(float _Delta)
 {
-	if (M_FStopTime <= M_FMoveTime)
+	M_FStopTime += _Delta;
+	if (M_FStopTime >= M_FStopLimitTime)
 	{
 		ChangeState(MonsterState::Run);
-		M_FMoveTime = 0.0f;
+		M_FStopTime = 0.0f;
 	}
 }
 
@@ -251,46 +257,50 @@ void Monster::RunStart()
 	ChangeAnimationState("Run");
 	idx = GameEngineRandom::MainRandom.RandomInt(0, 2);
 	Dir = idx ? MonsterDir::Left : MonsterDir::Right;
-	int a = 0;
 }
 
 void Monster::RunUpdate(float _Delta)
 {
-
-	float Speed = 30.0f;
+	M_FMoveTime += _Delta;
 	BlueSnailMovePos;
 
 	//if (M_FStopTime <= M_FMoveTime)
 	//{
-	if (idx == 0)
+	if (Dir == MonsterDir::Left && M_FMoveTime < M_FMoveLimitTime)
 	{
-		Dir = MonsterDir::Left;
 		BlueSnailMovePos = { -Speed * _Delta, 0.0f };
 		ChangeAnimationState("Run");
 		CheckPos = LeftCheck;
 	}
-	if (idx == 1)
+	if (Dir == MonsterDir::Right && M_FMoveTime < M_FMoveLimitTime)
 	{
-		Dir = MonsterDir::Right;
 		BlueSnailMovePos = { Speed * _Delta, 0.0f };
 		ChangeAnimationState("Run");
 		CheckPos = RightCheck;
 	}
 
-	//if (M_FMoveTime >= 7.0f)
-	//{
-	//	M_FMoveTime = M_FMoveLimitTime;
-	//	ChangeState(MonsterState::Idle);
-	//}
+	if (M_FMoveTime >= M_FMoveLimitTime)
+	{
+		M_FMoveTime = 0.0f;
+		ChangeState(MonsterState::Idle);
+	}
+
 	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), CheckPos);
 	if (RGB(0, 0, 128) != CheckColor)
 	{
-		//ChangeAnimationState("Idle");
 		AddPos(BlueSnailMovePos);
 	}
 	if (RGB(0, 0, 128) == CheckColor)
 	{
-		ChangeState(MonsterState::Idle);
+		//ChangeState(MonsterState::Idle);
+		if (Dir == MonsterDir::Right)
+		{
+			Dir = MonsterDir::Left;
+		}
+		if (Dir == MonsterDir::Left)
+		{
+			Dir = MonsterDir::Right;
+		}
 	}
 }
 
@@ -305,5 +315,6 @@ void Monster::DeathUpdate(float _Delta)
 	if (true == BlueSnailRenderer->IsAnimationEnd())
 	{
 		BlueSnailRenderer->Off();
+		MonsterBodyCol->Off();
 	}
 }

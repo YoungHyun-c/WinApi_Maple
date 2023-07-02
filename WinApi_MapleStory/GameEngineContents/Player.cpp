@@ -425,21 +425,36 @@ void Player::Render(float _Delta)
 {
 	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
 
+	{
+		std::string Text = "";
+		Text += "플레이어 디버그 모드: F1";
+		TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
+	}
+
+	{
+		std::string Text = "";
+		Text += "몬스터 디버그 모드: F2";
+		TextOutA(dc, 2, 40, Text.c_str(), static_cast<int>(Text.size()));
+	}
+
+	{
+		std::string Text = "";
+		Text += "픽셀 확인: B";
+		TextOutA(dc, 2, 60, Text.c_str(), static_cast<int>(Text.size()));
+	}
+
+	{
+		std::string Text = "";
+		Text += "충돌 확인 : R";
+		TextOutA(dc, 2, 80, Text.c_str(), static_cast<int>(Text.size()));
+	}
 
 	if (DebugMode)
 	{
 		{
-			std::string Text = "";
-			Text += "플레이어 공격 횟수 : ";
-			Text += std::to_string(TestValue);
-			//Text += std::to_string(1.0f / _Delta);
-			TextOutA(dc, 2, 3, Text.c_str(), static_cast<int>(Text.size()));
-		}
-
-		{
 			std::string PlayerStateText = "";
 			PlayerStateText = "플레이어 상태 : " + AnimationName;
-			TextOutA(dc, 500, 600, PlayerStateText.c_str(), static_cast<int>(PlayerStateText.size()));
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 100, PlayerStateText.c_str(), static_cast<int>(PlayerStateText.size()));
 		}
 
 		{
@@ -448,7 +463,7 @@ void Player::Render(float _Delta)
 			float X = MainPlayer->GetPos().X;
 			PlayerPosX += "플레이어 X위치 : ";
 			PlayerPosX += std::to_string(X);
-			TextOutA(dc, 500, 630, PlayerPosX.c_str(), static_cast<int>(PlayerPosX.size()));
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 80, PlayerPosX.c_str(), static_cast<int>(PlayerPosX.size()));
 		}
 
 		{
@@ -457,30 +472,53 @@ void Player::Render(float _Delta)
 			float Y = MainPlayer->GetPos().Y;
 			PlayerPosY += "플레이어 Y위치 : ";
 			PlayerPosY += std::to_string(Y);
-			TextOutA(dc, 500, 650, PlayerPosY.c_str(), static_cast<int>(PlayerPosY.size()));
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 60, PlayerPosY.c_str(), static_cast<int>(PlayerPosY.size()));
 		}
-
 
 		{
 			float4 Pos;
-			std::string CameraPosX = "";
-			float X = GetLevel()->GetUICamera()->GetPos().X + MainPlayer->GetPos().Half().X;
-			//int X = GetLevel()->GetMainCamera()->GetPos().X;
-			CameraPosX += "카메라 X 위치 : ";
-			CameraPosX += std::to_string(X);
-			TextOutA(dc, X, 630, CameraPosX.c_str(), static_cast<int>(CameraPosX.size()));
+			std::string PlayerHP = "";
+			int Hp = GetMainPlayer()->GetMainPlayerHpValue();
+			PlayerHP += "플레이어 HP : ";
+			PlayerHP += std::to_string(Hp);
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 40, PlayerHP.c_str(), PlayerHP.size());
 		}
 
-		//{
-		//	GameEngineRenderer* PlayerStateRen = CreateRenderer("FADE.bmp", RenderOrder::PlayUI);
-		//	PlayerStateRen->SetRenderPos({30, - 100 });
-		//	//PlayerStateRen->SetRenderScale({ 30, 30 });
-		//	PlayerStateRen->SetText("플레이어 상태 : " + AnimationName, 30);
-		//	PlayerStateRen->Off();
-		//}
+		{
+			float4 Pos;
+			std::string PlayerMP = "";
+			int MP = GetMainPlayer()->GetMainPlayerMpValue();
+			PlayerMP += "플레이어 MP : ";
+			PlayerMP += std::to_string(MP);
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 20, PlayerMP.c_str(), PlayerMP.size());
+		}
+
+		{
+			std::string Text = "";
+			Text += "플레이어 공격 횟수 : ";
+			Text += std::to_string(TestValue);
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y, Text.c_str(), static_cast<int>(Text.size()));
+		}
+
+		{
+			float4 Pos;
+			std::string PlayerHP = "";
+			int Hp = GetMainPlayer()->GetMainPlayerHpValue();
+			//PlayerHP += "플레이어 HP : ";
+			PlayerHP += std::to_string(Hp);
+			TextOutA(dc, 500, 700, PlayerHP.c_str(), PlayerHP.size());
+		}
+
+		{
+			float4 Pos;
+			std::string PlayerMP = "";
+			int MP = GetMainPlayer()->GetMainPlayerMpValue();
+			//PlayerMP += "플레이어 MP : ";
+			PlayerMP += std::to_string(MP);
+			TextOutA(dc, 500, 715, PlayerMP.c_str(), PlayerMP.size());
+		}
 
 		CollisionData Data;
-
 		Data.Pos = ActorCameraPos() + GroundCheck;
 		Data.Scale = { 5, 5 };
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
@@ -494,7 +532,6 @@ void Player::Render(float _Delta)
 		Data.Pos = ActorCameraPos() + RopeCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-		//Data.Pos = ActorCameraPos() + PotalCheck;
 	}
 
 	{
@@ -508,22 +545,5 @@ void Player::Render(float _Delta)
 		//TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
 	}
 
-	{
-		float4 Pos;
-		std::string PlayerHP = "";
-		int Hp = GetMainPlayer()->GetMainPlayerHpValue();
-		//PlayerHP += "플레이어 HP : ";
-		PlayerHP += std::to_string(Hp);
-		TextOutA(dc, 500, 700, PlayerHP.c_str(), PlayerHP.size());
-	}
-
-	{
-		float4 Pos;
-		std::string PlayerMP = "";
-		int MP = GetMainPlayer()->GetMainPlayerMpValue();
-		//PlayerMP += "플레이어 MP : ";
-		PlayerMP += std::to_string(MP);
-		TextOutA(dc, 500, 715, PlayerMP.c_str(), PlayerMP.size());
-	}
-
 }
+

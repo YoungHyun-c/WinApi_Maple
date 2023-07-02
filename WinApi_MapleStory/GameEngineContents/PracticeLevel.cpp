@@ -77,7 +77,7 @@ void PracticeLevel::Start()
 	Snail->SetGroundTexture("PracticeLevel_Debug.bmp");
 	
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
-	Snail->SetPos({ BlueSnailX + 200, BlueSnailY - 45});
+	Snail->SetPos({ BlueSnailX + 210, BlueSnailY - 45});
 	Snail->SetGroundTexture("PracticeLevel_Debug.bmp");
 
 	//Snail = CreateActor<Monster>(UpdateOrder::Monster);

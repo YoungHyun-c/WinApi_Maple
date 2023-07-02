@@ -23,6 +23,7 @@ public:
 	void InvenOff();
 
 	void InvenCollisionOn();
+	void InvenCollisionOff();
 
 	void SetMouseObject(class MouseObject* _MObject)
 	{
@@ -48,8 +49,6 @@ protected:
 
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;
-
-	GameEngineRenderer* PlayerStateRender = nullptr;
 
 	GameEngineRenderer* PlayerBarRender = nullptr;
 	GameEngineRenderer* PlayerHPBarRender = nullptr;
@@ -81,9 +80,9 @@ protected:
 
 	bool m_bClick;
 
-	float4 InvenPos;
-	float4 IconInter;
-	float4 InvenSize;
+	float4 InvenPos = { 700, 300 };
+	float4 InvenSize = { 120, 160 };
+	float4 IconInter = { 36, 36 };
 
 private:
 	class MouseObject* MObject;

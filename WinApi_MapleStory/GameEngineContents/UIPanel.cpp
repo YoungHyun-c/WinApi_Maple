@@ -42,28 +42,42 @@ void UIPanel::InvenOff()
 
 void UIPanel::InvenCollisionOn()
 {
-	InvenPos = { 700, 300 };
-	InvenSize = { 120, 160 };
-	IconInter = { 36, 36 };
-	IconCollisions.resize(6);
-	for (size_t y = 0; y < 6; y++)
+	for (size_t y = 0; y < IconCollisions.size(); y++)
 	{
-		for (size_t x = 0; x < 4; x++)
+		for (size_t x = 0; x < IconCollisions[y].size(); x++)
 		{
-			float4 StartPos = InvenPos - InvenSize.Half();
-			float4 IconPos;
-			IconPos.X = x * IconInter.X;
-			IconPos.Y = y * IconInter.Y;
-			StartPos += IconPos;
-			InvenCollision = CreateCollision(CollisionOrder::InvenIcon);
-			InvenCollision->SetCollisionPos(StartPos);
-			InvenCollision->SetCollisionScale(IconInter);
-			InvenCollision->IsUIOn();
-
-			IconCollisions[y].push_back(InvenCollision);
-			InvenCollision->On();
+			IconCollisions[y][x]->On();
 		}
 	}
+}
+
+void UIPanel::InvenCollisionOff()
+{
+
+	for (size_t y = 0; y < IconCollisions.size(); y++)
+	{
+		for (size_t x = 0; x < IconCollisions[y].size(); x++)
+		{
+			IconCollisions[y][x]->Off();
+		}
+	}
+	//for (size_t y = 0; y < 6; y++)
+	//{
+	//	for (size_t x = 0; x < 4; x++)
+	//	{
+	//		float4 StartPos = InvenPos - InvenSize.Half();
+	//		float4 IconPos;
+	//		IconPos.X = x * IconInter.X;
+	//		IconPos.Y = y * IconInter.Y;
+	//		StartPos += IconPos;
+
+	//		InvenCollision->SetCollisionPos(StartPos);
+	//		InvenCollision->SetCollisionScale(IconInter);
+	//		InvenCollision->IsUIOn();
+	//		IconCollisions[y].push_back(InvenCollision);
+	//		InvenCollision->Off();
+	//	}
+	//}
 }
 
 UIPanel::UIPanel() :
@@ -167,16 +181,6 @@ void UIPanel::Start()
 	}
 
 	{
-		PlayerStateRender = CreateUIRenderer("FADE.bmp", RenderOrder::PlayUI);
-		PlayerStateRender->SetRenderPos({ 600, 680 });
-		PlayerStateRender->SetRenderScale({ 210, 200 });
-		PlayerStateRender->Off();
-	}
-
-	{
-		InvenPos = { 700, 300 };
-		InvenSize = {120, 160};
-		IconInter = { 36, 36 };
 		UIItemRenderer = CreateUIRenderer("Inventory.bmp", RenderOrder::PlayUI);
 		UIItemRenderer->SetRenderPos({ 700, 300 });
 		UIItemRenderer->Off();
@@ -199,7 +203,6 @@ void UIPanel::Start()
 				InvenCollision->SetCollisionPos(StartPos);
 				InvenCollision->SetCollisionScale(IconInter);
 				InvenCollision->IsUIOn();
-
 
 				GameEngineRenderer* Icon = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
 				Icon->SetRenderPos(StartPos);
@@ -312,13 +315,13 @@ void UIPanel::Update(float _Delta)
 		Item = !Item;
 		if (Item)
 		{
-			InvenOn();
 			InvenCollisionOn();
+			InvenOn();
 		}
 		else
 		{
+			InvenCollisionOff();
 			InvenOff();
-			InvenCollision->Off();
 		}
 	}
 
@@ -348,32 +351,16 @@ void UIPanel::Update(float _Delta)
 		}
 	}
 
-	if (GameEngineInput::IsDown(VK_F1))
-	{
-		StateRender = !StateRender;
-		if (StateRender)
-		{
-			PlayerStateRender->On();
-		}
-		else
-		{
-			PlayerStateRender->Off();
-		}
-	}
-
-
-	if (GameEngineInput::IsDown(VK_F2))
+	if (GameEngineInput::IsDown('C'))
 	{
 		CharUIRender = !CharUIRender;
 		if (CharUIRender)
 		{
-			//PlayerBarRender->On();
 			PlayerChatOpenRender->Off();
 			PlayerChatCloseRender->On();
 		}
 		else
 		{
-			//PlayerBarRender->Off();
 			PlayerChatOpenRender->On();
 			PlayerChatCloseRender->Off();
 		}
@@ -384,8 +371,8 @@ void UIPanel::Update(float _Delta)
 	int MovePlayerMP = Player::GetMainPlayer()->GetMainPlayerHpValue();
 	if (MovePlayerHP -300 >= 0 && GameEngineInput::IsDown('-'))
 	{
-		HpBarPosX -= 15;
-		MpBarPosX -= 15;
+		HpBarPosX -= 15.0f;
+		MpBarPosX -= 15.0f;
 		Player::GetMainPlayer()->GetMainPlayerHp(-300);
 		PlayerHPBarRender->SetRenderScale({ HpBarX -= 30, 14});
 		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
@@ -396,8 +383,8 @@ void UIPanel::Update(float _Delta)
 
 	if (MovePlayerHP + 300 <= 1410 && GameEngineInput::IsDown('='))
 	{
-		HpBarPosX += 15;
-		MpBarPosX += 15;
+		HpBarPosX += 15.0f;
+		MpBarPosX += 15.0f;
 		Player::GetMainPlayer()->GetMainPlayerHp(300);
 		PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
 		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
