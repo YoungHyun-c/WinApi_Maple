@@ -114,11 +114,6 @@ void PracticeLevel::Update(float _Delta)
 		BackGroundPtr->SwitchRenderer();
 	}
 
-	if (true == GameEngineInput::IsDown('0'))
-	{
-		GameEngineCore::ChangeLevel("StartLevel");
-	}
-
 	if (true == GameEngineInput::IsDown('2'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");

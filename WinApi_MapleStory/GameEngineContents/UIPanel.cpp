@@ -61,23 +61,107 @@ void UIPanel::InvenCollisionOff()
 			IconCollisions[y][x]->Off();
 		}
 	}
-	//for (size_t y = 0; y < 6; y++)
-	//{
-	//	for (size_t x = 0; x < 4; x++)
-	//	{
-	//		float4 StartPos = InvenPos - InvenSize.Half();
-	//		float4 IconPos;
-	//		IconPos.X = x * IconInter.X;
-	//		IconPos.Y = y * IconInter.Y;
-	//		StartPos += IconPos;
+}
 
-	//		InvenCollision->SetCollisionPos(StartPos);
-	//		InvenCollision->SetCollisionScale(IconInter);
-	//		InvenCollision->IsUIOn();
-	//		IconCollisions[y].push_back(InvenCollision);
-	//		InvenCollision->Off();
-	//	}
-	//}
+void UIPanel::OneClickCheckIconRender()
+{
+	for (size_t y = 0; y < IconRenders.size(); y++)
+	{
+		for (size_t x = 0; x < IconRenders[y].size(); x++)
+		{
+			if (IconRenders[y][x]->GetTexture() == "Apple.bmp")
+			{
+
+			}
+		}
+	}
+}
+
+void UIPanel::DoubleClickCheckIconRender()
+{
+	for (size_t y = 0; y < IconRenders.size(); y++)
+	{
+		for (size_t x = 0; x < IconRenders[y].size(); x++)
+		{
+			// 사과
+			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				&& IconRenders[y][x]->GetTexture() == "Apple.bmp")
+			{
+				if (MovePlayerHP + 50 <= 1410)
+				{
+					HpBarPosX += 2.5f;
+					Player::GetMainPlayer()->GetMainPlayerHp(50);
+					PlayerHPBarRender->SetRenderScale({ HpBarX += 5, 14 });
+					PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+				}
+
+				if (MovePlayerHP + 50 > 1410)
+				{
+					Player::GetMainPlayer()->SetMainPlayerHP(1410);
+					PlayerHPBarRender->SetRenderScale({ 141, 14 });
+					PlayerHPBarRender->SetRenderPos({ 520, 710 });
+				}
+			}
+			// 빨간포션
+			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				&& IconRenders[y][x]->GetTexture() == "RedPotion.bmp")
+			{
+				if (MovePlayerHP + 100 <= 1410)
+				{
+					HpBarPosX += 5.0f;
+					Player::GetMainPlayer()->GetMainPlayerHp(100);
+					PlayerHPBarRender->SetRenderScale({ HpBarX += 10, 14 });
+					PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+				}
+
+				if (MovePlayerHP + 100 > 1410)
+				{
+					Player::GetMainPlayer()->SetMainPlayerHP(1410);
+					PlayerHPBarRender->SetRenderScale({ 141, 14 });
+					PlayerHPBarRender->SetRenderPos({ 520, 710 });
+				}
+			}
+			// 파란포션
+			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				&& IconRenders[y][x]->GetTexture() == "BluePotion.bmp")
+			{
+				if (MovePlayerMP + 100 <= 1410)
+				{
+					MpBarPosX += 5.0f;
+					Player::GetMainPlayer()->GetMainPlayerMp(100);
+					PlayerMPBarRender->SetRenderScale({ MpBarX += 10, 14 });
+					PlayerMPBarRender->SetRenderPos({ MpBarPosX, 725 });
+				}
+
+				if (MovePlayerMP + 100 > 1410)
+				{
+					Player::GetMainPlayer()->SetMainPlayerMP(1410);
+					PlayerMPBarRender->SetRenderScale({ 141, 14 });
+					PlayerMPBarRender->SetRenderPos({ 520, 725 });
+				}
+
+			}
+			// 하얀포션
+			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				&& IconRenders[y][x]->GetTexture() == "WhitePotion.bmp")
+			{
+				if (MovePlayerHP + 300 <= 1410)
+				{
+					HpBarPosX += 15.0f;
+					Player::GetMainPlayer()->GetMainPlayerHp(300);
+					PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
+					PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+				}
+
+				if (MovePlayerHP + 300 > 1410)
+				{
+					Player::GetMainPlayer()->SetMainPlayerHP(1410);
+					PlayerHPBarRender->SetRenderScale({ 141, 14 });
+					PlayerHPBarRender->SetRenderPos({ 520, 710 });
+				}
+			}
+		}
+	}
 }
 
 UIPanel::UIPanel() :
@@ -112,7 +196,7 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
 
-		///// 캐릭터렌더
+		///// 캐릭터UI렌더
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BarUI.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("MPBar.bmp"));
@@ -204,7 +288,7 @@ void UIPanel::Start()
 				InvenCollision->SetCollisionScale(IconInter);
 				InvenCollision->IsUIOn();
 
-				GameEngineRenderer* Icon = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
+				GameEngineRenderer* Icon = CreateUIRenderer("Empty.bmp", RenderOrder::InvenIcon);
 				Icon->SetRenderPos(StartPos);
 				Icon->Off();
 
@@ -215,10 +299,13 @@ void UIPanel::Start()
 		}
 	}
 
-	IconRenders[0][0]->SetTexture("Empty.bmp");
-	IconRenders[1][2]->SetTexture("Empty.bmp");
-	IconRenders[3][2]->SetTexture("Empty.bmp");
-	IconRenders[4][0]->SetTexture("Empty.bmp");
+	IconRenders[0][0]->SetTexture("Apple.bmp");
+	IconRenders[0][1]->SetTexture("RedPotion.bmp");
+	IconRenders[0][2]->SetTexture("BluePotion.bmp");
+	IconRenders[0][3]->SetTexture("WhitePotion.bmp");
+	IconRenders[1][0]->SetTexture("Apple.bmp");
+	IconRenders[1][1]->SetTexture("WhitePotion.bmp");
+	IconRenders[1][2]->SetTexture("WhitePotion.bmp");
 
 	IconRenders[4][1]->SetTexture("RedPotion.bmp");
 	IconRenders[4][2]->SetTexture("BluePotion.bmp");
@@ -250,6 +337,7 @@ void UIPanel::Update(float _Delta)
 				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 					&& GameEngineInput::IsDown(VK_LBUTTON) && !m_bClick && IconRenders[y][x]->GetTexture() != "Empty.bmp")
 				{
+					OneClickCheckIconRender();
 					m_bClick = true;
 					MObject->ChangeAnimationState("GrabIdle");
 				}
@@ -257,17 +345,10 @@ void UIPanel::Update(float _Delta)
 					&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
 				{
 					int a = 0;
+					DoubleClickCheckIconRender();
 					m_bClick = false;
 					IconRenders[y][x]->SetTexture("Empty.bmp");
 					MObject->ChangeAnimationState("Idle");
-
-					if (MovePlayerHP + 300 <= 1410)
-					{
-						HpBarPosX += 15;
-						Player::GetMainPlayer()->GetMainPlayerHp(300);
-						PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
-						PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
-					}
 				}
 				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 				//	&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
@@ -366,30 +447,51 @@ void UIPanel::Update(float _Delta)
 		}
 	}
 	
-	//int MovePlayerHP = Player::GetMainPlayer()->GetMainPlayerHpValue();
+	////////// 체력 관련
 	MovePlayerHP = Player::GetMainPlayer()->GetMainPlayerHpValue();
-	int MovePlayerMP = Player::GetMainPlayer()->GetMainPlayerHpValue();
 	if (MovePlayerHP -300 >= 0 && GameEngineInput::IsDown('-'))
 	{
 		HpBarPosX -= 15.0f;
-		MpBarPosX -= 15.0f;
 		Player::GetMainPlayer()->GetMainPlayerHp(-300);
 		PlayerHPBarRender->SetRenderScale({ HpBarX -= 30, 14});
 		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+	}
+	if (MovePlayerHP + 300 <= 1410 && GameEngineInput::IsDown('='))
+	{
+		HpBarPosX += 15.0f;
+		Player::GetMainPlayer()->GetMainPlayerHp(300);
+		PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
+		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
+	}
+	if (MovePlayerHP + 300 > 1410 && GameEngineInput::IsDown('='))
+	{
+		Player::GetMainPlayer()->SetMainPlayerHP(1410);
+		PlayerHPBarRender->SetRenderScale({ HpBarX = 141.0f, 14 });
+		PlayerHPBarRender->SetRenderPos({ HpBarPosX = 520.0f, 710 });
+	}
+
+
+	/////// 마나 관련
+	MovePlayerMP = Player::GetMainPlayer()->GetMainPlayerMpValue();
+	if (MovePlayerMP - 300 >= 0 && GameEngineInput::IsDown('-'))
+	{
+		MpBarPosX -= 15.0f;
 		Player::GetMainPlayer()->GetMainPlayerMp(-300);
 		PlayerMPBarRender->SetRenderScale({ MpBarX -= 30, 14 });
 		PlayerMPBarRender->SetRenderPos({ MpBarPosX , 725 });
 	}
-
-	if (MovePlayerHP + 300 <= 1410 && GameEngineInput::IsDown('='))
+	if (MovePlayerMP + 300 <= 1410 && GameEngineInput::IsDown('='))
 	{
-		HpBarPosX += 15.0f;
 		MpBarPosX += 15.0f;
-		Player::GetMainPlayer()->GetMainPlayerHp(300);
-		PlayerHPBarRender->SetRenderScale({ HpBarX += 30, 14 });
-		PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
 		Player::GetMainPlayer()->GetMainPlayerMp(300);
 		PlayerMPBarRender->SetRenderScale({ MpBarX += 30, 14 });
 		PlayerMPBarRender->SetRenderPos({ MpBarPosX , 725 });
 	}
+	if (MovePlayerMP + 300 > 1410 && GameEngineInput::IsDown('='))
+	{
+		Player::GetMainPlayer()->SetMainPlayerMP(1410);
+		PlayerMPBarRender->SetRenderScale({ MpBarX = 141.0f, 14 });
+		PlayerMPBarRender->SetRenderPos({ MpBarPosX = 520.0f, 725 });
+	}
+
 }

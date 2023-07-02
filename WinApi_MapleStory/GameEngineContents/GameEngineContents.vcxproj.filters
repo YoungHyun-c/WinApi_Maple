@@ -19,6 +19,9 @@
     <Filter Include="UI\UIInteraction">
       <UniqueIdentifier>{9c9c7e74-c738-4fae-a085-7d543e37f60f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global\Monster">
+      <UniqueIdentifier>{915215ec-240c-467b-8276-797c9a71f553}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StartLevel.h">
@@ -68,9 +71,6 @@
     <ClInclude Include="UIQuest.h">
       <Filter>UI\UIInteraction</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="FadeObject.h">
       <Filter>Play</Filter>
     </ClInclude>
@@ -84,7 +84,13 @@
       <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="BellomBoss.h">
-      <Filter>Global</Filter>
+      <Filter>Global\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Global\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpMonster.h">
+      <Filter>Global\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +141,6 @@
     <ClCompile Include="UIQuest.cpp">
       <Filter>UI\UIInteraction</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <Filter>Play</Filter>
     </ClCompile>
@@ -151,7 +154,13 @@
       <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="BellomBoss.cpp">
-      <Filter>Global</Filter>
+      <Filter>Global\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpMonster.cpp">
+      <Filter>Global\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Global\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,6 +25,9 @@ public:
 	void InvenCollisionOn();
 	void InvenCollisionOff();
 
+	void OneClickCheckIconRender();
+	void DoubleClickCheckIconRender();
+
 	void SetMouseObject(class MouseObject* _MObject)
 	{
 		MObject = _MObject;

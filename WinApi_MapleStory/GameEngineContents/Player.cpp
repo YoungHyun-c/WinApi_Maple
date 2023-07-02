@@ -481,7 +481,7 @@ void Player::Render(float _Delta)
 			int Hp = GetMainPlayer()->GetMainPlayerHpValue();
 			PlayerHP += "플레이어 HP : ";
 			PlayerHP += std::to_string(Hp);
-			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 40, PlayerHP.c_str(), PlayerHP.size());
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 40, PlayerHP.c_str(), static_cast<int>(PlayerHP.size()));
 		}
 
 		{
@@ -490,7 +490,7 @@ void Player::Render(float _Delta)
 			int MP = GetMainPlayer()->GetMainPlayerMpValue();
 			PlayerMP += "플레이어 MP : ";
 			PlayerMP += std::to_string(MP);
-			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 20, PlayerMP.c_str(), PlayerMP.size());
+			TextOutA(dc, ActorCameraPos().X + 30, ActorCameraPos().Y - 20, PlayerMP.c_str(), static_cast<int>(PlayerMP.size()));
 		}
 
 		{
@@ -506,7 +506,7 @@ void Player::Render(float _Delta)
 			int Hp = GetMainPlayer()->GetMainPlayerHpValue();
 			//PlayerHP += "플레이어 HP : ";
 			PlayerHP += std::to_string(Hp);
-			TextOutA(dc, 500, 700, PlayerHP.c_str(), PlayerHP.size());
+			TextOutA(dc, 500, 700, PlayerHP.c_str(), static_cast<int>(PlayerHP.size()));
 		}
 
 		{
@@ -515,7 +515,7 @@ void Player::Render(float _Delta)
 			int MP = GetMainPlayer()->GetMainPlayerMpValue();
 			//PlayerMP += "플레이어 MP : ";
 			PlayerMP += std::to_string(MP);
-			TextOutA(dc, 500, 715, PlayerMP.c_str(), PlayerMP.size());
+			TextOutA(dc, 500, 715, PlayerMP.c_str(), static_cast<int>(PlayerMP.size()));
 		}
 
 		CollisionData Data;

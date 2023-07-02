@@ -153,3 +153,8 @@ void BellomBoss::Update(float _Delta)
 	//	}
 	//}
 }
+
+void BellomBoss::Render(float _Delta)
+{
+
+}

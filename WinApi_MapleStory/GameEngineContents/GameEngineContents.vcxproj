@@ -199,6 +199,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ImpMonster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Monster.h">
       <SubType>
       </SubType>
@@ -286,6 +290,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ImpMonster.cpp">
       <SubType>
       </SubType>
     </ClCompile>

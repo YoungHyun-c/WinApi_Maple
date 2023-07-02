@@ -55,6 +55,17 @@ public:
 		return BodyCollision;
 	}
 
+	void SetMainPlayerHP(int _Value)
+	{
+		PlayerHp = _Value;
+
+	}
+
+	void SetMainPlayerMP(int _Value)
+	{
+		PlayerMp = _Value;
+	}
+
 	void GetMainPlayerHp(int _Value)
 	{
 		PlayerHp += _Value;
