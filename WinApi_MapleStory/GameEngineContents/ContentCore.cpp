@@ -28,10 +28,10 @@ void ContentCore::Start()
 	GameEngineCore::CreateLevel<GardenLevel>("GardenLevel");
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 
-	//GameEngineCore::ChangeLevel("StartLevel");
+	GameEngineCore::ChangeLevel("StartLevel");
 	//GameEngineCore::ChangeLevel("PracticeLevel");
 	//GameEngineCore::ChangeLevel("EreveLevel");
 	//GameEngineCore::ChangeLevel("PlayLevel");
-	GameEngineCore::ChangeLevel("GardenLevel");
+	//GameEngineCore::ChangeLevel("GardenLevel");
 	//GameEngineCore::ChangeLevel("BossLevel");
 }

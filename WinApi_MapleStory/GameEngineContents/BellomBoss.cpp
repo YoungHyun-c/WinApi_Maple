@@ -50,6 +50,19 @@ void BellomBoss::Start()
 		Bellom->Off();
 	}
 
+	GameEngineSound::SetGlobalVolume(0.3f);
+	if (nullptr == GameEngineSound::FindSound("BellomAttack1.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomAttack1.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDie.mp3"));
+	}
+
 	BellomSummon = CreateCollision(CollisionOrder::BossSummon);
 	BellomSummon->SetCollisionPos({ 1690, 650 });
 	BellomSummon->SetCollisionScale({ 200, 100 });
@@ -66,6 +79,7 @@ void BellomBoss::Update(float _Delta)
 	{
 		Bellom->On();
 		Bellom->SetRenderPos({ 1700, 400 });
+		GameEngineSound::SoundPlay("BellomAttack1.mp3");
 		Bellom->ChangeAnimation("Left_Ready");
 		Summon = true;
 		BellomSummon->Off();
@@ -81,10 +95,10 @@ void BellomBoss::Update(float _Delta)
 		Bellom->ChangeAnimation("Left_Wake");
 	}
 
-	if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
-	{
-		Bellom->ChangeAnimation("Left_Down");
-	}
+	//if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
+	//{
+	//	Bellom->ChangeAnimation("Left_Down");
+	//}
 
 	//if (GameEngineInput::IsDown(VK_F6))
 	//{
