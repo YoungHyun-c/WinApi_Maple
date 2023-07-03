@@ -67,15 +67,16 @@ void ImpMonster::Start()
 	}
 
 	GameEngineSound::SetGlobalVolume(0.3f);
-	//if (nullptr == GameEngineSound::FindSound("Die.mp3"))
-	//{
-	//	GameEnginePath FilePath;
-	//	FilePath.SetCurrentPath();
-	//	FilePath.MoveParentToExistsChild("ContentsResources");
-	//	FilePath.MoveChild("ContentsResources\\Sound\\");
+	if (nullptr == GameEngineSound::FindSound("ImpAttack.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Sound\\");
 
-	//	GameEngineSound::SoundLoad(FilePath.PlusFilePath("Die.mp3"));
-	//}
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("ImpAttack.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("ImpDie.mp3"));
+	}
 
 	{
 		ImpBodyCollision = CreateCollision(CollisionOrder::MonsterBody);
@@ -357,6 +358,7 @@ void ImpMonster::RunUpdate(float _Delta)
 
 void ImpMonster::AttackStart()
 {
+	GameEngineSound::SoundPlay("ImpAttack.mp3");
 	ChangeAnimationState("Attack");
 	if (Dir == MonsterDir::Left)
 	{
@@ -384,6 +386,7 @@ void ImpMonster::AttackUpdate(float _Delta)
 
 void ImpMonster::DeathStart()
 {
+	GameEngineSound::SoundPlay("ImpDie.mp3");
 	ChangeAnimationState("Death");
 	ImpDeath = true;
 	ImpRightAttackCollision->Off();

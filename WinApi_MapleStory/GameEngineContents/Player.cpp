@@ -84,6 +84,7 @@ void Player::Start()
 			FilePath.MoveChild("ContentsResources\\Sound\\");
 
 			GameEngineSound::SoundLoad(FilePath.PlusFilePath("Attack.mp3"));
+			GameEngineSound::SoundLoad(FilePath.PlusFilePath("Jump.mp3"));
 		}
 		
 	}

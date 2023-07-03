@@ -226,10 +226,12 @@ void Player::JumpStart()
 	Jump = true;
 	DoubleJump = true;
 	ChangeAnimationState("Jump");
+	GameEngineSound::SoundPlay("Jump.mp3");
 }
 
 void Player::DoubleJumpStart()
 {
+	GameEngineSound::SoundPlay("Jump.mp3");
 	if (Dir == PlayerDir::Right)
 	{
 		SetGravityVector(float4{ 400.0f, -300.0f });
@@ -434,8 +436,6 @@ void Player::RopeUpdate(float _Delta)
 void Player::AttackStart()
 {
 	int Value = GameEngineRandom::MainRandom.RandomInt(0, 2);
-	//AttackRenderer0->ChangeAnimation("Right_Skill0");
-	//AttackRenderer0->ChangeAnimation("Left_Skill0");
 	GameEngineSound::SoundPlay("Attack.mp3");
 	switch (Value)
 	{
