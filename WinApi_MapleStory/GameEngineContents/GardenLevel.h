@@ -27,6 +27,8 @@ private:
 
 	class BackGround* BackGroundPtr;
 	class Player* LevelPlayer = nullptr;
+	class ImpMonster* Imp = nullptr;
+
 
 	GameEngineSoundPlayer BGMPlayer;
 };

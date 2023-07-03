@@ -56,12 +56,13 @@ void Monster::Start()
 		BlueSnailRenderer->CreateAnimation("Right_Idle", "BlueSnailStand.bmp", 1, 1, 0.1f, true);
 		BlueSnailRenderer->CreateAnimation("Left_Run", "BlueSnailMove.bmp", 0, 4, 0.3f, true);
 		BlueSnailRenderer->CreateAnimation("Right_Run", "BlueSnailMove.bmp", 5, 9, 0.3f, true);
-		BlueSnailRenderer->CreateAnimation("Left_Death", "BlueSnailDeath.bmp", 0, 5, 0.2f, true);
-		BlueSnailRenderer->CreateAnimation("Right_Death", "BlueSnailDeath.bmp", 6, 11, 0.2f, true);
+		BlueSnailRenderer->CreateAnimation("Left_Death", "BlueSnailDeath.bmp", 0, 5, 0.2f, false);
+		BlueSnailRenderer->CreateAnimation("Right_Death", "BlueSnailDeath.bmp", 6, 11, 0.2f, false);
 		BlueSnailRenderer->ChangeAnimation("Right_Idle");
 		ChangeState(MonsterState::Idle);
 	}
 
+	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("Die.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -84,7 +85,7 @@ void Monster::Update(float _Delta)
 {
 	StateUpdate(_Delta);
 
-	std::vector<GameEngineCollision*> _Col;
+	//std::vector<GameEngineCollision*> _Col;
 	if (true == MonsterBodyCol->Collision(CollisionOrder::PlayerAttack, _Col
 		, CollisionType::Rect // 
 		, CollisionType::Rect // 
@@ -175,8 +176,10 @@ void Monster::StateUpdate(float _Delta)
 	{
 	case MonsterState::Idle:
 		return IdleUpdate(_Delta);
+		break;
 	case MonsterState::Run:
 		return RunUpdate(_Delta);
+		break;
 	case MonsterState::Death:
 		return DeathUpdate(_Delta);
 		break;
@@ -254,7 +257,6 @@ void Monster::IdleUpdate(float _Delta)
 
 void Monster::RunStart()
 {
-	ChangeAnimationState("Run");
 	idx = GameEngineRandom::MainRandom.RandomInt(0, 2);
 	Dir = idx ? MonsterDir::Left : MonsterDir::Right;
 }

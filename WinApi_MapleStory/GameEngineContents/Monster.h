@@ -37,10 +37,6 @@ public:
 	Monster& operator = (const Monster& _Other) = delete;
 	Monster& operator = (Monster&& _Other) noexcept = delete;
 
-	GameEngineRenderer* BlueSnailRenderer = nullptr;
-
-	//GameEngineRenderer*  = nullptr;
-
 protected:
 	void StateUpdate(float _Delta);
 
@@ -69,8 +65,11 @@ protected:
 	float M_FStopLimitTime = 3.5f;
 	int idx = rand() % 2;
 
+	GameEngineRenderer* BlueSnailRenderer = nullptr;
 	GameEngineCollision* BodyCollsion = nullptr;
 	GameEngineCollision* MonsterBodyCol = nullptr;
+
+	std::vector<GameEngineCollision*> _Col;
 
 	void DirCheck();
 

@@ -23,6 +23,7 @@ enum class CollisionOrder
 	PlayerBody,
 	PlayerAttack,
 	MonsterBody,
+	MonsterAttack,
 	InvenIcon,
 	MouseObject,
 	MouseObjectPlay,

@@ -51,7 +51,6 @@ void Player::Start()
 
 		FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
 
-		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
 
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Stand.bmp"), 6, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Walk.bmp"), 4, 1);
@@ -76,6 +75,7 @@ void Player::Start()
 		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
 		//ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
 
+		GameEngineSound::SetGlobalVolume(0.3f);
 		if (nullptr == GameEngineSound::FindSound("Attack.mp3"))
 		{
 			GameEnginePath FilePath;
@@ -189,8 +189,8 @@ void Player::Update(float _Delta)
 
 	//std::vector<GameEngineCollision*> _Col;
 	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _Col
-	//	, CollisionType::Rect // 
-	//	, CollisionType::Rect // 
+	//	, CollisionType::Rect // ³ª¸¦ »ç°¢ÇüÀ¸·Î ºÁÁà
+	//	, CollisionType::CirCle // »ó´ëµµ »ç°¢ÇüÀ¸·Î ºÁÁà
 	//))
 	//{
 	//	for (size_t i = 0; i < _Col.size(); i++)
@@ -199,7 +199,7 @@ void Player::Update(float _Delta)
 
 	//		GameEngineActor* Actor = Collison->GetActor();
 
-	//		Actor->Death();
+	//		Collison->GetActor()->Death();
 	//	}
 	//}
 

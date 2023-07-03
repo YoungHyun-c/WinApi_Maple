@@ -25,7 +25,7 @@ void BellomBoss::Start()
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\Monster\\");
+		FilePath.MoveChild("ContentsResources\\Texture\\Monster\\Bellom\\");
 
 		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Bellom.bmp"));
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Bellom1.bmp"), 4, 2);
@@ -54,6 +54,8 @@ void BellomBoss::Start()
 	BellomSummon->SetCollisionPos({ 1690, 650 });
 	BellomSummon->SetCollisionScale({ 200, 100 });
 
+
+	GameEngineSound::SetGlobalVolume(0.3f);
 }
 
 void BellomBoss::Update(float _Delta)

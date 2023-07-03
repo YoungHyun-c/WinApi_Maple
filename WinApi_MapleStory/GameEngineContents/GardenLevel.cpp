@@ -11,7 +11,7 @@
 
 #include "UIPanel.h"
 #include "Player.h"
-//#include "Monster.h"
+#include "ImpMonster.h"
 #include "BackGround.h"
 #include "GlobalValue.h"
 
@@ -61,6 +61,42 @@ void GardenLevel::Start()
 	LevelPlayer = CreateActor<Player>();
 	LevelPlayer->SetGroundTexture("Garden_Debug1.bmp");
 	LevelPlayer->SetPos({ 300, 400 });
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 700, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 90, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 1000, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 1200, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 1500, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 2000, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 2500, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 2700, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
+
+	Imp = CreateActor<ImpMonster>();
+	Imp->SetPos({ 3000, 700 });
+	Imp->SetGroundTexture("Garden_Debug1.bmp");
 }
 
 void GardenLevel::Update(float _Delta)
