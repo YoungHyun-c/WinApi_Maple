@@ -125,6 +125,11 @@ void PlayLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("PracticeLevel");
 	}
+
+	if (true == GameEngineInput::IsDown('4'))
+	{
+		GameEngineCore::ChangeLevel("BossLevel");
+	}
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -8,6 +8,8 @@
 #include <GameEnginePlatform/GameEngineInput.h>"
 #include "Enum.h"
 
+BellomBoss* BellomBoss::MainBoss = nullptr;
+bool BellomBoss::Summon = false;
 BellomBoss::BellomBoss()
 {
 
@@ -63,9 +65,20 @@ void BellomBoss::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDie.mp3"));
 	}
 
-	BellomSummon = CreateCollision(CollisionOrder::BossSummon);
-	BellomSummon->SetCollisionPos({ 1690, 650 });
-	BellomSummon->SetCollisionScale({ 200, 100 });
+	// º§·ë ¼ÒÈ¯
+	{
+		BellomSummon = CreateCollision(CollisionOrder::BossSummon);
+		BellomSummon->SetCollisionPos({ 1690.0f, 650.0f });
+		BellomSummon->SetCollisionScale({ 200.0f, 100.0f });
+	}
+
+	// º§·ë ¸öÅë
+	{
+		BellomBody = CreateCollision(CollisionOrder::MonsterBody);
+		BellomBody->SetCollisionPos({ 1730.0f, 600.0f });
+		BellomBody->SetCollisionScale({ 150.0f, 300.0f });
+		BellomBody->Off();
+	}
 
 
 	GameEngineSound::SetGlobalVolume(0.3f);
@@ -83,6 +96,7 @@ void BellomBoss::Update(float _Delta)
 		Bellom->ChangeAnimation("Left_Ready");
 		Summon = true;
 		BellomSummon->Off();
+		BellomBody->On();
 	}
 
 	if (true == Summon)

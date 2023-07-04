@@ -8,6 +8,7 @@ enum class RenderOrder
 	Play,
 	PlayUI,
 	PlayerHPMPBar,
+	BossHPBar,
 	InvenIcon,
 	MouseUI,
 	Fade,

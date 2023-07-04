@@ -13,6 +13,7 @@
 #include "MouseObject.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Player.h"
+#include "BellomBoss.h"
 
 UIPanel* UIPanel::UI = nullptr;
 
@@ -207,6 +208,13 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("QuickSlot.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("QuickSlotAlpha.bmp"));
 
+
+		///// º¸½ºUI·»´õ
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BellomProfile.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("EnergyBarS.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("EnergyBarM.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("EnergyBarE.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BellomHPBar.bmp"));
 	}
 
 	{
@@ -494,4 +502,22 @@ void UIPanel::Update(float _Delta)
 		PlayerMPBarRender->SetRenderPos({ MpBarPosX = 520.0f, 725 });
 	}
 
+
+	if (true == BellomBoss::GetMainBoss()->BellomSummoner())
+	{
+		GameEngineRenderer* BossProfile = CreateUIRenderer("BellomProfile.bmp", RenderOrder::PlayUI);
+		BossProfile->SetRenderPos({ 200.0f, 30.0f });
+
+		GameEngineRenderer* BossHPUIS = CreateUIRenderer("EnergyBarS.bmp", RenderOrder::PlayUI);
+		BossHPUIS->SetRenderPos({ 230.0f, 30.0f });
+		GameEngineRenderer* BossHPUIM = CreateUIRenderer("EnergyBarM.bmp", RenderOrder::PlayUI);
+		BossHPUIM->SetRenderPos({ 580.0f, 30.0f });
+		GameEngineRenderer* BossHPUIE = CreateUIRenderer("EnergyBarE.bmp", RenderOrder::PlayUI);
+		BossHPUIE->SetRenderPos({ 935.0f, 30.0f });
+
+		GameEngineRenderer* BossHPBar = CreateUIRenderer("BellomHPBar.bmp", RenderOrder::BossHPBar);
+		BossHPBar->SetRenderPos({ 582.5f, 30.0f });
+		//BossHPBar->SetRenderScale({ 710,12 });
+		//BossHPBar->SetRenderScale({ 510,12 });
+	}
 }
