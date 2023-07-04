@@ -46,12 +46,12 @@ void BellomBoss::Start()
 	{
 		Bellom = CreateRenderer(RenderOrder::Monster);
 		Bellom->CreateAnimation("Left_Ready", "Bellom1.bmp", 0, 7, 0.2f, false);
-		Bellom->CreateAnimation("Left_Wake", "Bellom2.bmp", 0, 7, 0.2f, false);
-		Bellom->CreateAnimation("Left_Down", "Bellom3.bmp", 0, 11, 0.2f, false);
-		Bellom->CreateAnimation("AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, false);
-		Bellom->CreateAnimation("Attack", "BellomAttack.bmp", 0, 5, 0.2f, false);
-		Bellom->CreateAnimation("AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, false);
-		Bellom->CreateAnimation("Die", "BossDie.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Left_Wake", "Bellom2.bmp", 0, 7, 0.15f, false);
+		Bellom->CreateAnimation("Left_Down", "Bellom3.bmp", 0, 11, 0.15f, false);
+		Bellom->CreateAnimation("Left_AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Left_Attack", "BellomAttack.bmp", 0, 5, 0.2f, false);
+		Bellom->CreateAnimation("Left_AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Left_Death", "BossDie.bmp", 0, 9, 0.2f, false);
 		Bellom->SetRenderScale({ 1024, 1024 });
 		//Bellom->SetRenderPos({ 1700, 300 });
 		//Bellom->ChangeAnimation("AttackReady");
@@ -66,10 +66,11 @@ void BellomBoss::Start()
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\Sound\\");
 
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDeath.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomAttack1.mp3"));
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDie.mp3"));
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomAttack5.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomAttack9.mp3"));
 	}
 
 	// 벨룸 소환
@@ -95,23 +96,40 @@ void BellomBoss::Update(float _Delta)
 	if (BellomSummon->Collision(CollisionOrder::MouseObjectPlay, Col, CollisionType::Rect, CollisionType::Rect)
 		&& GameEngineInput::IsDown(VK_LBUTTON))
 	{
-		Bellom->On();
-		Bellom->SetRenderPos({ 1700, 400 });
-		GameEngineSound::SoundPlay("BellomAttack1.mp3");
-		Bellom->ChangeAnimation("Left_Ready");
-		Summon = true;
+		ChangeState(BossState::Summon);
 		BellomSummon->Off();
-		BellomBody->On();
+		Summon = true;
 	}
 
-	if (true == Summon)
+	// 가만히 냅두고 죽이기
+	if (GameEngineInput::IsDown(VK_F6))
 	{
-		MoveTime += _Delta;
-	}
-
-	if (MoveTime >= 1.5f && true == Bellom->IsAnimationEnd())
-	{
+		Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400 });
+		GameEngineSound::SoundPlay("BellomAttack9.mp3");
 		Bellom->ChangeAnimation("Left_Wake");
+		Bellom->SetRenderPos({ 1700, 380 });
+		Bellom->SetRenderScale({ 1024, 1024 });
+		BellomBody->On();
+		BellomBody->SetCollisionPos({ 1730.0f, 600.0f });
+		BellomBody->SetCollisionScale({ 150.0f, 300.0f });
+		BossStop = true;
+	}
+
+	// 모션 테스트
+	if (GameEngineInput::IsDown(VK_F7))
+	{
+		Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400 });
+		ChangeAnimationState("Ready");
+		//GameEngineSound::SoundPlay("BellomAttack9.mp3");
+		//Bellom->ChangeAnimation("Left_Wake");
+		//Bellom->SetRenderPos({ 1700, 380 });
+		//Bellom->SetRenderScale({ 1024, 1024 });
+		//BossStop = true;
+	}
+
+	if (BossStop == false)
+	{
+		StateUpdate(_Delta);
 	}
 
 	std::vector<GameEngineCollision*> _BellomBodyCol;
@@ -126,13 +144,11 @@ void BellomBoss::Update(float _Delta)
 		return;
 	}
 
-	if (MoveTime >= 10.0f && AttackCount == 10)
+	if (AttackCount == 10)
 	{
-		Bellom->SetRenderScale({ 896, 896 });
-		Bellom->SetRenderPos({ 1700, 370 });
-		Bellom->ChangeAnimation("Die");
-
-		if (true == Bellom->IsAnimationEnd())
+		DeathTime += _Delta;
+		ChangeState(BossState::Death);
+		if (DeathTime >= DeathLimitTime && true == Bellom->IsAnimationEnd())
 		{
 			Death();
 		}
@@ -205,12 +221,7 @@ void BellomBoss::Update(float _Delta)
 	//	Bellom->SetRenderPos({ 1700, 300 });
 	//	Bellom->SetRenderScale({ 1024, 1024 });
 	//}
-	//if (GameEngineInput::IsDown(VK_F9))
-	//{
-	//	Bellom->ChangeAnimation("Left_Ready");
-	//	Bellom->SetRenderPos({ 1700, 300 });
-	//	Bellom->SetRenderScale({ 1024, 1024 });
-	//}
+
 
 	//MoveTime += _Delta;
 	//if (MoveTime <= 1.5f)
@@ -263,3 +274,288 @@ void BellomBoss::LevelStart()
 	MainBoss = this;
 }
 
+void BellomBoss::StateUpdate(float _Delta)
+{
+	switch (State)
+	{
+	case BossState::Summon():
+		return SummonUpdate(_Delta);
+		break;
+	case BossState::Idle:
+		return IdleUpdate(_Delta);
+		break;
+	case BossState::Ready:
+		return ReadyUpdate(_Delta);
+		break;
+	case BossState::Wake:
+		return WakeUpdate(_Delta);
+		break;
+	case BossState::Down:
+		return DownUpdate(_Delta);
+		break;
+	case BossState::AttackReady:
+		return AttackReadyUpdate(_Delta);
+		break;
+	case BossState::AttackBall:
+		return AttackBallUpdate(_Delta);
+		break;
+	case BossState::AttackBallBomb:
+		break;
+	case BossState::Death:
+		return DeathUpdate(_Delta);
+		break;
+	default:
+		break;
+	}
+}
+
+void BellomBoss::ChangeState(BossState _State)
+{
+	if (_State != State)
+	{
+		switch (_State)
+		{
+		case BossState::Summon:
+			SummonStart();
+			break;
+		case BossState::Idle:
+			IdleStart();
+			break;
+		case BossState::Ready:
+			ReadyStart();
+			break;
+		case BossState::Wake:
+			WakeStart();
+			break;
+		case BossState::Down:
+			DownStart();
+			break;
+		case BossState::AttackReady:
+			AttackReadyStart();
+			break;
+		case BossState::AttackBall:
+			AttackBallStart();
+			break;
+		case BossState::AttackBallBomb:
+			break;
+		case BossState::Death:
+			DeathStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	State = _State;
+}
+
+void BellomBoss::ChangeAnimationState(const std::string& _StateName)
+{
+	AnimationName = "Left_";
+
+	AnimationName += _StateName;
+	CurState = _StateName;
+
+	Bellom->ChangeAnimation(AnimationName);
+}
+
+
+void BellomBoss::SummonStart()
+{
+	ChangeAnimationState("Ready");
+	GameEngineSound::SoundPlay("BellomAttack1.mp3");
+	Bellom->On();
+	Bellom->SetRenderPos({ 1700, 400 });
+}
+
+void BellomBoss::SummonUpdate(float _Delta)
+{
+	B_FWakeTime += _Delta;
+	if (true == Bellom->IsAnimationEnd())
+	{
+		ChangeAnimationState("Wake");
+	}
+
+	if (true == Bellom->IsAnimationEnd())
+	{
+		ChangeAnimationState("Down");
+	}
+
+	if (B_FWakeTime >= 4.5f)
+	{
+		ChangeState(BossState::Down);
+		B_FWakeTime = 0.0f;
+	}
+}
+
+void BellomBoss::IdleStart()
+{
+	//ChangeAnimationState("Wake");
+}
+
+void BellomBoss::IdleUpdate(float _Delta)
+{
+
+}
+
+void BellomBoss::DownStart()
+{
+	Bellom->Off();
+}
+
+void BellomBoss::DownUpdate(float _Delta)
+{
+	B_FDownTime += _Delta;
+
+	if (B_FDownTime >= b_FDownLimitTime)
+	{
+		switch (Attack)
+		{
+		case 0:
+			B_FDownTime = 0.0f;
+			ChangeState(BossState::Ready);
+			break;
+		case 1:
+			B_FDownTime = 0.0f;
+			ChangeState(BossState::AttackReady);
+			break;
+		}
+	}
+}
+
+void BellomBoss::ReadyStart()
+{
+	Bellom->On();
+	Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400.0f });
+	GameEngineSound::SoundPlay("BellomAttack1.mp3");
+	ChangeAnimationState("Ready");
+	Attack += 1;
+	BellomBody->SetCollisionPos({ Player::GetMainPlayer()->GetPos().X, 600.0f });
+}
+void BellomBoss::ReadyUpdate(float _Delta)
+{
+	B_FDownTime += _Delta;
+
+	if (true == Bellom->IsAnimationEnd())
+	{
+		ChangeAnimationState("Wake");
+		BellomBody->On();
+	}
+
+	if (true == Bellom->IsAnimationEnd())
+	{
+		ChangeAnimationState("Down");
+		BellomBody->Off();
+	}
+
+	if (B_FDownTime >= 4.5f)
+	{
+		//BellomBody->Off();
+		B_FDownTime = 0.0f;
+		ChangeState(BossState::Down);
+	}
+}
+
+void BellomBoss::WakeStart()
+{
+
+}
+void BellomBoss::WakeUpdate(float _Delta)
+{
+
+}
+
+void BellomBoss::AttackReadyStart()
+{
+	Attack = 0;
+	Bellom->On();
+	Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X + 500.0f, 400.0f });
+	BellomSaveAttackPosX = Player::GetMainPlayer()->GetPos().X + 500.0f;
+	BellomAttackReadyPosX = Player::GetMainPlayer()->GetPos().X - 180.0f;
+	BellomAttackPosX = Player::GetMainPlayer()->GetPos().X - 80.0f;
+	BellomAttackBallPosX = Player::GetMainPlayer()->GetPos().X - 180.0f;
+
+	GameEngineSound::SoundPlay("BellomAttack9.mp3");
+	ChangeAnimationState("Ready");
+	BellomBody->SetCollisionPos({ Player::GetMainPlayer()->GetPos().X + 500.0f, 600.0f });
+}
+void BellomBoss::AttackReadyUpdate(float _Delta)
+{
+	B_FDownTime += _Delta;
+
+	if (true == Bellom->IsAnimationEnd() && AttackCheck == 0)
+	{
+		ChangeAnimationState("Wake");
+		AttackCheck += 1;
+		BellomBody->On();
+	}
+
+	if (true == Bellom->IsAnimationEnd() && AttackCheck == 1)
+	{
+		ChangeAnimationState("AttackReady");
+		Bellom->SetRenderPos({ BellomAttackPosX, 330.0f });
+		//Bellom->SetRenderScale({ 1536, 1024 });
+		Bellom->SetRenderScale({ 1792, 1024 });
+		AttackCheck += 1;
+	}
+
+	if (true == Bellom->IsAnimationEnd() && AttackCheck == 2)
+	{
+		ChangeAnimationState("Attack");
+		//Bellom->SetRenderScale({ 1280, 1024 });
+		Bellom->SetRenderScale({ 1536, 1024 });
+		Bellom->SetRenderPos({ BellomAttackPosX, 260.0f });
+		AttackCheck += 1;
+	}
+
+	if (true == Bellom->IsAnimationEnd() && AttackCheck == 3)
+	{
+		ChangeAnimationState("AttackBall");
+		Bellom->SetRenderPos({ BellomAttackPosX, 330.0f });
+		Bellom->SetRenderScale({ 1792, 1024 });
+		AttackCheck += 1;
+	}
+
+	if (true == Bellom->IsAnimationEnd() && AttackCheck == 4)
+	{
+		ChangeAnimationState("Down");
+		Bellom->SetRenderPos({ BellomSaveAttackPosX, 400.0f });
+		Bellom->SetRenderScale({ 1024, 1024 });
+		BellomBody->Off();
+	}
+
+	if (B_FDownTime >= 9.5f)
+	{
+		//BellomBody->Off();
+		B_FDownTime = 0.0f;
+		AttackCheck = 0;
+		ChangeState(BossState::Down);
+	}
+}
+
+void BellomBoss::AttackBallStart()
+{
+}
+void BellomBoss::AttackBallUpdate(float _Delta)
+{
+}
+
+void BellomBoss::DeathStart()
+{
+	ChangeAnimationState("Death");
+	GameEngineSound::SoundPlay("BellomDeath.mp3");
+	Bellom->SetRenderScale({ 896, 896 });
+	//Bellom->SetRenderPos({ 1700, 370 });
+
+	if (true == Bellom->IsAnimationEnd())
+	{
+		Death();
+	}
+}
+void BellomBoss::DeathUpdate(float _Delta)
+{
+	//if (true == Bellom->IsAnimationEnd())
+	//{
+	//	Death();
+	//}
+}

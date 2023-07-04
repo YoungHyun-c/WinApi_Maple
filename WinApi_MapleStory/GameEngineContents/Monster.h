@@ -90,7 +90,6 @@ private:
 	float4 LeftCheck = { -18.0f, 0.0f };
 	float4 RightCheck = { 18.0f, 0.0f };
 	
-	bool WallCheck = false;
 	float Speed = 30.0f;
 	
 	float4 BlueSnailMovePos = float4::ZERO;

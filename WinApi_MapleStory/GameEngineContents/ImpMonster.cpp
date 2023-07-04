@@ -373,7 +373,6 @@ void ImpMonster::AttackStart()
 
 void ImpMonster::AttackUpdate(float _Delta)
 {
-
 	if (true == ImpMonsterRenderer->IsAnimationEnd())
 	{
 		M_FMoveTime = 0.0f;
