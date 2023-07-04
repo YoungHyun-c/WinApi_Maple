@@ -24,7 +24,6 @@
 #pragma endregion
 
 Player* Player::MainPlayer = nullptr;
-//int Player::BackGroundSizeforCamY = -1082;
 int Player::BackGroundSizeforCamX = 0;
 int Player::BackGroundSizeforCamY = 0;
 
@@ -202,6 +201,27 @@ void Player::Update(float _Delta)
 
 	//		Collison->GetActor()->Death();
 	//	}
+	//}
+
+
+	//std::vector<GameEngineCollision*> _BellomBodyCol;
+	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _BellomBodyCol
+	//	, CollisionType::Rect
+	//	, CollisionType::Rect) && GameEngineInput::IsDown(VK_SHIFT))
+	//{
+	//	GameEngineSoundPlayer BellomDamage = GameEngineSound::SoundPlay("BellomDamage.mp3");
+	//	//AttackCount += 1;
+	//	return;
+	//}
+
+	//std::vector<GameEngineCollision*> _BellomBodyC;
+	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _BellomBodyC
+	//	, CollisionType::Rect
+	//	, CollisionType::Rect) && GameEngineInput::IsUp(VK_SHIFT))
+	//{
+	//	GameEngineSoundPlayer BellomDamage = GameEngineSound::SoundPlay("BellomDamage.mp3");
+	//	//AttackCount += 1;
+	//	return;
 	//}
 
 	if (true == GameEngineInput::IsDown('R'))

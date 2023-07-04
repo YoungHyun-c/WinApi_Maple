@@ -5,7 +5,11 @@
 #include <map>
 #include <vector>
 
-enum class CollisionType 
+// Value 없는 맵.
+// 데이터를 저장할 생각이 없다.
+#include <set>
+
+enum class CollisionType
 {
 	Point, // 점
 	Rect, // 사각형
@@ -13,14 +17,14 @@ enum class CollisionType
 	Max, // 원
 };
 
-class CollisionData 
+class CollisionData
 {
 public:
 	float4 Pos;
 	float4 Scale;
 
 	float Left() const
-	{ 
+	{
 		return Pos.X - Scale.hX();
 	}
 	float Right() const
@@ -28,11 +32,11 @@ public:
 		return Pos.X + Scale.hX();
 	}
 	float Top() const
-	{ 
+	{
 		return Pos.Y - Scale.hY();
 	}
 	float Bot() const
-	{ 
+	{
 		return Pos.Y + Scale.hY();
 	}
 
@@ -62,7 +66,7 @@ class GameEngineCollision : public GameEngineActorSubObject
 {
 	// 함수 포인터
 	static bool (*CollisionFunction[static_cast<int>(CollisionType::Max)][static_cast<int>(CollisionType::Max)])(const CollisionData& _LeftData, const CollisionData& _RightData);
-	
+
 	friend CollisionInitClass;
 	friend GameEngineActor;
 	friend GameEngineLevel;
@@ -110,6 +114,28 @@ public:
 	// std::vector<GameEngineCollision*>& _Result 충돌한 애들 여기에 담아줘.
 
 	template<typename EnumType>
+	bool CollisionCallBack(
+		EnumType _Order,
+		CollisionType _ThisType = CollisionType::CirCle,
+		CollisionType _OtherType = CollisionType::CirCle,
+		void(*Enter)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr,
+		void(*Stay)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr,
+		void(*Exit)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr
+	)
+	{
+		return CollisionCallBack(static_cast<int>(_Order), _ThisType, _OtherType, Enter, Stay, Exit);
+	}
+
+	bool CollisionCallBack(
+		int _Order,
+		CollisionType _ThisType = CollisionType::CirCle,
+		CollisionType _OtherType = CollisionType::CirCle,
+		void(*Enter)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr,
+		void(*Stay)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr,
+		void(*Exit)(GameEngineCollision* _this, GameEngineCollision* _Other) = nullptr
+	);
+
+	template<typename EnumType>
 	bool Collision(EnumType _Order, std::vector<GameEngineCollision*>& _Result
 		, CollisionType _ThisType = CollisionType::CirCle
 		, CollisionType _OtherType = CollisionType::CirCle)
@@ -150,7 +176,7 @@ public:
 		return CollisionScale;
 	}
 
-	CollisionData GetCollisionData() 
+	CollisionData GetCollisionData()
 	{
 		CollisionData Data;
 		Data.Pos = GetActorPivotPos();
@@ -174,7 +200,7 @@ public:
 		GameEngineActorSubObject::Off();
 		CollisionRenderValue = false;
 	}
-	
+
 	void IsUIOn()
 	{
 		IsUI = true;
@@ -183,6 +209,10 @@ public:
 protected:
 
 private:
+	// 내가 어떤 애랑 처음충돌했다.
+	// ??? 어떻게 체크할수 있을까?
+	std::set<GameEngineCollision*> ColSet;
+
 	bool IsUI = false;
 
 	CollisionType ColType = CollisionType::Rect;

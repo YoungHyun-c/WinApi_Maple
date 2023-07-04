@@ -88,6 +88,8 @@ private:
 	bool WallCheck = false;
 	bool ImpDeath = false;
 
+	float ImpHp = 300.0f;
+
 	float4 IMPMovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
 

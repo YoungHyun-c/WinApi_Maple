@@ -2,14 +2,18 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include <GameEnginePlatform/GameEngineWindow.h>
-#include "Player.h"
-
 #include <GameEnginePlatform/GameEngineInput.h>"
+#include <GameEnginePlatform/GameEngineWindow.h>
+
+
+
+#include "Player.h"
+#include "PlayActor.h"
 #include "Enum.h"
 
 BellomBoss* BellomBoss::MainBoss = nullptr;
 bool BellomBoss::Summon = false;
+
 BellomBoss::BellomBoss()
 {
 
@@ -36,6 +40,7 @@ void BellomBoss::Start()
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BellomAttackReady.bmp"), 6, 2);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BellomAttack.bmp"), 6, 1);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BellomAttackBall.bmp"), 5, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BossDie.bmp"), 10, 1);
 	}
 
 	{
@@ -46,6 +51,7 @@ void BellomBoss::Start()
 		Bellom->CreateAnimation("AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, false);
 		Bellom->CreateAnimation("Attack", "BellomAttack.bmp", 0, 5, 0.2f, false);
 		Bellom->CreateAnimation("AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Die", "BossDie.bmp", 0, 9, 0.2f, false);
 		Bellom->SetRenderScale({ 1024, 1024 });
 		//Bellom->SetRenderPos({ 1700, 300 });
 		//Bellom->ChangeAnimation("AttackReady");
@@ -63,6 +69,7 @@ void BellomBoss::Start()
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomAttack1.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDie.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BellomDamage.mp3"));
 	}
 
 	// 벨룸 소환
@@ -80,8 +87,6 @@ void BellomBoss::Start()
 		BellomBody->Off();
 	}
 
-
-	GameEngineSound::SetGlobalVolume(0.3f);
 }
 
 void BellomBoss::Update(float _Delta)
@@ -108,6 +113,70 @@ void BellomBoss::Update(float _Delta)
 	{
 		Bellom->ChangeAnimation("Left_Wake");
 	}
+
+	std::vector<GameEngineCollision*> _BellomBodyCol;
+	if (true == BellomBody->Collision(CollisionOrder::PlayerAttack, _BellomBodyCol
+		, CollisionType::Rect
+		, CollisionType::Rect) && GameEngineInput::IsDown(VK_SHIFT))
+	{
+		GameEngineSoundPlayer BellomDamage = GameEngineSound::SoundPlay("BellomDamage.mp3");
+		GetMainBossHP(141);
+		GetMainBossHpBarMove();
+		AttackCount += 1;
+		return;
+	}
+
+	if (MoveTime >= 10.0f && AttackCount == 10)
+	{
+		Bellom->SetRenderScale({ 896, 896 });
+		Bellom->SetRenderPos({ 1700, 370 });
+		Bellom->ChangeAnimation("Die");
+
+		if (true == Bellom->IsAnimationEnd())
+		{
+			Death();
+		}
+	}
+
+	// 람다.
+	//BellomBody->CollisionCallBack(
+	//	CollisionOrder::PlayerAttack
+	//	, CollisionType::Rect
+	//	, CollisionType::Rect
+	//	, [](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+	//		if (true == GameEngineInput::IsUp(VK_SHIFT))
+	//		{
+	//			GameEngineActor* ThisActor = _this->GetActor();
+	//			BellomBoss* BossPtr = dynamic_cast<BellomBoss*>(ThisActor);
+
+	//			GameEngineActor* PlayerActor = _Other->GetActor();
+	//			Player* PlayerPtr = dynamic_cast<Player*>(PlayerActor);
+
+	//			GameEngineSoundPlayer BellomDamage = GameEngineSound::SoundPlay("BellomDamage.mp3");
+	//			//ThisActor->
+	//		}
+	//		//ThisActor->AttackDamage(100);
+	//		//ThisActor->Death();
+	//	}
+	//	, [](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+
+	//	}
+	//	, [](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+	//		GameEngineActor* ThisActor = _this->GetActor();
+	//		BellomBoss* BossPtr = dynamic_cast<BellomBoss*>(ThisActor);
+
+	//		GameEngineActor* PlayerActor = _Other->GetActor();
+	//		Player* PlayerPtr = dynamic_cast<Player*>(PlayerActor);
+
+	//		GameEngineSoundPlayer BellomDamage = GameEngineSound::SoundPlay("BellomDamage.mp3");
+	//		//ThisActor->AttackDamage(100);
+	//		//ThisActor->Death();
+	//	}
+	//);
+
 
 	//if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
 	//{
@@ -188,3 +257,9 @@ void BellomBoss::Render(float _Delta)
 {
 
 }
+
+void BellomBoss::LevelStart()
+{
+	MainBoss = this;
+}
+

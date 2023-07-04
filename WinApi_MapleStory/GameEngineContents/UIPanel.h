@@ -47,16 +47,16 @@ protected:
 	std::string GetTextSave = "";
 	std::string GetSwitchTextSave = "";
 
-	int ValueY = 0;
-	int ValueX = 0;
+	float ValueY = 0;
+	float ValueX = 0;
 
 	GameEngineRenderer* UISkillRenderer = nullptr;
 	GameEngineRenderer* UIStatusRenderer = nullptr;
 
 	GameEngineRenderer* PlayerBarRender = nullptr;
 	GameEngineRenderer* PlayerHPBarRender = nullptr;
-	int MovePlayerHP = 0;
-	int MovePlayerMP = 0;
+	float MovePlayerHP = 0;
+	float MovePlayerMP = 0;
 	float HpBarX = 141.0f;
 	float MpBarX = 141.0f;
 	float HpBarPosX = 520.0f;
@@ -71,10 +71,6 @@ protected:
 	GameEngineRenderer* PlayerQuickSloteRender = nullptr;
 	GameEngineRenderer* PlayerQuickSlotAlphaRender = nullptr;
 
-
-	//GameEngineRenderer* UIStartRenderer = nullptr;
-	//GameEngineCollision* StartCollision = nullptr;
-
 	bool Item = false;
 	bool SKill = false;
 	bool Status = false;
@@ -86,6 +82,17 @@ protected:
 	float4 InvenPos = { 700, 300 };
 	float4 InvenSize = { 120, 160 };
 	float4 IconInter = { 36, 36 };
+
+	/////////// º¸½º
+	GameEngineRenderer* BossProfile = nullptr;
+	GameEngineRenderer* BossHPUIS = nullptr;
+	GameEngineRenderer* BossHPUIM = nullptr;
+	GameEngineRenderer* BossHPUIE = nullptr;
+	GameEngineRenderer* BossHPBar = nullptr;
+
+	float MoveBossHP = 0;
+	float MoveBossPrevHP = 1410.0f;
+	float BossHpBarX = 0;
 
 private:
 	class MouseObject* MObject;

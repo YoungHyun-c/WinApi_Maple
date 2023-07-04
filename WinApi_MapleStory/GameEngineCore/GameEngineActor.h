@@ -106,6 +106,11 @@ public:
 		IsOverValue = false;
 	}
 
+	/*void BossAttack(float _Value)
+	{
+		Damage -= _Value;
+	}*/
+
 protected:
 	virtual void LevelStart() {}
 	virtual void LevelEnd() {}
@@ -117,6 +122,8 @@ private:
 	GameEngineLevel* Level;
 
 	float4 Pos = float4::ZERO;
+
+	float BossHP;
 
 	std::list<GameEngineRenderer*> AllRenderer;
 	std::list<GameEngineCollision*> AllCollision;

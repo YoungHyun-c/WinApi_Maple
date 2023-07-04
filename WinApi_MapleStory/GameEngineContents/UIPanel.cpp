@@ -332,6 +332,34 @@ void UIPanel::Start()
 		UIStatusRenderer->Off();
 	}
 
+	
+	{
+		BossProfile = CreateUIRenderer("BellomProfile.bmp", RenderOrder::PlayUI);
+		BossProfile->SetRenderPos({ 200.0f, 30.0f });
+		BossProfile->Off();
+
+		BossHPUIS = CreateUIRenderer("EnergyBarS.bmp", RenderOrder::PlayUI);
+		BossHPUIS->SetRenderPos({ 230.0f, 30.0f });
+		BossHPUIS->Off();
+
+		BossHPUIM = CreateUIRenderer("EnergyBarM.bmp", RenderOrder::PlayUI);
+		BossHPUIM->SetRenderPos({ 580.0f, 30.0f });
+		BossHPUIM->Off();
+
+		BossHPUIE = CreateUIRenderer("EnergyBarE.bmp", RenderOrder::PlayUI);
+		BossHPUIE->SetRenderPos({ 935.0f, 30.0f });
+		BossHPUIE->Off();
+
+		BossHPBar = CreateUIRenderer("BellomHPBar.bmp", RenderOrder::BossHPBar);
+		BossHPBar->SetRenderPos({ 582.5f, 30.0f });
+		BossHPBar->Off();
+		//BossHPBar->SetRenderScale({ 710,12 });
+		//BossHPBar->SetRenderScale({ 510,12 });
+
+		//float BossCurHp = BellomBoss::GetMainBoss()->GetMainBossHpValue();
+		//BossHPBar->SetRenderScale({ BossCurHp, 12.0f });
+	}
+
 }
 
 void UIPanel::Update(float _Delta)
@@ -505,19 +533,31 @@ void UIPanel::Update(float _Delta)
 
 	if (true == BellomBoss::GetMainBoss()->BellomSummoner())
 	{
-		GameEngineRenderer* BossProfile = CreateUIRenderer("BellomProfile.bmp", RenderOrder::PlayUI);
-		BossProfile->SetRenderPos({ 200.0f, 30.0f });
+		//BossProfile->SetRenderPos({ 200.0f, 30.0f });
+		BossProfile->On();
 
-		GameEngineRenderer* BossHPUIS = CreateUIRenderer("EnergyBarS.bmp", RenderOrder::PlayUI);
-		BossHPUIS->SetRenderPos({ 230.0f, 30.0f });
-		GameEngineRenderer* BossHPUIM = CreateUIRenderer("EnergyBarM.bmp", RenderOrder::PlayUI);
-		BossHPUIM->SetRenderPos({ 580.0f, 30.0f });
-		GameEngineRenderer* BossHPUIE = CreateUIRenderer("EnergyBarE.bmp", RenderOrder::PlayUI);
-		BossHPUIE->SetRenderPos({ 935.0f, 30.0f });
+		//BossHPUIS->SetRenderPos({ 230.0f, 30.0f });
+		BossHPUIS->On();
 
-		GameEngineRenderer* BossHPBar = CreateUIRenderer("BellomHPBar.bmp", RenderOrder::BossHPBar);
-		BossHPBar->SetRenderPos({ 582.5f, 30.0f });
-		//BossHPBar->SetRenderScale({ 710,12 });
-		//BossHPBar->SetRenderScale({ 510,12 });
+		//BossHPUIM->SetRenderPos({ 580.0f, 30.0f });
+		BossHPUIM->On();
+
+		//BossHPUIE->SetRenderPos({ 935.0f, 30.0f });
+		BossHPUIE->On();
+
+		//BossHPBar->SetRenderPos({ 582.5f, 30.0f });
+		BossHPBar->On();
+		
+		MoveBossHP = BellomBoss::GetMainBoss()->GetMainBossHpValue();
+		BossHPBar->SetRenderScale({ (MoveBossHP) / 2, 12.0f });
+
+		BossHpBarX = BellomBoss::GetMainBoss()->GetMainBossHpBar();
+		BossHPBar->SetRenderPos({ BossHpBarX, 30.0f });
+
+		/*BossHPBar->SetRenderScale({ 710,12 });
+		BossHPBar->SetRenderScale({ 510,12 });*/
+
+		//float BossCurHp = BellomBoss::GetMainBoss()->GetMainBossHpValue();
+		//BossHPBar->SetRenderScale({ BossCurHp, 12.0f });
 	}
 }
