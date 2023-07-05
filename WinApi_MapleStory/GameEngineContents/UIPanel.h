@@ -47,6 +47,7 @@ protected:
 	std::vector<std::vector<GameEngineCollision*>> IconCollisions;
 
 	std::string GetTextSave = "";
+	//std::string GetClickTextSave = "";
 	std::string GetSwitchTextSave = "";
 
 	float ValueY = 0;

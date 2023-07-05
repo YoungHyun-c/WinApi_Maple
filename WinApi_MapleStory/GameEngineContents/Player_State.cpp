@@ -69,19 +69,6 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 	
-	//unsigned int PotalCheckColor = GetGroundColor(RGB(0, 0, 255), PotalCheck);
-	//if (true == GameEngineInput::IsPress('W') && PotalCheckColor == RGB(0, 0, 255))
-	//if (QuestCollision->Collision(CollisionOrder::MouseObjectPlay, Col) && GameEngineInput::IsDown(VK_LBUTTON))
-	//{
-	//	int a = 0;
-	//	/*{
-	//		GameEngineRenderer* Ptr = CreateUIRenderer("HPBar.bmp", RenderOrder::Play);
-	//		Ptr->SetText("か神格たびかし葛ったびかし葛ったびかし葛った顕し葛君たびしけい稽っ原閑", 40);
-	//		Ptr->SetRenderPos({ 100, 100 });
-	//		Ptr->SetRenderScale({ 200, 200 });
-	//	}*/
-	//	GameEngineCore::ChangeLevel("GardenLevel");
-	//}
 	std::vector<GameEngineCollision*> _Col;
 	if (true == GameEngineInput::IsDown('W') && BodyCollision->Collision(CollisionOrder::GardenPotal, _Col, CollisionType::Rect, CollisionType::Rect))
 	{

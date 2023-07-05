@@ -429,11 +429,23 @@ void UIPanel::Start()
 
 void UIPanel::Update(float _Delta)
 {
+	if (m_bClick == true
+		&& MObject->GetMainMouse()->GetPos().X < 550.0f && GameEngineInput::IsUp(VK_LBUTTON)
+		|| MObject->GetMainMouse()->GetPos().Y < 150.0f && GameEngineInput::IsUp(VK_LBUTTON)
+		|| MObject->GetMainMouse()->GetPos().X > 800.0f && GameEngineInput::IsUp(VK_LBUTTON)
+		|| MObject->GetMainMouse()->GetPos().Y > 500.0f && GameEngineInput::IsUp(VK_LBUTTON))
+	{
+		if (MessageBoxA(NULL, "아이템을 버리시겠습니까 ?", "버리기", MB_YESNO) == IDYES)
+		{
+			IconRenders[ValueY][ValueX]->SetTexture("Empty.bmp");
+			IconMouse->Off();
+			m_bClick = false;
+		}
+	}
 	if (Grab == false)
 	{
 		MObject->ChangeAnimationState("Idle");
 	}
-
 	if (true == UIItemRenderer->IsUpdate())
 	{
 		for (size_t y = 0; y < IconRenders.size(); y++)
@@ -449,11 +461,13 @@ void UIPanel::Update(float _Delta)
 						m_bClick = true;
 						ValueY = y;
 						ValueX = x;
+						//GetClickTextSave = IconRenders[ValueY][ValueX]->GetTexture();
 						GameEngineSound::SoundPlay("BtMouseClick.mp3");
 						MObject->ChangeAnimationState("GrabIdle");
 					}
 					else if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-						&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp" && ValueY == y &&ValueX == x)
+						&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp"
+						&& ValueY == y &&ValueX == x)
 					{
 						GameEngineSound::SoundPlay("Use.mp3");
 						DoubleClickCheckIconRender();
@@ -519,15 +533,8 @@ void UIPanel::Update(float _Delta)
 					MObject->ChangeAnimationState("Grab");
 					IconMouse->Off();
 				}
-			}
-			//if (false == IconCollisions[ValueY][ValueX]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-			//	&& GameEngineInput::IsUp(VK_LBUTTON))
-			//{
 
-			//	IconRenders[ValueY][ValueX]->SetTexture("Empty.bmp");
-			//	MObject->ChangeAnimationState("Grab");
-			//	IconMouse->Off();
-			//}
+			}
 		}
 	}
 	else
@@ -539,7 +546,8 @@ void UIPanel::Update(float _Delta)
 		WhitePotionStatus->Off();
 	}
 	
-
+	IconMouse->SetRenderPos({ MObject->GetPos().X - 10, MObject->GetPos().Y - 5 });
+	
 
 	if (GameEngineInput::IsDown('I'))
 	{

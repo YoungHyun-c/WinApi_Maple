@@ -555,16 +555,19 @@ void Player::Render(float _Delta)
 
 	}
 
-	{
-		//float4 PlayerPos = GameEngineWindow::MainWindow.GetScale().Half();
-		//float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
-		//float4 Dir = PlayerPos - MousePos;
+	//{
+	//	float4 PlayerPos = GameEngineWindow::MainWindow.GetScale().Half();
+	//	float4 MousePos = GameEngineWindow::MainWindow.GetMousePos();
+	//	float4 Dir = PlayerPos - MousePos;
 
-		//std::string Text = "";
-		//Text += "마우스 앵글 값 : ";
-		//Text += std::to_string(Dir.AngleDeg());
-		//TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
-	}
+	//	std::string Text = "";
+	//	Text += "마우스 위치 X값 : ";
+	//	//Text += std::to_string(Dir.AngleDeg());
+	//	Text += std::to_string(MousePos.X);
+	//	Text += "마우스 위치 Y값 : ";
+	//	Text += std::to_string(MousePos.Y);
+	//	TextOutA(dc, 2, 20, Text.c_str(), static_cast<int>(Text.size()));
+	//}
 
 }
 
