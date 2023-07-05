@@ -48,7 +48,7 @@ void PracticeLevel::Start()
 
 		FilePath.MoveChild("ContentsResources\\Texture\\");
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel_Debug.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel_DebugT.bmp"));
 	}
 
 	GameEngineSound::SetGlobalVolume(0.3f);
@@ -63,10 +63,10 @@ void PracticeLevel::Start()
 	}
 
 	BackGroundPtr = CreateActor<BackGround>();
-	BackGroundPtr->Init("PracticeLevel.bmp", "PracticeLevel_Debug.bmp");
+	BackGroundPtr->Init("PracticeLevel.bmp", "PracticeLevel_DebugT.bmp");
 
 	LevelPlayer = CreateActor<Player>();
-	LevelPlayer->SetGroundTexture("PracticeLevel_Debug.bmp");
+	LevelPlayer->SetGroundTexture("PracticeLevel_DebugT.bmp");
 
 	{
 		FObject = CreateActor<FadeObject>();
@@ -74,11 +74,11 @@ void PracticeLevel::Start()
 
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	Snail->SetPos({ BlueSnailX, BlueSnailY });
-	Snail->SetGroundTexture("PracticeLevel_Debug.bmp");
+	Snail->SetGroundTexture("PracticeLevel_DebugT.bmp");
 	
 	Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	Snail->SetPos({ BlueSnailX + 210, BlueSnailY - 45});
-	Snail->SetGroundTexture("PracticeLevel_Debug.bmp");
+	Snail->SetGroundTexture("PracticeLevel_DebugT.bmp");
 
 	//Snail = CreateActor<Monster>(UpdateOrder::Monster);
 	//Snail->SetPos({ BlueSnailX,BlueSnailY+200 });
@@ -103,7 +103,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BGMPlayer = GameEngineSound::SoundPlay("AboveTheTreetops.mp3");
 
-	LevelPlayer->SetGroundTexture("PracticeLevel_Debug.bmp");
+	LevelPlayer->SetGroundTexture("PracticeLevel_DebugT.bmp");
 
 }
 
