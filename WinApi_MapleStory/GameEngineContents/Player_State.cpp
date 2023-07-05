@@ -69,6 +69,8 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 	
+
+
 	std::vector<GameEngineCollision*> _Col;
 	if (true == GameEngineInput::IsDown('W') && BodyCollision->Collision(CollisionOrder::GardenPotal, _Col, CollisionType::Rect, CollisionType::Rect))
 	{
