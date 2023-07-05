@@ -429,25 +429,25 @@ void UIPanel::Start()
 
 void UIPanel::Update(float _Delta)
 {
-	if (m_bClick == true
-		&& MObject->GetMainMouse()->GetPos().X < 550.0f && GameEngineInput::IsUp(VK_LBUTTON)
-		|| MObject->GetMainMouse()->GetPos().Y < 150.0f && GameEngineInput::IsUp(VK_LBUTTON)
-		|| MObject->GetMainMouse()->GetPos().X > 800.0f && GameEngineInput::IsUp(VK_LBUTTON)
-		|| MObject->GetMainMouse()->GetPos().Y > 500.0f && GameEngineInput::IsUp(VK_LBUTTON))
-	{
-		if (MessageBoxA(NULL, "아이템을 버리시겠습니까 ?", "버리기", MB_YESNO) == IDYES)
-		{
-			IconRenders[ValueY][ValueX]->SetTexture("Empty.bmp");
-			IconMouse->Off();
-			m_bClick = false;
-		}
-	}
 	if (Grab == false)
 	{
 		MObject->ChangeAnimationState("Idle");
 	}
 	if (true == UIItemRenderer->IsUpdate())
 	{
+		if (m_bClick == true
+			&& MObject->GetMainMouse()->GetPos().X < 550.0f && GameEngineInput::IsUp(VK_LBUTTON)
+			|| MObject->GetMainMouse()->GetPos().Y < 150.0f && GameEngineInput::IsUp(VK_LBUTTON)
+			|| MObject->GetMainMouse()->GetPos().X > 800.0f && GameEngineInput::IsUp(VK_LBUTTON)
+			|| MObject->GetMainMouse()->GetPos().Y > 500.0f && GameEngineInput::IsUp(VK_LBUTTON))
+		{
+			if (MessageBoxA(NULL, "아이템을 버리시겠습니까 ?", "버리기", MB_YESNO) == IDYES)
+			{
+				IconRenders[ValueY][ValueX]->SetTexture("Empty.bmp");
+				IconMouse->Off();
+				m_bClick = false;
+			}
+		}
 		for (size_t y = 0; y < IconRenders.size(); y++)
 		{
 			for (size_t x = 0; x < IconRenders[y].size(); x++)

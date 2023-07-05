@@ -25,21 +25,26 @@ void Player::IdleUpdate(float _Delta)
 {
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-		if (RGB(255, 255, 255) == Color)
+		unsigned int RopeCheckColor = GetGroundColor(RGB(0, 255, 0), RopeCheck);
+		if (RGB(255, 255, 255) == Color || RGB(0, 0, 128) == Color || RGB(0, 255, 0) == Color && RGB(0, 255, 0) == RopeCheckColor)
 		{
 			Gravity(_Delta);
+			Prone = false;
 		}
 		else
 		{
-			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-
-			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0) && CheckColor == (0, 0, 255))
+			if (RopeCheckColor != RGB(0, 255, 0))
 			{
-				CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-				AddPos(float4::UP);
+				unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
+				while (CheckColor != RGB(255, 255, 255))
+				{
+					CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
+					AddPos(float4::UP);
+				}
+				Jump = false;
+				Prone = true;
+				GravityReset();
 			}
-			Jump = false;
-			GravityReset();
 		}
 	}
 
@@ -57,7 +62,7 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
+	if (Prone = true && true == GameEngineInput::IsPress('S'))
 	{
 		ChangeState(PlayerState::Prone);
 		return;
@@ -82,7 +87,6 @@ void Player::IdleUpdate(float _Delta)
 		GameEngineCore::ChangeLevel("BossLevel");
 	}
 
-
 	if (true == GameEngineInput::IsDown(VK_SHIFT))
 	{
 		ChangeState(PlayerState::Attack);
@@ -99,28 +103,31 @@ void Player::RunUpdate(float _Delta)
 	// 중력 적용 
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-		if (Color == RGB(255, 255, 255))
+		unsigned int RopeCheckColor = GetGroundColor(RGB(0, 255, 0), RopeCheck);
+		if (Color == RGB(255, 255, 255) || RGB(0, 0, 128) == Color || RGB(0, 255, 0) == Color && RGB(0, 255, 0) == RopeCheckColor)
 		{
 			Gravity(_Delta);
 		}
 		else
 		{
-			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-
-			while (CheckColor == RGB(255, 0, 0)) //&& CheckColor != (0, 255, 0))
+			if (RopeCheckColor != RGB(0, 255, 0))
 			{
-				CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-				AddPos(float4::UP);
-			}
+				unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
 
+				while (CheckColor == RGB(255, 0, 0))
+				{
+					CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
+					AddPos(float4::UP);
+				}
 
-			if (true == GameEngineInput::IsPress(VK_SPACE))
-			{
-				ChangeState(PlayerState::Jump);
-				return;
+				if (true == GameEngineInput::IsPress(VK_SPACE))
+				{
+					ChangeState(PlayerState::Jump);
+					return;
+				}
+				Jump = false;
+				GravityReset();
 			}
-			Jump = false;
-			GravityReset();
 		}
 	}
 
@@ -162,10 +169,10 @@ void Player::RunUpdate(float _Delta)
 		return;
 	}
 
+
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-
-		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 255))
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 0, 128) || Color == RGB(0, 255, 0))
 		{
 			if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), GroundCheck + MovePos))
 			{
@@ -202,7 +209,7 @@ void Player::RunUpdate(float _Delta)
 				}
 
 			}
-
+			Prone = false;
 			Jump = false;
 			AddPos(MovePos);
 		}
@@ -222,14 +229,6 @@ void Player::JumpStart()
 void Player::DoubleJumpStart()
 {
 	GameEngineSound::SoundPlay("Jump.mp3");
-	//if (Dir == PlayerDir::Right)
-	//{
-	//	SetGravityVector(float4{ 400.0f, -300.0f });
-	//}
-	//if (Dir == PlayerDir::Left)
-	//{
-	//	SetGravityVector(float4{ -400.0f, -300.0f });
-	//}
 	SetGravityVector(float4::UP * 300.0f);
 	Jump = false;
 	ChangeAnimationState("Jump");
@@ -254,7 +253,7 @@ void Player::DoubleJumpUpdate(float _Delta)
 	}
 
 	// 벽 체크
-	float Speed = 300.0f;
+	float Speed = 400.0f;
 	float4 MovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
 	if (true == GameEngineInput::IsPress('A'))
@@ -268,14 +267,15 @@ void Player::DoubleJumpUpdate(float _Delta)
 		MovePos += float4::RIGHT * Speed * _Delta;
 	}
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-	if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+	if (Color == RGB(255, 255, 255) || Color == RGB(0, 0, 128) || Color == RGB(0, 255, 0))
 	{
 		AddPos(MovePos);
 	}
 
+	if (RGB(0, 255, 0) != CheckColor)
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-		if (RGB(255, 255, 255) != Color && Color != RGB(0, 255, 0))
+		if (RGB(255, 255, 255) != Color && Color != RGB(0, 0, 128))// && Color != RGB(0, 255, 0))
 		{
 			ChangeState(PlayerState::Run);
 			return;
@@ -301,11 +301,10 @@ void Player::JumpUpdate(float _Delta)
 		return;
 	}
 
-
+	// 벽체크
 	float Speed = 250.0f;
 	float4 MovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
-
 	if (true == GameEngineInput::IsPress('A'))
 	{
 		CheckPos = LeftCheck;
@@ -316,23 +315,21 @@ void Player::JumpUpdate(float _Delta)
 		CheckPos = RightCheck;
 		MovePos += float4::RIGHT * Speed * _Delta;
 	}
-
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 128))
 	{
-		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-		if (RGB(255, 255, 255) != Color && Color != RGB(0, 255, 0))
-		{
-			ChangeState(PlayerState::Run);
-			Jump = false;
-			return;
-		}
+		AddPos(MovePos);
 	}
 
-	{
-		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
 
-		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+	if (RGB(0, 255, 0) != CheckColor)
+	{
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
+		if (RGB(255, 255, 255) != Color && Color != RGB(0, 0, 128))// && Color != RGB(0, 255, 0))
 		{
-			AddPos(MovePos);
+			Jump = false;
+			ChangeState(PlayerState::Run);
+			return;
 		}
 	}
 
@@ -343,7 +340,6 @@ void Player::JumpUpdate(float _Delta)
 		ChangeState(PlayerState::Attack);
 		return;
 	}
-
 }
 
 void Player::ProneStart()
@@ -356,15 +352,14 @@ void Player::ProneUpdate(float _Delta)
 {
 	{
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-		if (RGB(255, 255, 255) == Color)
+		if (RGB(255, 255, 255) == Color || Color == RGB(0,0,128))
 		{
 			Gravity(_Delta);
 		}
 		else
 		{
 			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-
-			while (CheckColor != RGB(255, 255, 255) && CheckColor != RGB(0, 255, 0))
+			while (CheckColor != RGB(255, 255, 255))
 			{
 				CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
 				AddPos(float4::UP);
@@ -391,20 +386,27 @@ void Player::ProneUpdate(float _Delta)
 void Player::RopeStart()
 {
 	ChangeAnimationState("Rope");
-	SetGravityVector(float4::UP * 100.0f);
+	if (true == GameEngineInput::IsPress('W'))
+	{
+		SetGravityVector(float4::UP * 100.0f);
+	}
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		SetGravityVector(float4::DOWN * 100.0f);
+	}
 }
 
 // 로프(줄)타는 중일 때
 void Player::RopeUpdate(float _Delta)
 {
-	float Speed = 100.0f;
+	float Speed = 200.0f;
 	float4 MovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
 
-	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), RopeCheck);
+	unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), RopeCheck);// +float4{ 0.0f, 15.0f });
 	if (true == GameEngineInput::IsPress('W') && CheckColor == RGB(0, 255, 0))
 	{
-		CheckPos = RopeCheck;
+		CheckPos = RopeCheck;// +float4{ 0.0f, 25.0f };
 		MovePos = { 0.0f, -Speed * _Delta };
 	}
 	if (true == GameEngineInput::IsPress('S') && CheckColor == RGB(0, 255, 0))
@@ -413,8 +415,8 @@ void Player::RopeUpdate(float _Delta)
 		MovePos = { 0.0f, Speed * _Delta };
 	}
 
-	AddPos(MovePos);
 
+	AddPos(MovePos);
 
 	unsigned int GroundCheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck);
 	if (CheckColor == RGB(255, 255, 255))
@@ -424,23 +426,44 @@ void Player::RopeUpdate(float _Delta)
 			GroundCheckColor = GetGroundColor(RGB(0, 255, 0), GroundCheck);
 			AddPos(float4::UP);
 		}
-		ChangeState(PlayerState::Run);
+		ChangeState(PlayerState::Idle);
 		return;
-
 	}
 
 	if (GroundCheckColor == RGB(255, 0, 0))
 	{
-		ChangeState(PlayerState::Run);
+		ChangeState(PlayerState::Idle);
 		return;
 	}
 
+	//unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	//if (Color == RGB(0, 255, 0))
+	//{
+	//	AddPos(MovePos);
+	//}
 
-	unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-	if (Color == RGB(0, 255, 0))
-	{
-		AddPos(MovePos);
-	}
+	//unsigned int RopeBodyCheck = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	//unsigned int GroundCheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck);
+	//if (GroundCheckColor == RGB(255, 255, 255) && true == GameEngineInput::IsPress('S'))
+	//{
+	//	ChangeState(PlayerState::Run);
+	//	return;
+	//}
+	//if (RopeBodyCheck == RGB(0, 255, 0))
+	//{
+	//	AddPos(MovePos);
+	//}
+
+	//if (CheckColor == RGB(255, 0, 0))
+	//{
+	//	while (GroundCheckColor == RGB(0, 255, 0))
+	//	{
+	//		GroundCheckColor = GetGroundColor(RGB(0, 255, 0), GroundCheck);
+	//		AddPos(float4::UP);
+	//	}
+	//	ChangeState(PlayerState::Run);
+	//	return;
+	//}
 
 }
 
@@ -534,7 +557,6 @@ void Player::ProneAttackUpdate(float _Delta)
 		ChangeState(PlayerState::Run);
 		return;
 	}
-
 }
 
 void Player::AttackUpdate(float _Delta)
@@ -556,7 +578,7 @@ void Player::AttackUpdate(float _Delta)
 		}
 
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 128))
 		{
 			AddPos(MovePos);
 		}
@@ -579,28 +601,32 @@ void Player::AttackUpdate(float _Delta)
 		}
 
 		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0) || Color == RGB(0, 0, 128))
 		{
 			AddPos(MovePos);
 		}
 	}
 	
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255), GroundCheck);
-	if (RGB(255, 255, 255) == Color || Color == RGB(0, 255, 0))
+	unsigned int RopeCheckColor = GetGroundColor(RGB(0, 255, 0), RopeCheck);
+	if (RGB(255, 255, 255) == Color || RGB(0, 0, 128) == Color || RGB(0, 255, 0) == Color && RopeCheckColor == RGB(0, 255, 0))
 	{
 		Gravity(_Delta);
 	}
 	else
 	{
-		unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-		while (CheckColor != RGB(255, 255, 255) && CheckColor == RGB(0, 255, 0))
+		if (RopeCheckColor != RGB(0, 255, 0))
 		{
-			CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
-			AddPos(float4::UP);
+			unsigned int CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
+			while (CheckColor != RGB(255, 255, 255))
+			{
+				CheckColor = GetGroundColor(RGB(255, 255, 255), GroundCheck + float4::UP);
+				AddPos(float4::UP);
+			}
+			Jump = false;
+			DoubleJump = false;
+			GravityReset();
 		}
-		Jump = false;	
-		DoubleJump = false;
-		GravityReset();
 	}
 
 
@@ -610,8 +636,7 @@ void Player::AttackUpdate(float _Delta)
 		AttackCollsion->Off();
 		AttackRenderer0->Off();
 		Jump = false;
-		ChangeState(PlayerState::Run); // Alert
+		ChangeState(PlayerState::Run); 
 		return;
 	}
-
 }

@@ -158,6 +158,7 @@ private:
 
 	float4 GroundCheck = { 0.0f, 30.0f };
 	float4 RopeCheck = { 0.0f, 10.0f };
+	float4 RopeBottomCheck = { 0.0f, 15.0f };
 
 	//float4 PotalCheck = { 0.0f, 10.0f };
 
@@ -169,6 +170,7 @@ private:
 	//////////////////////
 	bool Jump;
 	bool DoubleJump;
+	bool Prone = false;
 
 
 	//////////////////// »ç¿îµå
