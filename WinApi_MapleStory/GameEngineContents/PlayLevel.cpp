@@ -134,5 +134,6 @@ void PlayLevel::Update(float _Delta)
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	GameEngineSound::SoundPlay("Portal.mp3");
 	BGMPlayer.Stop();
 }

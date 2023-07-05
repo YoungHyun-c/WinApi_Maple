@@ -154,5 +154,5 @@ void GardenLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void GardenLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	GameEngineSound::SoundPlay("Portal.mp3");
 }

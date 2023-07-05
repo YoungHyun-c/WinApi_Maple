@@ -71,7 +71,7 @@ public:
 		PlayerHp += _Value;
 	}
 
-	float GetMainPlayerHpValue()
+	int GetMainPlayerHpValue()
 	{
 		return PlayerHp;
 	}
@@ -81,7 +81,7 @@ public:
 		PlayerMp += _Value;
 	}
 
-	float GetMainPlayerMpValue()
+	int GetMainPlayerMpValue()
 	{
 		return PlayerMp;
 	}

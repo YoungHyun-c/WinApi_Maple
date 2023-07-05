@@ -48,9 +48,9 @@ void BellomBoss::Start()
 		Bellom->CreateAnimation("Left_Ready", "Bellom1.bmp", 0, 7, 0.2f, false);
 		Bellom->CreateAnimation("Left_Wake", "Bellom2.bmp", 0, 7, 0.15f, false);
 		Bellom->CreateAnimation("Left_Down", "Bellom3.bmp", 0, 11, 0.15f, false);
-		Bellom->CreateAnimation("Left_AttackReady", "BellomAttackReady.bmp", 0, 9, 0.2f, false);
-		Bellom->CreateAnimation("Left_Attack", "BellomAttack.bmp", 0, 5, 0.2f, false);
-		Bellom->CreateAnimation("Left_AttackBall", "BellomAttackBall.bmp", 0, 9, 0.2f, false);
+		Bellom->CreateAnimation("Left_AttackReady", "BellomAttackReady.bmp", 0, 9, 0.1f, false);
+		Bellom->CreateAnimation("Left_Attack", "BellomAttack.bmp", 0, 5, 0.1f, false);
+		Bellom->CreateAnimation("Left_AttackBall", "BellomAttackBall.bmp", 0, 9, 0.1f, false);
 		Bellom->CreateAnimation("Left_Death", "BossDie.bmp", 0, 9, 0.2f, false);
 		Bellom->SetRenderScale({ 1024, 1024 });
 		//Bellom->SetRenderPos({ 1700, 300 });
@@ -524,7 +524,7 @@ void BellomBoss::AttackReadyUpdate(float _Delta)
 		BellomBody->Off();
 	}
 
-	if (B_FDownTime >= 9.5f)
+	if (B_FDownTime >= 7.2f)
 	{
 		//BellomBody->Off();
 		B_FDownTime = 0.0f;

@@ -77,3 +77,71 @@ void MouseObject::ChangeAnimationState(const std::string& _StateName)
 
 	CursorRenderer->ChangeAnimation(AnimationName);
 }
+
+//void MouseObject::ChangeState(MouseState _State)
+//{
+//	if (_State != State)
+//	{
+//		switch (_State)
+//		{
+//		case MouseState::Idle:
+//			IdleStart();
+//			break;
+//		case MouseState::Grab:
+//			GrabStart();
+//			break;
+//		case MouseState::GrabIdle:
+//			GrabIdleStart();
+//			break;
+//		default:
+//			break;
+//		}
+//	}
+//
+//	State = _State;
+//}
+//
+//void MouseObject::StateUpdate(float _Delta)
+//{
+//	switch (State)
+//	{
+//	case MouseState::Idle:
+//		return IdleUpdate(_Delta);
+//		break;
+//	case MouseState::Grab:
+//		return GrabUpdate(_Delta);
+//		break;
+//	case MouseState::GrabIdle:
+//		return GrabIdleUpdate(_Delta);
+//		break;
+//	default:
+//		break;
+//	}
+//}
+//
+//void MouseObject::IdleStart()
+//{
+//
+//}
+//void MouseObject::IdleUpdate(float _Delta)
+//{
+//
+//}
+//void MouseObject::GrabStart()
+//{
+//
+//}
+//void MouseObject::GrabUpdate(float _Delta)
+//{
+//
+//}
+//
+//void MouseObject::GrabIdleStart()
+//{
+//
+//}
+//
+//void MouseObject::GrabIdleUpdate(float _Delta)
+//{
+//
+//}

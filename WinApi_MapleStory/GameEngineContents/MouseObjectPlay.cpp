@@ -20,7 +20,8 @@ MouseObjectPlay::~MouseObjectPlay()
 void MouseObjectPlay::Start()
 {
 	Collision = CreateCollision(CollisionOrder::MouseObjectPlay);
-	Collision->SetCollisionScale({ 50, 50 });
+	Collision->SetCollisionPos({ -5, -10 });
+	Collision->SetCollisionScale({ 20, 20 });
 }
 
 void MouseObjectPlay::Update(float _Delta)

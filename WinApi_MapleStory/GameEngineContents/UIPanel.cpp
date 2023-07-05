@@ -64,15 +64,50 @@ void UIPanel::InvenCollisionOff()
 	}
 }
 
-void UIPanel::OneClickCheckIconRender()
+void UIPanel::IconStatusRender()
 {
 	for (size_t y = 0; y < IconRenders.size(); y++)
 	{
 		for (size_t x = 0; x < IconRenders[y].size(); x++)
 		{
-			if (IconRenders[y][x]->GetTexture() == "Apple.bmp")
+			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect))
 			{
-
+				if (IconRenders[y][x]->GetTexture() == "Apple.bmp")
+				{
+					AppleStatus->On();
+					AppleStatus->SetRenderPos({ MObject->GetPos().X + 180, MObject->GetPos().Y + 70 });
+				}
+				else
+				{
+					AppleStatus->Off();
+				}
+				if (IconRenders[y][x]->GetTexture() == "RedPotion.bmp")
+				{
+					RedPotionStatus->On();
+					RedPotionStatus->SetRenderPos({ MObject->GetPos().X + 180, MObject->GetPos().Y + 70 });
+				}
+				else
+				{
+					RedPotionStatus->Off();
+				}
+				if (IconRenders[y][x]->GetTexture() == "BluePotion.bmp")
+				{
+					BluePotionStatus->On();
+					BluePotionStatus->SetRenderPos({ MObject->GetPos().X + 180, MObject->GetPos().Y + 70 });
+				}
+				else
+				{
+					BluePotionStatus->Off();
+				}
+				if (IconRenders[y][x]->GetTexture() == "WhitePotion.bmp")
+				{
+					WhitePotionStatus->On();
+					WhitePotionStatus->SetRenderPos({ MObject->GetPos().X + 180, MObject->GetPos().Y + 70 });
+				}
+				else
+				{
+					WhitePotionStatus->Off();
+				}
 			}
 		}
 	}
@@ -88,15 +123,15 @@ void UIPanel::DoubleClickCheckIconRender()
 			if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 				&& IconRenders[y][x]->GetTexture() == "Apple.bmp")
 			{
-				if (MovePlayerHP + 50 <= 1410)
+				if (MovePlayerHP + 30 <= 1410)
 				{
-					HpBarPosX += 2.5f;
-					Player::GetMainPlayer()->GetMainPlayerHp(50);
-					PlayerHPBarRender->SetRenderScale({ HpBarX += 5, 14 });
+					HpBarPosX += 1.5f;
+					Player::GetMainPlayer()->GetMainPlayerHp(30);
+					PlayerHPBarRender->SetRenderScale({ HpBarX += 3, 14 });
 					PlayerHPBarRender->SetRenderPos({ HpBarPosX, 710 });
 				}
 
-				if (MovePlayerHP + 50 > 1410)
+				if (MovePlayerHP + 30 > 1410)
 				{
 					Player::GetMainPlayer()->SetMainPlayerHP(1410);
 					PlayerHPBarRender->SetRenderScale({ 141, 14 });
@@ -196,6 +231,10 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotion.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Empty.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("AppleDesc.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RedPotionDesc.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BluePotionDesc.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("WhitePotionDesc.bmp"));
 
 		///// 캐릭터UI렌더
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BarUI.bmp"));
@@ -215,6 +254,20 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("EnergyBarM.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("EnergyBarE.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BellomHPBar.bmp"));
+	}
+
+	GameEngineSound::SetGlobalVolume(0.3f);
+	if (nullptr == GameEngineSound::FindSound("Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Use.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DragStart.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DragEnd.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BtMouseClick.mp3"));
 	}
 
 	{
@@ -285,7 +338,7 @@ void UIPanel::Start()
 			for (size_t x = 0; x < 4; x++)
 			{
 				float4 StartPos = InvenPos - InvenSize.Half();
-				float4 IconPos;
+				IconPos;
 				IconPos.X = x * IconInter.X;
 				IconPos.Y = y * IconInter.Y;
 				StartPos += IconPos;
@@ -307,6 +360,17 @@ void UIPanel::Start()
 		}
 	}
 
+	{
+		AppleStatus = CreateUIRenderer("AppleDesc.bmp", RenderOrder::MouseUI);
+		AppleStatus->Off();
+		RedPotionStatus = CreateUIRenderer("RedPotionDesc.bmp", RenderOrder::MouseUI);
+		RedPotionStatus->Off();
+		BluePotionStatus = CreateUIRenderer("BluePotionDesc.bmp", RenderOrder::MouseUI);
+		BluePotionStatus->Off();
+		WhitePotionStatus = CreateUIRenderer("WhitePotionDesc.bmp", RenderOrder::MouseUI);
+		WhitePotionStatus->Off();
+	}
+
 	IconRenders[0][0]->SetTexture("Apple.bmp");
 	IconRenders[0][1]->SetTexture("RedPotion.bmp");
 	IconRenders[0][2]->SetTexture("BluePotion.bmp");
@@ -315,10 +379,16 @@ void UIPanel::Start()
 	IconRenders[1][1]->SetTexture("WhitePotion.bmp");
 	IconRenders[1][2]->SetTexture("WhitePotion.bmp");
 
+	IconRenders[4][0]->SetTexture("BluePotion.bmp");
 	IconRenders[4][1]->SetTexture("RedPotion.bmp");
 	IconRenders[4][2]->SetTexture("BluePotion.bmp");
 	IconRenders[4][3]->SetTexture("WhitePotion.bmp");
 
+	// 아이콘 마우스 따라가게
+	{
+		IconMouse = CreateUIRenderer("Empty.bmp", RenderOrder::InvenIcon);
+		IconMouse->Off();
+	}
 
 	{
 		UISkillRenderer = CreateUIRenderer("Skill.bmp", RenderOrder::PlayUI);
@@ -353,78 +423,122 @@ void UIPanel::Start()
 		BossHPBar = CreateUIRenderer("BellomHPBar.bmp", RenderOrder::BossHPBar);
 		BossHPBar->SetRenderPos({ 582.5f, 30.0f });
 		BossHPBar->Off();
-		//BossHPBar->SetRenderScale({ 710,12 });
-		//BossHPBar->SetRenderScale({ 510,12 });
-
-		//float BossCurHp = BellomBoss::GetMainBoss()->GetMainBossHpValue();
-		//BossHPBar->SetRenderScale({ BossCurHp, 12.0f });
 	}
 
 }
 
 void UIPanel::Update(float _Delta)
 {
+	if (Grab == false)
+	{
+		MObject->ChangeAnimationState("Idle");
+	}
+
 	if (true == UIItemRenderer->IsUpdate())
 	{
 		for (size_t y = 0; y < IconRenders.size(); y++)
 		{
 			for (size_t x = 0; x < IconRenders[y].size(); x++)
 			{
-				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-					&& GameEngineInput::IsDown(VK_LBUTTON) && !m_bClick && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect))
 				{
-					OneClickCheckIconRender();
-					m_bClick = true;
-					MObject->ChangeAnimationState("GrabIdle");
+					IconStatusRender();
+					// 더블 클릭
+					if(GameEngineInput::IsDown(VK_LBUTTON) && !m_bClick && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+					{
+						m_bClick = true;
+						ValueY = y;
+						ValueX = x;
+						GameEngineSound::SoundPlay("BtMouseClick.mp3");
+						MObject->ChangeAnimationState("GrabIdle");
+					}
+					else if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+						&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp" && ValueY == y &&ValueX == x)
+					{
+						GameEngineSound::SoundPlay("Use.mp3");
+						DoubleClickCheckIconRender();
+						IconRenders[y][x]->SetTexture("Empty.bmp");
+						m_bClick = false;
+					}
+
+					if (m_bClick == false)
+					{
+						Grab = true;
+						MObject->ChangeAnimationState("Grab");
+					}
 				}
-				else if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+				
+				// 위치 옮기기
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
 					&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
 				{
-					int a = 0;
-					DoubleClickCheckIconRender();
-					m_bClick = false;
+					GameEngineSound::SoundPlay("BtMouseClick.mp3");
+					ValueY = y;
+					ValueX = x;
+					MObject->ChangeAnimationState("GrabIdle");
+					GetTextSave = IconRenders[y][x]->GetTexture();
 					IconRenders[y][x]->SetTexture("Empty.bmp");
-					MObject->ChangeAnimationState("Idle");
+					if (GetTextSave == "Apple.bmp")
+					{
+						IconMouse = CreateUIRenderer("Apple.bmp", RenderOrder::InvenIcon);
+						IconMouse->On();
+					}
+					if (GetTextSave == "RedPotion.bmp")
+					{
+						IconMouse = CreateUIRenderer("RedPotion.bmp", RenderOrder::InvenIcon);
+						IconMouse->On();
+					}
+					if (GetTextSave == "BluePotion.bmp")
+					{
+						IconMouse = CreateUIRenderer("BluePotion.bmp", RenderOrder::InvenIcon);
+						IconMouse->On();
+					}
+					if (GetTextSave == "WhitePotion.bmp")
+					{
+						IconMouse = CreateUIRenderer("WhitePotion.bmp", RenderOrder::InvenIcon);
+						IconMouse->On();
+					}
 				}
-				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-				//	&& GameEngineInput::IsDown(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
-				//{
-				//	ValueY = y;
-				//	ValueX = x;
-				//	MObject->ChangeAnimationState("GrabIdle");
-				//	GetTextSave = IconRenders[y][x]->GetTexture();
-				//	GetTextSave;
-
-				//	IconRenders[y][x]->SetTexture("Empty.bmp");
-				//}
-				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-				//	&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
-				//{
-				//	MObject->ChangeAnimationState("Idle");
-				//	GetSwitchTextSave = IconRenders[y][x]->GetTexture();
-
-				//	IconRenders[y][x]->SetTexture(GetTextSave);
-
-				//	//IconRenders[y][x]->SetTexture(Textl);
-				//	ValueY;
-				//	ValueX;
-				//	IconRenders[ValueY][ValueX]->SetTexture(GetSwitchTextSave);
-				//	
-				//	GetTextSave = ("Empty.bmp");
-				//	int a = 0;
-				//}
-				//if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
-				//	&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() == "Empty.bmp")
-				//{
-				//	MObject->ChangeAnimationState("Idle");
-				//	IconRenders[y][x]->SetTexture(GetTextSave);
-				//	GetTextSave = ("Empty.bmp");
-				//	int a = 0;
-				//}
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() != "Empty.bmp")
+				{
+					GameEngineSound::SoundPlay("BtMouseClick.mp3");
+					GetSwitchTextSave = IconRenders[y][x]->GetTexture();
+					IconRenders[y][x]->SetTexture(GetTextSave);
+					IconRenders[ValueY][ValueX]->SetTexture(GetSwitchTextSave);
+					GetTextSave = ("Empty.bmp");
+					MObject->ChangeAnimationState("Grab");
+					IconMouse->Off();
+				}
+				if (true == IconCollisions[y][x]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+					&& GameEngineInput::IsUp(VK_LBUTTON) && IconRenders[y][x]->GetTexture() == "Empty.bmp")
+				{
+					GameEngineSound::SoundPlay("BtMouseClick.mp3");
+					IconRenders[y][x]->SetTexture(GetTextSave);
+					GetTextSave = ("Empty.bmp");
+					MObject->ChangeAnimationState("Grab");
+					IconMouse->Off();
+				}
 			}
+			//if (false == IconCollisions[ValueY][ValueX]->CollisionCheck(MObject->GetCollision(), CollisionType::Rect, CollisionType::Rect)
+			//	&& GameEngineInput::IsUp(VK_LBUTTON))
+			//{
+
+			//	IconRenders[ValueY][ValueX]->SetTexture("Empty.bmp");
+			//	MObject->ChangeAnimationState("Grab");
+			//	IconMouse->Off();
+			//}
 		}
 	}
-
+	else
+	{
+		Grab = false;
+		AppleStatus->Off();
+		RedPotionStatus->Off();
+		BluePotionStatus->Off();
+		WhitePotionStatus->Off();
+	}
+	
 
 
 	if (GameEngineInput::IsDown('I'))
@@ -432,12 +546,15 @@ void UIPanel::Update(float _Delta)
 		Item = !Item;
 		if (Item)
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			InvenCollisionOn();
 			InvenOn();
 		}
 		else
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			InvenCollisionOff();
+			//IconMouse->Off();
 			InvenOff();
 		}
 	}
@@ -447,10 +564,12 @@ void UIPanel::Update(float _Delta)
 		SKill = !SKill;
 		if (SKill)
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			UISkillRenderer->On();
 		}
 		else
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			UISkillRenderer->Off();
 		}
 	}
@@ -460,10 +579,12 @@ void UIPanel::Update(float _Delta)
 		Status = !Status;
 		if (Status)
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			UIStatusRenderer->On();
 		}
 		else
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			UIStatusRenderer->Off();
 		}
 	}
@@ -473,11 +594,13 @@ void UIPanel::Update(float _Delta)
 		CharUIRender = !CharUIRender;
 		if (CharUIRender)
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			PlayerChatOpenRender->Off();
 			PlayerChatCloseRender->On();
 		}
 		else
 		{
+			GameEngineSound::SoundPlay("BtMouseClick.mp3");
 			PlayerChatOpenRender->On();
 			PlayerChatCloseRender->Off();
 		}
@@ -534,30 +657,24 @@ void UIPanel::Update(float _Delta)
 	if (true == BellomBoss::GetMainBoss()->BellomSummoner())
 	{
 		//BossProfile->SetRenderPos({ 200.0f, 30.0f });
-		BossProfile->On();
+		BossProfile->On();	//보스초상화
 
 		//BossHPUIS->SetRenderPos({ 230.0f, 30.0f });
-		BossHPUIS->On();
+		BossHPUIS->On();	//보스바 시작
 
 		//BossHPUIM->SetRenderPos({ 580.0f, 30.0f });
-		BossHPUIM->On();
+		BossHPUIM->On();	//보스바 중간
 
 		//BossHPUIE->SetRenderPos({ 935.0f, 30.0f });
-		BossHPUIE->On();
+		BossHPUIE->On();	//보스바 마지막
 
 		//BossHPBar->SetRenderPos({ 582.5f, 30.0f });
-		BossHPBar->On();
+		BossHPBar->On();	//보스 빨간체력바
 		
 		MoveBossHP = BellomBoss::GetMainBoss()->GetMainBossHpValue();
 		BossHPBar->SetRenderScale({ (MoveBossHP) / 2, 12.0f });
 
 		BossHpBarX = BellomBoss::GetMainBoss()->GetMainBossHpBar();
 		BossHPBar->SetRenderPos({ BossHpBarX, 30.0f });
-
-		/*BossHPBar->SetRenderScale({ 710,12 });
-		BossHPBar->SetRenderScale({ 510,12 });*/
-
-		//float BossCurHp = BellomBoss::GetMainBoss()->GetMainBossHpValue();
-		//BossHPBar->SetRenderScale({ BossCurHp, 12.0f });
 	}
 }

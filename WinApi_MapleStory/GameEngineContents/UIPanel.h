@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
 
 // 설명 :
@@ -25,7 +26,8 @@ public:
 	void InvenCollisionOn();
 	void InvenCollisionOff();
 
-	void OneClickCheckIconRender();
+	void IconStatusRender();
+	//void IconMouseObject();
 	void DoubleClickCheckIconRender();
 
 	void SetMouseObject(class MouseObject* _MObject)
@@ -78,10 +80,18 @@ protected:
 	bool CharUIRender = false;
 
 	bool m_bClick;
+	bool Grab = false;
 
 	float4 InvenPos = { 700, 300 };
 	float4 InvenSize = { 120, 160 };
 	float4 IconInter = { 36, 36 };
+
+	float4 IconPos = {0 , 0};
+	GameEngineRenderer* AppleStatus = nullptr;
+	GameEngineRenderer* RedPotionStatus = nullptr;
+	GameEngineRenderer* BluePotionStatus = nullptr;
+	GameEngineRenderer* WhitePotionStatus = nullptr;
+	GameEngineRenderer* IconMouse = nullptr; // 아이콘 마우스 따라가게
 
 	/////////// 보스
 	GameEngineRenderer* BossProfile = nullptr;
@@ -96,5 +106,5 @@ protected:
 
 private:
 	class MouseObject* MObject;
-
+	class MouseObjectPlay* MOjectPlay;
 };

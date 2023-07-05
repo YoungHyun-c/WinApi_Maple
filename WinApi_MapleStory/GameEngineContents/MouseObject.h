@@ -1,7 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-// CreateActor<MouseObject>()
 
 enum class MouseState
 {
@@ -41,7 +40,7 @@ public:
 
 	void CursorGrab();
 
-	void ChangeState(MouseObject _State);
+	//void ChangeState(MouseState _State);
 
 	void ChangeAnimationState(const std::string& _StateName);
 
@@ -49,9 +48,20 @@ public:
 
 
 protected:
+	void StateUpdate(float _Delta);
+
 	void Start() override;
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
+
+	//void IdleStart();
+	//void IdleUpdate(float _Delta);
+
+	//void GrabStart();
+	//void GrabUpdate(float _Delta);
+
+	//void GrabIdleStart();
+	//void GrabIdleUpdate(float _Delta);
 
 	MouseState State = MouseState::Max;
 	std::string CurState = "";

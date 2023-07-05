@@ -127,7 +127,7 @@ void Monster::Render(float _Delta)
 			float4 Pos;
 			std::string MonsterState = "";
 			MonsterState += "몬스터 상태 : " + AnimationName;
-			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 100, MonsterState.c_str(), static_cast<int>(MonsterState.size()));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 100.0f, MonsterState.c_str(), static_cast<int>(MonsterState.size()));
 		}
 
 		{
@@ -136,7 +136,7 @@ void Monster::Render(float _Delta)
 			float X = GetPos().X;
 			MonsterPosX += "몬스터 X 위치 : ";
 			MonsterPosX += std::to_string(X);
-			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -80, MonsterPosX.c_str(), static_cast<int>(MonsterPosX.size()));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -80.0f, MonsterPosX.c_str(), static_cast<int>(MonsterPosX.size()));
 		}
 
 		{
@@ -145,7 +145,7 @@ void Monster::Render(float _Delta)
 			float Y = GetPos().Y;
 			MonsterPosY += ("몬스터 Y 위치 : ");
 			MonsterPosY += std::to_string(Y);
-			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -60, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y -60.0f, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
 		}
 
 		{
@@ -155,7 +155,7 @@ void Monster::Render(float _Delta)
 			MonsterPosY += std::to_string(M_FMoveTime);
 			MonsterPosY += ("/");
 			MonsterPosY += std::to_string(static_cast<int>(M_FMoveLimitTime));
-			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 40, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 40.0f, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
 		}
 
 		{
@@ -165,7 +165,7 @@ void Monster::Render(float _Delta)
 			MonsterPosY += std::to_string(static_cast<int>(M_FStopTime));
 			MonsterPosY += ("/");
 			MonsterPosY += std::to_string(static_cast<int>(M_FStopLimitTime));
-			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 20, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
+			TextOutA(dc, ActorCameraPos().X, ActorCameraPos().Y - 20.0f, MonsterPosY.c_str(), static_cast<int>(MonsterPosY.size()));
 		}
 	}
 }

@@ -58,6 +58,7 @@ void StartLevel::Start()
 		FilePath.MoveChild("ContentsResources\\Sound\\");
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Login.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Portal.mp3"));
 	}
 
 	BackGroundPtr = CreateActor<BackGround>();
