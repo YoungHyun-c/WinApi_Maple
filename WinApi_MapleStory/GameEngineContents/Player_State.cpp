@@ -70,7 +70,6 @@ void Player::IdleUpdate(float _Delta)
 	}
 	
 
-
 	std::vector<GameEngineCollision*> _Col;
 	if (true == GameEngineInput::IsDown('W') && BodyCollision->Collision(CollisionOrder::GardenPotal, _Col, CollisionType::Rect, CollisionType::Rect))
 	{
@@ -249,6 +248,27 @@ void Player::DoubleJumpUpdate(float _Delta)
 	{
 		ChangeState(PlayerState::Attack);
 		return;
+	}
+
+	float Speed = 250.0f;
+	float4 MovePos = float4::ZERO;
+	float4 CheckPos = float4::ZERO;
+
+	if (true == GameEngineInput::IsPress('A'))
+	{
+		CheckPos = LeftCheck;
+		MovePos += float4::LEFT * Speed * _Delta;
+	}
+	else if (true == GameEngineInput::IsPress('D'))
+	{
+		CheckPos = RightCheck;
+		MovePos += float4::RIGHT * Speed * _Delta;
+	}
+
+	unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+	if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+	{
+		AddPos(MovePos);
 	}
 
 	{
@@ -554,6 +574,13 @@ void Player::AttackUpdate(float _Delta)
 		else if (true == GameEngineInput::IsPress('D'))
 		{
 			CheckPos = RightCheck;
+		}
+
+		unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+		if (Color == RGB(255, 255, 255) || Color == RGB(0, 255, 0))
+		{
+			AddPos(MovePos);
+			//GetLevel()->GetMainCamera()->AddPos(MovePos);
 		}
 	}
 
