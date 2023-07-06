@@ -27,6 +27,12 @@ private:
 	class BackGround* BackGroundPtr;
 	class Player* LevelPlayer = nullptr;
 
+	float SummonTime = 0.0f;
+	float SummonLimitTime = 8.0f;
+	float MoveTime = 0.0f;
+	float MoveLimitTime = 2.0f;
+	int TailsCount = 0;
+
 	float NextMoveTime = 0.0f;
 	float NextLevelTime = 2.0f;
 

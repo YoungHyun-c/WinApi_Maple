@@ -194,75 +194,6 @@ void BellomBoss::Update(float _Delta)
 	//	}
 	//);
 
-
-	//if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
-	//{
-	//	Bellom->ChangeAnimation("Left_Down");
-	//}
-
-	//if (GameEngineInput::IsDown(VK_F6))
-	//{
-	//	Bellom->ChangeAnimation("AttackReady");
-
-	//	Bellom->SetRenderPos({ 1700, 300 });
-	//	Bellom->SetRenderScale({ 1024, 1024 });
-	//}
-	//if (GameEngineInput::IsDown(VK_F7))
-	//{
-	//	//Bellom->ChangeAnimation("Attack");
-	//	//Bellom->SetRenderPos({ 150, 430 });
-	//	//Bellom->SetRenderScale({ 1536, 1024 });
-	//	Bellom->ChangeAnimation("Attack");
-	//	Bellom->SetRenderPos({ 1700, 300 });
-	//	Bellom->SetRenderScale({ 1024, 1024 });
-	//}
-	//if (GameEngineInput::IsDown(VK_F8))
-	//{
-	//	Bellom->ChangeAnimation("AttackBall");
-	//	Bellom->SetRenderPos({ 1700, 300 });
-	//	Bellom->SetRenderScale({ 1024, 1024 });
-	//}
-
-
-	//MoveTime += _Delta;
-	//if (MoveTime <= 1.5f)
-	//{
-	//	Bellom->ChangeAnimation("AttackReady");
-	//}
-
-	//if (MoveTime >= 3.0f && true == Bellom->IsAnimationEnd())
-	//{
-	//	Bellom->ChangeAnimation("Attack");
-	//}
-
-	//if (MoveTime >= 4.0f && true == Bellom->IsAnimationEnd())
-	//{
-	//	Bellom->ChangeAnimation("AttackBall");
-	//}
-
-	//if (MoveTime >= 7.0f)
-	//{
-	//	MoveTime = 0.0f;
-	//}
-
-	//if (true == Bellom->IsAnimationEnd())
-	//{
-	//	Bellom->ChangeAnimation("AttackBall");
-	//}
-	//MoveTime += _Delta;
-
-	//if (MoveTime >= 2.5f)
-	//{
-	//	Bellom->ChangeAnimation("Attack");
-	//}
-	//if (MoveTime >= 5.0f)
-	//{
-	//	Bellom->ChangeAnimation("AttackBall");
-	//	if (true == Bellom->IsAnimationEnd())
-	//	{
-	//		MoveTime = 0.0f;
-	//	}
-	//}
 }
 
 void BellomBoss::Render(float _Delta)
@@ -382,7 +313,7 @@ void BellomBoss::SummonUpdate(float _Delta)
 		ChangeAnimationState("Down");
 	}
 
-	if (B_FWakeTime >= 4.5f)
+	if (B_FWakeTime >= B_FWakeLimitTime)
 	{
 		ChangeState(BossState::Down);
 		B_FWakeTime = 0.0f;

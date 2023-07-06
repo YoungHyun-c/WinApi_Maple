@@ -130,7 +130,7 @@ private:
 	std::string AnimationName;
 
 	float B_FWakeTime = 0.0f;
-	float B_FWakeLimitTime = 4.0f;
+	float B_FWakeLimitTime = 4.5f;
 	float B_FDownTime = 0.0f;
 	float b_FDownLimitTime = 3.0f;
 	float DeathTime = 0.0f;
@@ -146,10 +146,6 @@ private:
 	////////////////////// DebugValue
 	float4 LeftCheck = { -40.0f, 0.0f };
 	float4 RightCheck = { 40.0f, 0.0f };
-
-	float Speed = 30.0f;
-
-	float4 BlueSnailMovePos = float4::ZERO;
 	float4 CheckPos = float4::ZERO;
 
 	bool MonsterStatus = false;

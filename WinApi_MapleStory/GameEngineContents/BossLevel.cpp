@@ -12,11 +12,12 @@
 
 #include "UIPanel.h"
 #include "Player.h"
-#include "BellomBoss.h"
 #include "BackGround.h"
 #include "GlobalValue.h"
 #include "EndLevel.h"
 
+#include "BellomBoss.h"
+#include "BellomTail.h"
 #include "Enum.h"
 #include "FadeObject.h"
 BossLevel::BossLevel()
@@ -56,6 +57,23 @@ void BossLevel::Start()
 
 void BossLevel::Update(float _Delta)
 {
+	if (true == BellomBoss::GetMainBoss()->BellomSummoner())
+	{
+		SummonTime += _Delta;
+	}
+
+	if (SummonTime >= SummonLimitTime)
+	{
+		MoveTime += _Delta;
+	}
+
+	if (MoveTime >= MoveLimitTime && TailsCount < 5)
+	{
+		BellomTail* BossTail = CreateActor<BellomTail>(UpdateOrder::Monster);
+		MoveTime = 0.0f;
+		TailsCount += 1;
+	}
+
 	if (true == BellomBoss::GetMainBoss()->BellomDeath())
 	{
 		NextMoveTime += _Delta;
@@ -69,6 +87,7 @@ void BossLevel::Update(float _Delta)
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BellomBoss* Boss = CreateActor<BellomBoss>(UpdateOrder::Monster);
+	//BellomTail* BossTail = CreateActor<BellomTail>(UpdateOrder::Monster);
 
 	GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("BossLevel.Bmp");
 	if (nullptr == Ptr)
