@@ -44,6 +44,11 @@ public:
 		return Summon;
 	}
 
+	static bool BellomDeath()
+	{
+		return BossDeath;
+	}
+
 	void SetMainBossHp(float _Value)
 	{
 		BellomBossHp = _Value;
@@ -68,6 +73,7 @@ public:
 	{
 		return BossHpBarX;
 	}
+
 
 protected:
 	void StateUpdate(float _Delta);
@@ -115,6 +121,7 @@ private:
 	int AttackCount = 0;
 	float MoveTime = 0.0f;
 	static bool Summon;
+	static bool BossDeath;
 	float BellomBossHp = 1410.0f;
 	float BossHpBarX = 582.5f;
 

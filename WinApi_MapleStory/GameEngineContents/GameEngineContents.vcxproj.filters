@@ -92,6 +92,12 @@
     <ClInclude Include="ImpMonster.h">
       <Filter>Global\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="BellomTail.h">
+      <Filter>Global\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="EndLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StartLevel.cpp">
@@ -161,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Global\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BellomTail.cpp">
+      <Filter>Global\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="EndLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

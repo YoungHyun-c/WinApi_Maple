@@ -685,4 +685,9 @@ void UIPanel::Update(float _Delta)
 		BossHpBarX = BellomBoss::GetMainBoss()->GetMainBossHpBar();
 		BossHPBar->SetRenderPos({ BossHpBarX, 30.0f });
 	}
+
+	if (true == BellomBoss::GetMainBoss()->BellomDeath())
+	{
+		Off();
+	}
 }

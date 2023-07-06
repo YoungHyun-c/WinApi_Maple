@@ -14,8 +14,8 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineCore.h>
-//#include "Bullet.h"
-//#include "Monster.h"
+
+#include "BellomBoss.h"
 #include "UIPanel.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 
@@ -187,23 +187,6 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 
-	//std::vector<GameEngineCollision*> _Col;
-	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _Col
-	//	, CollisionType::Rect // 나를 사각형으로 봐줘
-	//	, CollisionType::CirCle // 상대도 사각형으로 봐줘
-	//))
-	//{
-	//	for (size_t i = 0; i < _Col.size(); i++)
-	//	{
-	//		GameEngineCollision* Collison = _Col[i];
-
-	//		GameEngineActor* Actor = Collison->GetActor();
-
-	//		Collison->GetActor()->Death();
-	//	}
-	//}
-
-
 	//std::vector<GameEngineCollision*> _BellomBodyCol;
 	//if (true == AttackCollsion->Collision(CollisionOrder::MonsterBody, _BellomBodyCol
 	//	, CollisionType::Rect
@@ -238,6 +221,11 @@ void Player::Update(float _Delta)
 	StateUpdate(_Delta);
 
 	CameraFocus();
+
+	if (true == BellomBoss::GetMainBoss()->BellomDeath())
+	{
+		Off();
+	}
 
 	//if(FindImage = ResourcesManager::GetInst().FindTexture("RUTAMAP_NPC.bmp"))
 	//{

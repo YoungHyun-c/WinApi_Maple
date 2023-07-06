@@ -15,6 +15,7 @@
 #include "BellomBoss.h"
 #include "BackGround.h"
 #include "GlobalValue.h"
+#include "EndLevel.h"
 
 #include "Enum.h"
 #include "FadeObject.h"
@@ -55,7 +56,14 @@ void BossLevel::Start()
 
 void BossLevel::Update(float _Delta)
 {
-
+	if (true == BellomBoss::GetMainBoss()->BellomDeath())
+	{
+		NextMoveTime += _Delta;
+		if (NextMoveTime >= NextLevelTime)
+		{
+			GameEngineCore::ChangeLevel("EndLevel");
+		}
+	}
 }
 
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -74,7 +82,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다.");
 	}
-
 
 	LevelPlayer->SetGroundTexture("BossLevel_Debug.bmp");
 

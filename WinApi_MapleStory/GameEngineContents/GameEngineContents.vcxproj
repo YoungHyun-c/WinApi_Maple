@@ -174,11 +174,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BellomTail.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BossLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EndLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -269,11 +277,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BellomTail.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BossLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EndLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -6,13 +6,13 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 
-
 #include "Player.h"
 #include "PlayActor.h"
 #include "Enum.h"
 
 BellomBoss* BellomBoss::MainBoss = nullptr;
 bool BellomBoss::Summon = false;
+bool BellomBoss::BossDeath = false;
 
 BellomBoss::BellomBoss()
 {
@@ -32,7 +32,6 @@ void BellomBoss::Start()
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\Texture\\Monster\\Bellom\\");
-
 		//ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Bellom.bmp"));
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Bellom1.bmp"), 4, 2);
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Bellom2.bmp"), 4, 2);
@@ -104,11 +103,12 @@ void BellomBoss::Update(float _Delta)
 	// °¡¸¸È÷ ³ÀµÎ°í Á×ÀÌ±â
 	if (GameEngineInput::IsDown(VK_F6))
 	{
-		Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400 });
+		//Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400 });
 		GameEngineSound::SoundPlay("BellomAttack9.mp3");
 		Bellom->ChangeAnimation("Left_Wake");
 		Bellom->SetRenderPos({ 1700, 380 });
 		Bellom->SetRenderScale({ 1024, 1024 });
+		Bellom->On();
 		BellomBody->On();
 		BellomBody->SetCollisionPos({ 1730.0f, 600.0f });
 		BellomBody->SetCollisionScale({ 150.0f, 300.0f });
@@ -150,6 +150,7 @@ void BellomBoss::Update(float _Delta)
 		ChangeState(BossState::Death);
 		if (DeathTime >= DeathLimitTime && true == Bellom->IsAnimationEnd())
 		{
+			BossDeath = true;
 			Death();
 		}
 	}

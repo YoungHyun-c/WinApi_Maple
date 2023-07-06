@@ -3,18 +3,18 @@
 #include <GameEnginePlatform/GameEngineSound.h>
 
 // Ό³Έν :
-class BossLevel : public GameEngineLevel
+class EndLevel : public GameEngineLevel
 {
 public:
 	// constructer destructer
-	BossLevel();
-	~BossLevel();
+	EndLevel();
+	~EndLevel();
 
 	// delete Function
-	BossLevel(const BossLevel& _Other) = delete;
-	BossLevel(BossLevel&& _Other) noexcept = delete;
-	BossLevel& operator = (const BossLevel& _Other) = delete;
-	BossLevel& operator = (BossLevel&& _Other) noexcept = delete;
+	EndLevel(const EndLevel& _Other) = delete;
+	EndLevel(EndLevel&& _Other) noexcept = delete;
+	EndLevel& operator = (const EndLevel& _Other) = delete;
+	EndLevel& operator = (EndLevel&& _Other) noexcept = delete;
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -25,11 +25,6 @@ private:
 	void Update(float _Delta) override;
 
 	class BackGround* BackGroundPtr;
-	class Player* LevelPlayer = nullptr;
-
-	float NextMoveTime = 0.0f;
-	float NextLevelTime = 2.0f;
-
 	GameEngineSoundPlayer BGMPlayer;
 };
 
