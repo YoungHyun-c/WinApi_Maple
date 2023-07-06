@@ -22,6 +22,9 @@
     <Filter Include="Global\Monster">
       <UniqueIdentifier>{915215ec-240c-467b-8276-797c9a71f553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global\Monster\Boss">
+      <UniqueIdentifier>{ab7a08a9-2945-46cd-b1e3-dd4fb46d9312}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StartLevel.h">
@@ -83,20 +86,23 @@
     <ClInclude Include="RutaNpc.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="BellomBoss.h">
-      <Filter>Global\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Global\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ImpMonster.h">
       <Filter>Global\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="BellomTail.h">
-      <Filter>Global\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="EndLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BellomBoss.h">
+      <Filter>Global\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BellomTail.h">
+      <Filter>Global\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneDrop.h">
+      <Filter>Global\Monster\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,20 +165,23 @@
     <ClCompile Include="RutaNpc.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="BellomBoss.cpp">
-      <Filter>Global\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="ImpMonster.cpp">
       <Filter>Global\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Global\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="BellomTail.cpp">
-      <Filter>Global\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="EndLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BellomBoss.cpp">
+      <Filter>Global\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BellomTail.cpp">
+      <Filter>Global\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneDrop.cpp">
+      <Filter>Global\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

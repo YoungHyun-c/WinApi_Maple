@@ -18,6 +18,8 @@
 
 #include "BellomBoss.h"
 #include "BellomTail.h"
+#include "StoneDrop.h"
+
 #include "Enum.h"
 #include "FadeObject.h"
 BossLevel::BossLevel()
@@ -65,14 +67,31 @@ void BossLevel::Update(float _Delta)
 	if (SummonTime >= SummonLimitTime)
 	{
 		MoveTime += _Delta;
+		StoneSummonTime += _Delta;
+	}
+
+	if (StoneSummonTime >= StoneSummonLimitTime);
+	{
+		StonDrop1->SetPos({ -600.0f, 0 });
+		StonDrop2->SetPos({ -450.0f, 0 });
+		StonDrop3->SetPos({ -300.0f, 0 });
+		StonDrop4->SetPos({ -150.0f, 0 });
+		StonDrop5->SetPos({ 0.0f, 0 });
+		StonDrop6->SetPos({ 150.0f, 0 });
+		StonDrop7->SetPos({ 300.0f, 0 });
+		StonDrop8->SetPos({ 450.0f, 0 });
+		StonDrop9->SetPos({ 600.0f, 0 });
 	}
 
 	if (MoveTime >= MoveLimitTime && TailsCount < 5)
 	{
+		//StoneDrop* StonDrop = CreateActor<StoneDrop>(UpdateOrder::Monster);
+
 		BellomTail* BossTail = CreateActor<BellomTail>(UpdateOrder::Monster);
 		MoveTime = 0.0f;
 		TailsCount += 1;
 	}
+
 
 	if (true == BellomBoss::GetMainBoss()->BellomDeath())
 	{
@@ -87,7 +106,16 @@ void BossLevel::Update(float _Delta)
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BellomBoss* Boss = CreateActor<BellomBoss>(UpdateOrder::Monster);
-	//BellomTail* BossTail = CreateActor<BellomTail>(UpdateOrder::Monster);
+	//StoneDrop* StonDorp = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop1 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop2 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop3 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop4 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop5 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop6 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop7 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop8 = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	StonDrop9 = CreateActor<StoneDrop>(UpdateOrder::Monster);
 
 	GameEngineWindowTexture* Ptr = ResourcesManager::GetInst().FindTexture("BossLevel.Bmp");
 	if (nullptr == Ptr)

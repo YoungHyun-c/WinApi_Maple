@@ -51,7 +51,7 @@ private:
 	void Start() override;
 	void Update(float _Delta) override;
 
-	// 벨룸 상태 관하여
+	// 벨룸꼬리 상태 관하여
 	GameEngineRenderer* BellomTails = nullptr;
 	TailState State = TailState::Max;
 	std::string CurState = "";
