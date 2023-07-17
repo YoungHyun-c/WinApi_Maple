@@ -95,6 +95,7 @@ void BossLevel::Update(float _Delta)
 	if (true == BellomBoss::GetMainBoss()->BellomDeath())
 	{
 		NextMoveTime += _Delta;
+		BGMPlayer.Stop();
 		if (NextMoveTime >= NextLevelTime)
 		{
 			GameEngineCore::ChangeLevel("EndLevel");
@@ -105,7 +106,8 @@ void BossLevel::Update(float _Delta)
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BellomBoss* Boss = CreateActor<BellomBoss>(UpdateOrder::Monster);
-	//StoneDrop* StonDorp = CreateActor<StoneDrop>(UpdateOrder::Monster);
+	BGMPlayer = GameEngineSound::SoundPlay("AbyssCave.mp3");
+
 	StonDrop1 = CreateActor<StoneDrop>(UpdateOrder::Monster);
 	StonDrop2 = CreateActor<StoneDrop>(UpdateOrder::Monster);
 	StonDrop3 = CreateActor<StoneDrop>(UpdateOrder::Monster);
@@ -138,5 +140,5 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	BGMPlayer.Stop();
+	
 }

@@ -58,7 +58,7 @@ void EndLevel::Update(float _Delta)
 void EndLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	FadeObject* FObject = CreateActor<FadeObject>();
-	GameEngineSound::SoundPlay("Congratulation.mp3");
+	BGMPlayer = GameEngineSound::SoundPlay("Congratulation.mp3");
 }
 
 void EndLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -120,11 +120,6 @@ void BellomBoss::Update(float _Delta)
 	{
 		Bellom->SetRenderPos({ Player::GetMainPlayer()->GetPos().X, 400 });
 		ChangeAnimationState("Ready");
-		//GameEngineSound::SoundPlay("BellomAttack9.mp3");
-		//Bellom->ChangeAnimation("Left_Wake");
-		//Bellom->SetRenderPos({ 1700, 380 });
-		//Bellom->SetRenderScale({ 1024, 1024 });
-		//BossStop = true;
 	}
 
 	if (BossStop == false)
