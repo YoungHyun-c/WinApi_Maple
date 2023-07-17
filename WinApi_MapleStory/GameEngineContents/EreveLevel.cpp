@@ -49,7 +49,6 @@ void EreveLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Ereve_Debug.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("QueensGarden.mp3"))
 	{
 		GameEnginePath FilePath;

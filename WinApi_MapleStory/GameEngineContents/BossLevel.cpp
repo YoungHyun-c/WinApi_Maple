@@ -46,7 +46,6 @@ void BossLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BossLevel_Debug.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 
 	BackGroundPtr = CreateActor<BackGround>();
 	BackGroundPtr->Init("BossLevel.bmp", "BossLevel_Debug.bmp");

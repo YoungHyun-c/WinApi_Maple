@@ -44,7 +44,6 @@ void GardenLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Garden_Debug1.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("AbyssCave.mp3"))
 	{
 		GameEnginePath FilePath;

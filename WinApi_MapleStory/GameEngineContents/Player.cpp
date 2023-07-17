@@ -74,7 +74,6 @@ void Player::Start()
 		//FolderPath.MoveChild("ContentsResources\\Texture\\Player\\FolderPlayer\\");
 		//ResourcesManager::GetInst().CreateSpriteFolder("Stand", FolderPath.PlusFilePath("Stand"));
 
-		GameEngineSound::SetGlobalVolume(0.3f);
 		if (nullptr == GameEngineSound::FindSound("Attack.mp3"))
 		{
 			GameEnginePath FilePath;

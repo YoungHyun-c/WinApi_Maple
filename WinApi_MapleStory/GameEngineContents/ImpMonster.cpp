@@ -66,7 +66,6 @@ void ImpMonster::Start()
 		ChangeState(MonsterState::Idle);
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("ImpAttack.mp3"))
 	{
 		GameEnginePath FilePath;

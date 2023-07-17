@@ -36,7 +36,6 @@ void EndLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("End.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("Congratulation.mp3"))
 	{
 		GameEnginePath FilePath;

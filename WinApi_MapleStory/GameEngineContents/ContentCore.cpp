@@ -21,6 +21,7 @@ ContentCore::~ContentCore()
 void ContentCore::Start()
 {
 	GameEngineWindow::MainWindow.SetPosAndScale({ 50, 100 }, { 1024, 768 });
+	GameEngineSound::SetGlobalVolume(0.3f);
 
 	GameEngineCore::CreateLevel<StartLevel>("StartLevel");
 	GameEngineCore::CreateLevel<PracticeLevel>("PracticeLevel");

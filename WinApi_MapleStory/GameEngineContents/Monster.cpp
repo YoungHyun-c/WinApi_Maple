@@ -62,7 +62,6 @@ void Monster::Start()
 		ChangeState(MonsterState::Idle);
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("Die.mp3"))
 	{
 		GameEnginePath FilePath;

@@ -256,7 +256,6 @@ void UIPanel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("BellomHPBar.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("Use.mp3"))
 	{
 		GameEnginePath FilePath;

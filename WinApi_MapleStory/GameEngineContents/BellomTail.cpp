@@ -36,7 +36,6 @@ void BellomTail::Start()
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("BellomTailsDown.bmp"), 8, 1);
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("BellomAttack8.mp3"))
 	{
 		GameEnginePath FilePath;

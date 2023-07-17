@@ -57,7 +57,7 @@ void BellomBoss::Start()
 		Bellom->Off();
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
+	
 	if (nullptr == GameEngineSound::FindSound("BellomAttack1.mp3"))
 	{
 		GameEnginePath FilePath;

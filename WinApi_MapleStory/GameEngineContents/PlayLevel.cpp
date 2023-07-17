@@ -53,7 +53,6 @@ void PlayLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("RUTAMAP_DebugTT.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("YggdrasilPrayer.mp3"))
 	{
 		GameEnginePath FilePath;

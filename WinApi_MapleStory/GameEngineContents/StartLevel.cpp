@@ -49,7 +49,6 @@ void StartLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LoginBack_Test.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("Login.mp3"))
 	{
 		GameEnginePath FilePath;

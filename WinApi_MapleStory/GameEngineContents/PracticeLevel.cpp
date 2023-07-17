@@ -51,7 +51,6 @@ void PracticeLevel::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("PracticeLevel_DebugT.bmp"));
 	}
 
-	GameEngineSound::SetGlobalVolume(0.3f);
 	if (nullptr == GameEngineSound::FindSound("AboveTheTreetops.mp3"))
 	{
 		GameEnginePath FilePath;
